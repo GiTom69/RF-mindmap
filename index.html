@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Mind Map Visualizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #mind-map-container {
+            flex-grow: 1;
+            border-right: 1px solid #ccc;
+        }
+        #controls-container {
+            width: 300px;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        .node {
+            cursor: pointer;
+        }
+        .link {
+            stroke: #999;
+            stroke-opacity: 0.6;
+        }
+        #url-manager h3 {
+            margin-top: 0;
+        }
+        #url-manager ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #url-manager li {
+            margin-bottom: 5px;
+        }
+        #url-manager a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        #url-manager a:hover {
+            text-decoration: underline;
+        }
+        #add-url-input {
+            width: calc(100% - 60px);
+            padding: 5px;
+        }
+        #add-url-button {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="mind-map-container"></div>
+    <div id="controls-container">
+        <h2>Controls</h2>
+        <div id="url-manager">
+            <p>Click on a topic (node) or a connection (link) to see its associated resources.</p>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
