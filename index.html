@@ -5,62 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Mind Map Visualizer</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            margin: 0;
-            height: 100vh;
+        /* Most CSS is unchanged */
+        body { font-family: Arial, sans-serif; display: flex; margin: 0; height: 100vh; overflow: hidden; }
+        #mind-map-container { flex-grow: 1; border-right: 1px solid #ccc; }
+        #controls-container { width: 300px; padding: 10px; box-sizing: border-box; overflow-y: auto; }
+        svg { width: 100%; height: 100%; }
+        .node { cursor: pointer; }
+        .link { stroke: #999; stroke-opacity: 0.8; }
+        .link.hierarchical { stroke: #ccc; stroke-dasharray: 4; }
+        #url-manager h3 { margin-top: 0; }
+        #url-manager ul { list-style-type: none; padding: 0; }
+        #add-url-input { width: calc(100% - 60px); padding: 5px; }
+        #save-csv-button { padding: 5px 10px; margin-top: 5px; }
+
+        /* --- MODIFIED & NEW CSS --- */
+        .url-entry {
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             overflow: hidden;
+            background-color: #f9f9f9;
         }
-        #mind-map-container {
-            flex-grow: 1;
-            border-right: 1px solid #ccc;
-        }
-        #controls-container {
-            width: 300px;
-            padding: 10px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-        svg {
-            width: 100%;
-            height: 100%;
-        }
-        .node {
-            cursor: pointer;
-        }
-        .link {
-            stroke: #999;
-            stroke-opacity: 0.8;
-        }
-        /* --- NEW CSS RULE --- */
-        .link.hierarchical {
-            stroke: #ccc;
-            stroke-dasharray: 4; /* Creates a dashed line effect */
-        }
-        #url-manager h3 {
-            margin-top: 0;
-        }
-        #url-manager ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        #url-manager li {
-            margin-bottom: 5px;
-        }
-        #url-manager a {
-            color: #007bff;
+        .url-entry a {
             text-decoration: none;
+            color: #333;
+            display: block;
         }
-        #url-manager a:hover {
-            text-decoration: underline;
+        .url-entry a:hover {
+            background-color: #f0f0f0;
         }
-        #add-url-input {
-            width: calc(100% - 60px);
-            padding: 5px;
+        .url-entry .url-text {
+            padding: 8px;
+            font-size: 14px;
+            word-wrap: break-word;
         }
-        #add-url-button {
-            padding: 5px 10px;
+        .url-entry.youtube-preview .url-text {
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .url-entry img {
+            max-width: 100%;
+            display: block;
         }
     </style>
 </head>
@@ -69,6 +54,8 @@
     <div id="mind-map-container"></div>
     <div id="controls-container">
         <h2>Controls</h2>
+        <button id="save-csv-button">Save & Download urls.csv</button>
+        <hr>
         <div id="url-manager">
             <p>Click on a topic (node) or a connection (link) to see its associated resources.</p>
         </div>
