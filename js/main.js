@@ -1,32 +1,77 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const controlsContainer = document.getElementById('controls-container');
+    const initialControlsHTML = controlsContainer.innerHTML;
+
     // --- Data Loading ---
     Promise.all([
         d3.csv("data/topics.csv"),
         d3.csv("data/links.csv")
     ]).then(([topics, links]) => {
-        const graph = createD3Graph(topics, links);
+        const validTopics = topics.filter(t => t.Index && t.Index.trim() !== '');
+        const validLinks = links.filter(l => l['Source Index'] && l['Target Index']);
+
+        const graph = createD3Graph(validTopics, validLinks);
         renderD3MindMap(graph);
     }).catch(error => {
         console.error("Error loading or parsing data:", error);
     });
 
-    // --- Data Transformation ---
+    // --- MODIFIED: Data Transformation ---
     function createD3Graph(topics, links) {
         const nodes = topics.map(topic => ({
             id: topic.Index,
             title: topic.Topic,
             description: topic['Description / Key Concepts'],
-            urls: [] // Initialize with an empty array for custom URLs
+            urls: []
         }));
 
-        const d3Links = links.map(link => ({
+        // Process explicit links from links.csv
+        const dependencyLinks = links.map(link => ({
             source: link['Source Index'],
             target: link['Target Index'],
             relation: link['Relation Type'],
-            urls: [] // Initialize for custom URLs
+            type: 'dependency', // Assign a type for styling
+            urls: []
         }));
+        
+        // --- NEW: Generate hierarchical links automatically ---
+        const hierarchicalLinks = [];
+        const nodeIdSet = new Set(nodes.map(n => n.id));
 
-        return { nodes, links: d3Links };
+        nodes.forEach(node => {
+            const parts = node.id.toString().split('.');
+            if (parts.length > 1) {
+                // Find the parent ID by removing the last part (e.g., "1.1.1" -> "1.1")
+                const parentId = parts.slice(0, -1).join('.');
+                // If the parent node actually exists, create a link
+                if (nodeIdSet.has(parentId)) {
+                    hierarchicalLinks.push({
+                        source: parentId,
+                        target: node.id,
+                        relation: 'parent-child',
+                        type: 'hierarchical' // Assign a type for styling
+                    });
+                }
+            }
+        });
+
+        // Combine both types of links
+        const allLinks = [...dependencyLinks, ...hierarchicalLinks];
+
+        return { nodes, links: allLinks };
+    }
+
+    // --- NEW: Function to determine node style based on index depth ---
+    function getNodeStyle(nodeId) {
+        const level = nodeId.toString().split('.').length;
+        switch (level) {
+            case 1:
+                return { radius: 20, stroke: 'black', strokeWidth: 2 };
+            case 2:
+                return { radius: 15, stroke: 'none', strokeWidth: 0 };
+            default:
+                return { radius: 10, stroke: 'none', strokeWidth: 0 };
+        }
     }
 
     // --- D3.js Rendering ---
@@ -40,7 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
             .attr("height", height)
             .call(d3.zoom().on("zoom", (event) => {
                 g.attr("transform", event.transform);
-            }));
+            }))
+            .on("click", resetControlsPanel);
 
         const g = svg.append("g");
 
@@ -54,9 +100,11 @@ document.addEventListener("DOMContentLoaded", () => {
             .selectAll("line")
             .data(graph.links)
             .join("line")
-            .attr("class", "link")
+            // --- MODIFIED: Apply class based on link type ---
+            .attr("class", d => `link ${d.type}`)
             .attr("stroke-width", 2)
             .on("click", (event, d) => {
+                event.stopPropagation();
                 showUrlManager(d, 'Link');
             });
 
@@ -68,16 +116,19 @@ document.addEventListener("DOMContentLoaded", () => {
             .attr("class", "node")
             .call(drag(simulation))
             .on("click", (event, d) => {
+                event.stopPropagation();
                 showUrlManager(d, 'Node');
             });
-
+        
         node.append("circle")
-            .attr("r", 10)
-            .attr("fill", "steelblue");
+            .attr("r", d => getNodeStyle(d.id).radius)
+            .attr("fill", "steelblue")
+            .attr("stroke", d => getNodeStyle(d.id).stroke)
+            .attr("stroke-width", d => getNodeStyle(d.id).strokeWidth);
 
         node.append("text")
             .text(d => d.title)
-            .attr("x", 12)
+            .attr("x", d => getNodeStyle(d.id).radius + 5)
             .attr("y", 3);
 
         node.append("title")
@@ -95,72 +146,68 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- Interactivity ---
+    // --- Interactivity (Unchanged) ---
     function drag(simulation) {
         function dragstarted(event, d) {
             if (!event.active) simulation.alphaTarget(0.3).restart();
             d.fx = d.x;
             d.fy = d.y;
         }
-
         function dragged(event, d) {
             d.fx = event.x;
             d.fy = event.y;
         }
-
         function dragended(event, d) {
             if (!event.active) simulation.alphaTarget(0);
             d.fx = null;
             d.fy = null;
         }
-
-        return d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended);
+        return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
     }
 
-    // --- URL Management UI ---
+    function resetControlsPanel() {
+        controlsContainer.innerHTML = initialControlsHTML;
+    }
+
     function showUrlManager(element, type) {
-        const urlContainer = document.getElementById('url-manager');
+        controlsContainer.innerHTML = '';
         const title = type === 'Node' ? element.title : `${element.source.title} → ${element.target.title}`;
-
-        urlContainer.innerHTML = `<h3>Resources for ${title}</h3>`;
-
+        const h3 = document.createElement('h3');
+        h3.textContent = `Resources for ${title}`;
+        controlsContainer.appendChild(h3);
         const urlList = document.createElement('ul');
-        element.urls.forEach((url, index) => {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.href = url;
-            a.textContent = url;
-            a.target = "_blank";
-            li.appendChild(a);
-            urlList.appendChild(li);
-        });
-        urlContainer.appendChild(urlList);
-
+        if (element.urls) { // Check if urls array exists
+            element.urls.forEach((url) => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = url;
+                a.textContent = url;
+                a.target = "_blank";
+                li.appendChild(a);
+                urlList.appendChild(li);
+            });
+        }
+        controlsContainer.appendChild(urlList);
         const addUrlInput = document.createElement('input');
         addUrlInput.type = 'text';
         addUrlInput.id = 'add-url-input';
         addUrlInput.placeholder = 'Add a new URL';
-
+        controlsContainer.appendChild(addUrlInput);
         const addUrlButton = document.createElement('button');
         addUrlButton.id = 'add-url-button';
         addUrlButton.textContent = 'Add';
-
+        controlsContainer.appendChild(addUrlButton);
         addUrlButton.onclick = () => {
             if (addUrlInput.value) {
                 try {
-                    new URL(addUrlInput.value); // Validate URL
+                    new URL(addUrlInput.value);
+                    if (!element.urls) element.urls = []; // Initialize if it doesn't exist
                     element.urls.push(addUrlInput.value);
-                    showUrlManager(element, type); // Refresh the display
+                    showUrlManager(element, type);
                 } catch (_) {
                     alert("Please enter a valid URL.");
                 }
             }
         };
-
-        urlContainer.appendChild(addUrlInput);
-        urlContainer.appendChild(addUrlButton);
     }
 });
