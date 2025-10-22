@@ -239,6 +239,38 @@
             color: #a0e0ff;
             font-style: italic;
         }
+        
+        .url-entry a {
+            text-decoration: none;
+            color: #eee;
+            display: block;
+            position: relative; /* Needed for positioning the title */
+        }
+
+        /* --- NEW CSS FOR THE VIDEO TITLE --- */
+        .youtube-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.75); /* Darker for better contrast */
+            color: #fff;
+            padding: 6px 8px;
+            font-size: 13px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+            /* Hide long titles gracefully */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: opacity 0.3s; /* Smooth appearance */
+        }
+
+        .url-entry .url-text {
+            padding: 8px;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
     </style>
 </head>
 <body>
