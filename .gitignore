@@ -3,3 +3,6 @@ venv*
 .vscode
 data/youtube_cache.json
 log.txt
+dump
+__pycache__/
+*.pyc
