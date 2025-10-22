@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!urlMap.has(entry.Identifier)) {
                 urlMap.set(entry.Identifier, []);
             }
+            // Store URLs as simple strings
             urlMap.get(entry.Identifier).push(entry.URL);
         });
 
@@ -94,18 +95,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const tId = typeof targetId === 'object' ? targetId.id : targetId;
         return `${sId}|${tId}|${relation}`;
     }
-
+    
     function saveUrlsToCsv(graph) {
         let csvContent = "Identifier,URL\n";
+        const escapeCsv = (str) => `"${(str || '').replace(/"/g, '""')}"`;
+
         graph.nodes.forEach(node => {
             if (node.urls && node.urls.length > 0) {
-                node.urls.forEach(url => { csvContent += `${node.id},"${url}"\n`; });
+                node.urls.forEach(url => {
+                    csvContent += `${node.id},${escapeCsv(url)}\n`;
+                });
             }
         });
         graph.links.forEach(link => {
             if (link.urls && link.urls.length > 0) {
                 const linkId = getLinkId(link.source, link.target, link.relation);
-                link.urls.forEach(url => { csvContent += `${linkId},"${url}"\n`; });
+                 link.urls.forEach(url => {
+                    csvContent += `${linkId},${escapeCsv(url)}\n`;
+                });
             }
         });
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -127,6 +134,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getYoutubeThumbnailUrl(videoId) {
         return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+    }
+
+    async function fetchYoutubeMetadata(videoUrl) {
+        // Use a public oEmbed endpoint which is designed for this purpose and avoids CORS issues.
+        const response = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(videoUrl)}`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch metadata for ${videoUrl}`);
+        }
+        return await response.json();
     }
 
     function getNodeStyle(nodeId) {
@@ -248,19 +264,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const relatedList = document.createElement('ul');
             relatedList.className = 'related-topics-list';
-
             const connectedLinks = currentGraphData.links.filter(link => link.source.id === element.id || link.target.id === element.id);
 
             if (connectedLinks.length > 0) {
                 connectedLinks.forEach(link => {
                     const isSource = link.source.id === element.id;
                     const otherNode = isSource ? link.target : link.source;
-
                     const li = document.createElement('li');
                     const button = document.createElement('button');
                     button.className = 'related-topic-button';
                     button.innerHTML = isSource ? `<span class="relation">[${link.relation}] →</span> ${otherNode.title}` : `<span class="relation">← [${link.relation}]</span> ${otherNode.title}`;
-                    button.onclick = () => focusOnNode(otherNode);
+                    button.onclick = () => {
+                        focusOnNode(otherNode);
+                        showUrlManager(otherNode, 'Node');
+                    };
                     li.appendChild(button);
                     relatedList.appendChild(li);
                 });
@@ -288,16 +305,43 @@ document.addEventListener("DOMContentLoaded", () => {
                 const videoId = getYoutubeVideoId(url);
                 if (videoId) {
                     li.className = 'url-entry youtube-preview';
-                    const linkElement = document.createElement('a'); linkElement.href = url; linkElement.target = "_blank";
-                    const thumbnail = document.createElement('img'); thumbnail.src = getYoutubeThumbnailUrl(videoId);
+                    const linkElement = document.createElement('a');
+                    linkElement.href = url;
+                    linkElement.target = "_blank";
+                    
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = getYoutubeThumbnailUrl(videoId);
                     linkElement.appendChild(thumbnail);
-                    const urlTextDiv = document.createElement('div'); urlTextDiv.className = 'url-text'; urlTextDiv.textContent = url;
-                    linkElement.appendChild(urlTextDiv);
+                    
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'youtube-title';
+                    titleDiv.textContent = 'Loading title...';
+                    titleDiv.style.opacity = '0';
+                    linkElement.appendChild(titleDiv);
+                    
                     li.appendChild(linkElement);
+
+                    fetchYoutubeMetadata(url)
+                        .then(data => {
+                            if (data && data.title) {
+                                titleDiv.textContent = data.title;
+                                titleDiv.style.opacity = '1';
+                            } else {
+                                titleDiv.textContent = 'Title not available';
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            titleDiv.style.display = 'none';
+                        });
                 } else {
                     li.className = 'url-entry';
-                    const linkElement = document.createElement('a'); linkElement.href = url; linkElement.target = "_blank";
-                    const urlTextDiv = document.createElement('div'); urlTextDiv.className = 'url-text'; urlTextDiv.textContent = url;
+                    const linkElement = document.createElement('a');
+                    linkElement.href = url;
+                    linkElement.target = "_blank";
+                    const urlTextDiv = document.createElement('div');
+                    urlTextDiv.className = 'url-text';
+                    urlTextDiv.textContent = url;
                     linkElement.appendChild(urlTextDiv);
                     li.appendChild(linkElement);
                 }
