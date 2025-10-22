@@ -64,9 +64,9 @@ This project revolves around a few key concepts and UI components. AI suggestion
   - **URLs:** From `urls.csv`. These are attached to nodes and links and can include special previews for YouTube videos.
 
 - **Key UI Components:**
-  - **The SVG Canvas** (`#mind-map-container`): The main D3.js drawing area.
-  - **The Details Panel (`#controls-container`):** A panel on the right that contextually displays information about the selected node or link. This includes descriptions, related topics, and associated resources (URLs).
-  - **The Notes Panel (`#notes-section`):** A collapsible "hamburger" menu in the bottom-left that contains a legend for relationship types.
+  - **The SVG Canvas** (`mind-map-container`): The main D3.js drawing area.
+  - **The Details Panel (`controls-container`):** A panel on the right that contextually displays information about the selected node or link. This includes descriptions, related topics, and associated resources (URLs).
+  - **The Notes Panel (`notes-section`):** A collapsible "hamburger" menu in the bottom-left that contains a legend for relationship types.
 
 - **Key Features to be Aware of:**
   - **"Jump-to-Node" (`focusOnNode` function):** An important navigation feature that animates the view to center on a selected node and highlights it.
