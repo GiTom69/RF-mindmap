@@ -24,9 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Data Loading & Initialization ---
     Promise.all([
-        d3.csv("data/topics.csv"),
-        d3.csv("data/links.csv"),
-        d3.csv("data/urls.csv")
+        d3.csv("../data/topics.csv"),   // <-- CORRECTED PATH
+        d3.csv("../data/links.csv"),     // <-- CORRECTED PATH
+        d3.csv("../data/urls.csv")       // <-- CORRECTED PATH
     ]).then(([topics, links, urls]) => {
         const validTopics = topics.filter(t => t.Index && t.Index.trim() !== '');
         const validLinks = links.filter(l => l['Source Index'] && l['Target Index']);
@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }).catch(error => {
         console.error("Error loading or parsing data:", error);
     });
+
 
     // --- Data Transformation ---
     function createD3Graph(topics, links, urlsData) {
