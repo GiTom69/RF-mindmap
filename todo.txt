@@ -1,0 +1,4 @@
+tasks:
+- autofill links from youtube playlists - done
+- search bar
+- modern UI
