@@ -1,3 +1,5 @@
 *.env
 venv*
 .vscode
+data/youtube_cache.json
+log.txt

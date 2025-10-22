@@ -1,4 +1,9 @@
-tasks:
+code tasks :
 - autofill links from youtube playlists - done
 - search bar
 - modern UI
+- noramal, plaintext display for all the topics
+
+topics tasks:
+- add OPENTAP topics
+- hebrew lang support
