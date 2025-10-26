@@ -6,3 +6,4 @@ log.txt
 dump
 __pycache__/
 *.pyc
+how-branch --all
