@@ -10,7 +10,7 @@ import google.generativeai as genai
 from tqdm import tqdm
 
 # --- CONFIGURATION & UNCHANGED FUNCTIONS ---
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 TOPICS_FILE = DATA_DIR / "topics.csv"
 URLS_FILE = DATA_DIR / "urls.csv"
