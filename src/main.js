@@ -36,34 +36,80 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Error loading or parsing data:", error);
     });
 
-    // --- Data Transformation (Unchanged) ---
-    function createD3Graph(topics, links, urlsData) {
-        const urlMap = new Map();
-        urlsData.forEach(entry => {
-            if (!urlMap.has(entry.Identifier)) {
-                urlMap.set(entry.Identifier, []);
-            }
-            urlMap.get(entry.Identifier).push(entry.URL);
-        });
+// --- Data Transformation ---
+function createD3Graph(topics, links, urlsData) {
+    const urlMap = new Map();
+    urlsData.forEach(entry => {
+        if (!urlMap.has(entry.Identifier)) {
+            urlMap.set(entry.Identifier, []);
+        }
+        urlMap.get(entry.Identifier).push(entry.URL);
+    });
 
-        const nodes = topics.map(topic => ({ id: topic.Index, title: topic.Topic, description: topic['Description / Key Concepts'], urls: urlMap.get(topic.Index) || [] }));
-        const dependencyLinks = links.map(link => { const linkId = getLinkId(link['Source Index'], link['Target Index'], link['Relation Type']); return { source: link['Source Index'], target: link['Target Index'], relation: link['Relation Type'], type: 'dependency', urls: urlMap.get(linkId) || [] }; });
-        const hierarchicalLinks = [];
-        const nodeIdSet = new Set(nodes.map(n => n.id));
-        nodes.forEach(node => {
-            const parts = node.id.toString().split('.');
-            if (parts.length > 1) {
-                const parentId = parts.slice(0, -1).join('.');
-                if (nodeIdSet.has(parentId)) {
-                    const relationType = 'sub topic';
-                    const linkId = getLinkId(parentId, node.id, relationType);
-                    hierarchicalLinks.push({ source: parentId, target: node.id, relation: relationType, type: 'hierarchical', urls: urlMap.get(linkId) || [] });
-                }
+    const nodes = topics.map(topic => ({
+        id: topic.Index,
+        title: topic.Topic,
+        description: topic['Description / Key Concepts'],
+        urls: urlMap.get(topic.Index) || []
+    }));
+
+    // --- START OF FIX ---
+    // Create a Set of all valid node IDs for quick lookups.
+    const nodeIdSet = new Set(nodes.map(n => n.id));
+    // --- END OF FIX ---
+
+    const dependencyLinks = links.map(link => {
+        const linkId = getLinkId(link['Source Index'], link['Target Index'], link['Relation Type']);
+        return {
+            source: link['Source Index'],
+            target: link['Target Index'],
+            relation: link['Relation Type'],
+            type: 'dependency',
+            urls: urlMap.get(linkId) || []
+        };
+    });
+    
+    const hierarchicalLinks = [];
+    // We already have the nodeIdSet, so we can use it here as well.
+    nodes.forEach(node => {
+        const parts = node.id.toString().split('.');
+        if (parts.length > 1) {
+            const parentId = parts.slice(0, -1).join('.');
+            if (nodeIdSet.has(parentId)) {
+                const relationType = 'sub topic';
+                const linkId = getLinkId(parentId, node.id, relationType);
+                hierarchicalLinks.push({
+                    source: parentId,
+                    target: node.id,
+                    relation: relationType,
+                    type: 'hierarchical',
+                    urls: urlMap.get(linkId) || []
+                });
             }
-        });
-        const allLinks = [...dependencyLinks, ...hierarchicalLinks];
-        return { nodes, links: allLinks };
-    }
+        }
+    });
+
+    const allLinks = [...dependencyLinks, ...hierarchicalLinks];
+
+    // --- START OF FIX ---
+    // Filter the links to only include those where both source and target nodes exist.
+    const validLinks = allLinks.filter(link => {
+        const sourceExists = nodeIdSet.has(link.source);
+        const targetExists = nodeIdSet.has(link.target);
+
+        if (!sourceExists) {
+            console.warn(`Filtering out link because source node '${link.source}' does not exist.`);
+        }
+        if (!targetExists) {
+            console.warn(`Filtering out link because target node '${link.target}' does not exist.`);
+        }
+
+        return sourceExists && targetExists;
+    });
+    // --- END OF FIX ---
+
+    return { nodes, links: validLinks }; // Return the filtered links
+}
 
     // --- Helper Functions (Unchanged) ---
     function getLinkId(sourceId, targetId, relation) { /* ... */ }
