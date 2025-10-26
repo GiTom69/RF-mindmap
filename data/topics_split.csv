@@ -8,14 +8,14 @@ Index,Topic,Description / Key Concepts
 1.6,Antenna Fundamentals,MISSING
 2,RF System Design Parameters,MISSING
 2.1,System-level design,MISSING
-2.1,Link Budget Analysis,Power balance across the communication path.
-2.2,analysis,MISSING
-2.2,Dynamic Range and Linearity,System linearity and compression performance.
-2.3,and performance optimization,MISSING
-2.3,Noise Performance,MISSING
-2.4,Linearity and Interference Robustness,Intermodulation and blocking behavior.
-2.5,Power Efficiency and Thermal Design,Efficiency optimization and thermal management.
-2.6,Impedance Matching and Stability,Stability and impedance transformations.
+2.2,Link Budget Analysis,Power balance across the communication path.
+2.3,analysis,MISSING
+2.4,Dynamic Range and Linearity,System linearity and compression performance.
+2.5,and performance optimization,MISSING
+2.6,Noise Performance,MISSING
+2.7,Linearity and Interference Robustness,Intermodulation and blocking behavior.
+2.8,Power Efficiency and Thermal Design,Efficiency optimization and thermal management.
+2.9,Impedance Matching and Stability,Stability and impedance transformations.
 3,Performance Metrics and Measurements,System performance quantification and testing.
 3.1,Spectral Performance,Bandwidth and emissions characterization.
 3.2,Receiver Performance,MISSING
@@ -39,20 +39,20 @@ Index,Topic,Description / Key Concepts
 5.6,Network-Level Coexistence,Inter-system interference and coexistence.
 6,Advanced Topics,Emerging and research-level areas in RF.
 6.1,MIMO and Beamforming,MISSING
-6.1,Simulation & Modeling,MISSING
+6.2,Simulation & Modeling,MISSING
 6.11,Non-Terrestrial Networks (NTN),MISSING
 6.12,Terahertz & Sub-THz,MISSING
 6.13,Quantum & Secure RF,MISSING
 6.14,Reconfigurable Intelligent Surfaces,MISSING
 6.15,Hardware Nonidealities,MISSING
-6.2,Adaptive Modulation and Coding,MISSING
-6.3,Cognitive Radio,Spectrum sensing and access.
-6.4,Machine Learning for RF,MISSING
-6.5,Radar Systems,MISSING
-6.6,Electronic Warfare,MISSING
-6.7,Interference Management,MISSING
-6.8,RF Sensing & ISAC,Joint radar-comm waveform design.
-6.9,Hardware & Calibration,MISSING
+6.3,Adaptive Modulation and Coding,MISSING
+6.4,Cognitive Radio,Spectrum sensing and access.
+6.5,Machine Learning for RF,MISSING
+6.6,Radar Systems,MISSING
+6.7,Electronic Warfare,MISSING
+6.8,Interference Management,MISSING
+6.9,RF Sensing & ISAC,Joint radar-comm waveform design.
+6.10,Hardware & Calibration,MISSING
 7,RF System Integration and Implementation,Practical realization and manufacturing.
 7.1,PCB Design,MISSING
 7.2,Packaging and Integration,MISSING
@@ -121,23 +121,23 @@ Index,Topic,Description / Key Concepts
 1.5.5.3,WINNER II,MISSING
 1.5.6,Doppler and Mobility,Coherence time and Doppler spread.
 1.6.1,Antenna theory,MISSING
-1.6.1,Antenna Parameters,MISSING
+1.6.2,Antenna Parameters,MISSING
 1.6.1.1,Gain,MISSING
 1.6.1.2,efficiency,MISSING
 1.6.1.3,polarization,MISSING
 1.6.1.4,impedance,MISSING
-1.6.2,Antenna design,MISSING
-1.6.2,Antenna Types,MISSING
+1.6.3,Antenna design,MISSING
+1.6.4,Antenna Types,MISSING
 1.6.2.1,Dipole,MISSING
 1.6.2.2,patch,MISSING
 1.6.2.3,horn,MISSING
 1.6.2.4,Yagi,MISSING
 1.6.2.5,array,MISSING
 1.6.2.6,reflector,MISSING
-1.6.3,Matching and Baluns,Impedance matching for maximum power transfer.
-1.6.4,Radiation Pattern,Beamwidth and sidelobe control.
-1.6.5,Antenna Diversity and MIMO,Spatial diversity and correlation.
-1.6.6,Antenna Measurements,MISSING
+1.6.5,Matching and Baluns,Impedance matching for maximum power transfer.
+1.6.6,Radiation Pattern,Beamwidth and sidelobe control.
+1.6.7,Antenna Diversity and MIMO,Spatial diversity and correlation.
+1.6.8,Antenna Measurements,MISSING
 1.6.6.1,Gain,MISSING
 1.6.6.2,pattern,MISSING
 1.6.6.3,VSWR,MISSING
@@ -153,12 +153,12 @@ Index,Topic,Description / Key Concepts
 2.2.2.3,SFDR,MISSING
 2.2.3,Testing Methods,Two-tone and sweep measurements.
 2.3.1,Noise figure,MISSING
-2.3.1,Noise Figure,Definition and measurement.
-2.3.2,cascaded effects,MISSING
-2.3.2,Thermal Noise,Generated power kTB.
-2.3.3,measurement,MISSING
-2.3.3,Friis Formula,Cascaded NF calculation.
-2.3.4,Measurement Methods,MISSING
+2.3.2,Noise Figure,Definition and measurement.
+2.3.3,cascaded effects,MISSING
+2.3.4,Thermal Noise,Generated power kTB.
+2.3.5,measurement,MISSING
+2.3.6,Friis Formula,Cascaded NF calculation.
+2.3.7,Measurement Methods,MISSING
 2.3.4.1,Y-factor,MISSING
 2.3.4.2,noise diode,MISSING
 2.4.1,Intermodulation Distortion,3rd and 5th order products.
@@ -181,12 +181,12 @@ Index,Topic,Description / Key Concepts
 3.1.3,Harmonics & Spurious,Compliance with spectral limits.
 3.1.4,Phase Noise,Frequency stability and jitter.
 3.2.1,Sensitivity,MISSING
-3.2.1,Sensitivity,Minimum detectable signal.
-3.2.2,selectivity,MISSING
-3.2.2,Selectivity,Adjacent channel rejection.
-3.2.3,blocking,MISSING
-3.2.3,Blocking,Out-of-band interference tolerance.
-3.2.4,Desensitization,In-band interference effects.
+3.2.2,Sensitivity,Minimum detectable signal.
+3.2.3,selectivity,MISSING
+3.2.4,Selectivity,Adjacent channel rejection.
+3.2.5,blocking,MISSING
+3.2.6,Blocking,Out-of-band interference tolerance.
+3.2.7,Desensitization,In-band interference effects.
 3.3.1,BER vs Eb/N0,Performance curves.
 3.3.2,EVM,Error vector magnitude.
 3.3.3,Constellation Analysis,IQ scatter visualization.

@@ -1,9 +1,19 @@
 code tasks :
 - autofill links from youtube playlists - done
+- find ways to easily expand topics
 - search bar
 - modern UI
 - noramal, plaintext display for all the topics
+- clean up redundant pyhton scripts
+- deploy on some cloud
+- bigger spacing
+- split some topics with "compressed" subtopics
+- hierarcial connections should be stronger than logical ones
+- explain missing topics
+- fix duplicate topic indexes
 
 topics tasks:
-- add OPENTAP topics
+- add analog instruments glossary
+- add microwaves 101 glossary
 - hebrew lang support
+- add OPENTAP topics

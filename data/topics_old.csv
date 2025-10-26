@@ -1,0 +1,134 @@
+Index,Topic,Description / Key Concepts
+1,RF Communications Fundamentals,Foundational concepts in RF communication systems.
+1.1,Signal Types,Classification of analog and digital modulation schemes.
+1.1.1,Amplitude Modulation (AM),Basic analog modulation varying carrier amplitude.
+1.1.2,Frequency Modulation (FM),Frequency deviation based analog modulation.
+1.1.3,Phase Modulation (PM),Phase-based analog modulation scheme.
+1.1.4,SSB / DSB-SC / VSB,Sideband modulation techniques and efficiency.
+1.1.5,Bandwidth Efficiency and Demodulation,Trade-offs and demodulation principles.
+1.1.6,ASK / FSK / PSK / QAM,Core digital modulation types.
+1.1.7,OFDM / FBMC / UFMC,Multicarrier modulation schemes.
+1.1.8,Pulse Shaping Filters,Raised Cosine and SRRC filtering.
+1.1.9,IQ Representation and Complex Envelope,Baseband/passband modeling concepts.
+1.1.10,Up/Down Conversion,Frequency translation and mixing operations.
+1.2,Frequency Spectrum,Organization and use of frequency bands.
+1.2.1,HF / VHF / UHF / SHF / EHF,Band definitions and characteristics.
+1.2.2,HF Applications,Long-range communications and propagation.
+1.2.3,VHF Applications,Broadcast and airband communications.
+1.2.4,UHF Applications,Cellular, Wi-Fi systems.
+1.2.5,SHF/EHF Applications,Radar and satellite systems.
+1.2.6,Regulatory Bodies,ITU, ETSI, FCC coordination.
+1.2.7,Frequency Reuse and Planning,Reuse factors and guard bands.
+1.3,Modulation and Demodulation Concepts,Signal synchronization and recovery principles.
+1.3.1,Carrier Synchronization,PLLs and Costas loops.
+1.3.2,Symbol Timing Recovery,Gardner and Mueller & Müller algorithms.
+1.3.3,Equalization,Linear, DFE, and adaptive methods.
+1.3.4,Error Detection,CRC, parity, checksum.
+1.3.5,Spectral Efficiency,Trade-offs between bits/Hz and robustness.
+1.4,RF Front-End Architecture,Signal chain from antenna to ADC/DAC.
+1.4.1,Transmitter Chain,DAC → Mixer → PA → Filter → Antenna.
+1.4.2,Receiver Chain,Antenna → LNA → Mixer → Filter → ADC.
+1.4.3,LNA,Noise figure optimization and impedance matching.
+1.4.4,Mixer,LO leakage and image rejection.
+1.4.5,Filters,BPF, LPF, SAW/BAW design.
+1.4.6,Power Amplifiers,Efficiency, linearity, and thermal effects.
+1.4.7,Architectures,Direct conversion, superheterodyne, zero-IF.
+1.4.8,Testing,Gain flatness, NF, linearity, and S11.
+1.5,Propagation and Channel Fundamentals,Mechanisms of RF signal transmission and fading.
+1.5.1,Free-space and Reflection,Line-of-sight and multipath.
+1.5.2,Fresnel Zones and Diffraction,Path clearance and shadowing.
+1.5.3,Ground and Sky Wave,Long-distance and atmospheric effects.
+1.5.4,Atmospheric and Rain Attenuation,Frequency-dependent losses (ITU models).
+1.5.5,Urban and Indoor Models,COST 231, Hata, WINNER II.
+1.5.6,Doppler and Mobility,Coherence time and Doppler spread.
+1.6,Antenna Fundamentals,Antenna theory, design, and measurements.
+1.6.1,Antenna Parameters,Gain, efficiency, polarization, impedance.
+1.6.2,Antenna Types,Dipole, patch, horn, Yagi, array, reflector.
+1.6.3,Matching and Baluns,Impedance matching for maximum power transfer.
+1.6.4,Radiation Pattern,Beamwidth and sidelobe control.
+1.6.5,Antenna Diversity and MIMO,Spatial diversity and correlation.
+1.6.6,Antenna Measurements,Gain, pattern, VSWR, and S11 testing.
+2,RF System Design Parameters,System-level design, analysis, and performance optimization.
+2.1,Link Budget Analysis,Power balance across the communication path.
+2.1.1,Core Formula,Pr = Pt + Gt + Gr − Lp − Lsys.
+2.1.2,Free Space Path Loss (FSPL),Lfs = 32.4 + 20 log d + 20 log f.
+2.1.3,Fade Margin,Design margin for reliability.
+2.1.4,Link Tools,Spreadsheet and MATLAB simulations.
+2.2,Dynamic Range and Linearity,System linearity and compression performance.
+2.2.1,Receiver Dynamic Range,Difference between MDS and max input.
+2.2.2,Nonlinearity Metrics,P1dB, IP3, SFDR.
+2.2.3,Testing Methods,Two-tone and sweep measurements.
+2.3,Noise Performance,Noise figure, cascaded effects, measurement.
+2.3.1,Noise Figure,Definition and measurement.
+2.3.2,Thermal Noise,Generated power kTB.
+2.3.3,Friis Formula,Cascaded NF calculation.
+2.3.4,Measurement Methods,Y-factor, noise diode.
+2.4,Linearity and Interference Robustness,Intermodulation and blocking behavior.
+2.4.1,Intermodulation Distortion,3rd and 5th order products.
+2.4.2,Blocking Performance,Adjacent channel immunity.
+2.4.3,ACPR Measurement,Output spectral purity.
+2.5,Power Efficiency and Thermal Design,Efficiency optimization and thermal management.
+2.5.1,PA Efficiency,PAE and drain efficiency.
+2.5.2,Thermal Management,Heat sinks and derating.
+2.5.3,Envelope Tracking,Doherty and supply modulation.
+2.6,Impedance Matching and Stability,Stability and impedance transformations.
+2.6.1,Matching Networks,L, π, and T network design.
+2.6.2,Smith Chart,Visualization of impedance and reflection.
+2.6.3,Stability Criteria,Rollet’s K, μ-factor.
+2.6.4,Stability Circles,Feedback and oscillation control.
+3,Performance Metrics and Measurements,System performance quantification and testing.
+3.1,Spectral Performance,Bandwidth and emissions characterization.
+3.1.1,Occupied Bandwidth (OBW),99% power bandwidth.
+3.1.2,ACPR/ACLR,Adjacent channel leakage.
+3.1.3,Harmonics & Spurious,Compliance with spectral limits.
+3.1.4,Phase Noise,Frequency stability and jitter.
+3.2,Receiver Performance,Sensitivity, selectivity, blocking.
+3.2.1,Sensitivity,Minimum detectable signal.
+3.2.2,Selectivity,Adjacent channel rejection.
+3.2.3,Blocking,Out-of-band interference tolerance.
+3.2.4,Desensitization,In-band interference effects.
+3.3,Bit-Level Metrics,Bit error and vector error measurements.
+3.3.1,BER vs Eb/N0,Performance curves.
+3.3.2,EVM,Error vector magnitude.
+3.3.3,Constellation Analysis,IQ scatter visualization.
+3.3.4,Eye Diagram,Timing and jitter analysis.
+3.4,System-Level Metrics,End-to-end system KPIs.
+3.4.1,Throughput,Measured data rate.
+3.4.2,Latency and Jitter,Timing consistency.
+3.4.3,Reliability,PER, FER, link availability.
+3.5,Nonlinear Distortion Metrics,AM-AM, AM-PM, IMD.
+3.6,Time-Variant Metrics,Group delay, envelope delay distortion.
+4,RF Testing and Validation,Verification and measurement environments.
+4.1,Test Equipment,Spectrum analyzer, VNA, generator, oscilloscope.
+4.2,Test Environments,Anechoic, conducted, OTA, environmental.
+4.3,Automation and Control,SCPI, PyVISA, LabVIEW, HIL.
+4.4,Calibration and Verification,Instrument calibration and traceability.
+4.5,OTA MIMO/mmWave Testing,Beamforming, OTA chamber, channel sounding.
+4.6,EMC/EMI Testing,Regulatory emissions and susceptibility testing.
+5,Communication System Evaluation,System-level testing and field validation.
+5.1,Link-Level Simulation,Baseband modeling and BER validation.
+5.2,System-Level Testing,KPI and multi-user testing.
+5.3,Standards Compliance,3GPP, IEEE, FCC, ETSI conformance.
+5.4,Field Measurements,Drive testing, spectrum scanning.
+5.5,Reliability and Maintenance,MTBF, telemetry, predictive maintenance.
+5.6,Network-Level Coexistence,Inter-system interference and coexistence.
+6,Advanced Topics,Emerging and research-level areas in RF.
+6.1,MIMO and Beamforming,Spatial multiplexing, CSI, beamforming.
+6.2,Adaptive Modulation and Coding,CQI, HARQ, LDPC, Turbo, Polar.
+6.3,Cognitive Radio,Spectrum sensing and access.
+6.4,Machine Learning for RF,Modulation recognition, channel prediction.
+6.5,Radar Systems,Pulse, FMCW, MIMO radar, CFAR.
+6.6,Electronic Warfare,ES, EA, EP, jamming, protection.
+6.7,Interference Management,Guard bands, filtering, cancellation.
+6.8,RF Sensing & ISAC,Joint radar-comm waveform design.
+6.9,Hardware & Calibration,IQ imbalance, DPD, synchronization.
+6.10,Simulation & Modeling,Channel emulation, DSP, hardware-in-loop.
+6.11,Non-Terrestrial Networks (NTN),LEO/GEO links, Doppler, rain fade.
+6.12,Terahertz & Sub-THz,6G, short-range, spectroscopy.
+6.13,Quantum & Secure RF,Physical-layer security, LPI, QKD.
+6.14,Reconfigurable Intelligent Surfaces,RIS design, beam steering.
+6.15,Hardware Nonidealities,Phase noise, LO leakage, compensation.
+7,RF System Integration and Implementation,Practical realization and manufacturing.
+7.1,PCB Design,Microstrip, CPW, grounding, shielding.
+7.2,Packaging and Integration,MMICs, SiP, SoC, thermal design.
+7.3,Measurement Uncertainty,Error budgets, repeatability, statistical validation.

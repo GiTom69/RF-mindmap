@@ -104,11 +104,6 @@ GEMINI_API_KEY=your_gemini_api_key
 
 ### 4. Run Scripts (Optional)
 
-* **Enrich URLs Automatically**
-
-  ```bash
-  python scripts/enrich_urls.py
-  ```
 * **Check Model Limits**
 
   ```bash
@@ -118,6 +113,11 @@ GEMINI_API_KEY=your_gemini_api_key
 
   ```bash
   python scripts/calculate_tokens.py
+  ```
+* **Enrich URLs Automatically**
+
+  ```bash
+  python scripts/enrich_urls.py
   ```
 
 ---
