@@ -7,7 +7,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const notesToggle = document.getElementById('notes-toggle');
     const searchInput = document.getElementById('search-input');
     const suggestionsContainer = document.getElementById('search-suggestions');
+
+    const helpButton = document.getElementById('help-button');
+    const helpModal = document.getElementById('help-modal-overlay');    
+    const helpModalClose = document.getElementById('help-modal-close');
     
+    helpButton.addEventListener('click', () => {
+        helpModal.classList.remove('hidden');
+    });
+
+    helpModalClose.addEventListener('click', () => {
+        helpModal.classList.add('hidden');
+    });
+
+    // Close modal if user clicks on the dark overlay
+    helpModal.addEventListener('click', (event) => {
+        if (event.target === helpModal) {
+            helpModal.classList.add('hidden');
+        }
+    });
+
     let currentGraphData = null;
     let svg, zoom, width, height; // D3 variables for global access
 

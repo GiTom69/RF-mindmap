@@ -263,6 +263,85 @@
             color: #a0e0ff;
             font-style: italic;
         }
+        /* --- Help Button Styling --- */
+        #help-button {
+        position: fixed;
+        top: 20px;
+        left: 330px; /* Position it to the right of the search bar */
+        z-index: 1001;
+        width: 42px;
+        height: 42px;
+        background-color: #444;
+        color: #eee;
+        border: 1px solid #eee;
+        border-radius: 50%;
+        font-size: 24px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    #help-button:hover {
+        background-color: #5E5E5E;
+    }
+
+    /* --- Modal Styling --- */
+    #help-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 2000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #help-modal-overlay.hidden {
+        display: none;
+    }
+
+    #help-modal-content {
+        background: #444;
+        color: #eee;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 800px;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #help-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #666;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+    #help-modal-header h2 {
+        margin: 0;
+    }
+
+    #help-modal-close {
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #help-modal-body {
+        overflow-y: auto;
+    }
+
+    /* Basic styling for the content inside the modal */
+    #help-modal-body h3 { color: #a0e0ff; }
+    #help-modal-body code { background: #333; padding: 2px 5px; border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -299,5 +378,23 @@
     </div>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="main.js"></script>
+        
+    <!-- Add a Help button to the top-left, next to the search bar -->
+    <div id="help-button">?</div>
+
+    <!-- The Modal Structure (hidden by default) -->
+    <div id="help-modal-overlay" class="hidden">
+        <div id="help-modal-content">
+            <div id="help-modal-header">
+                <h2>User Guide</h2>
+                <span id="help-modal-close">&times;</span>
+            </div>
+            <div id="help-modal-body">
+                <!-- The Markdown content from Phase 1 will be converted to HTML and placed here -->
+            </div>
+        </div>
+    </div>
+
+    
   </body>
 </html>
