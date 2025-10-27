@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Data Loading & Initialization ---
     // MODIFIED: Load only the single, complete JSON data file.
-    d3.json("d3_graph_data.json").then(graphData => {
+    d3.json("../data/d3_graph_data.json").then(graphData => {
         // The data is already in the correct format with URLs embedded.
         currentGraphData = graphData; 
         renderD3MindMap(currentGraphData);
