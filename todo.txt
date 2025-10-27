@@ -1,7 +1,7 @@
 code tasks :
 - autofill links from youtube playlists - done
 - find ways to easily expand topics
-- search bar
+- search bar - done
 - modern UI
 - noramal, plaintext display for all the topics
 - clean up redundant pyhton scripts
@@ -10,10 +10,16 @@ code tasks :
 - split some topics with "compressed" subtopics
 - hierarcial connections should be stronger than logical ones
 - explain missing topics
-- fix duplicate topic indexes
+- fix duplicate topic indexes - done (manually)
+- make nodes less conjested, more space
+- merge all or most csvs into fat JSON?
+- add user guide / how to
+- add button to find additional sources for a topics (on button press)?
+- generate learning path
 
 topics tasks:
-- add analog instruments glossary
-- add microwaves 101 glossary
+- add glossaries to data
+- add acronyms to data
 - hebrew lang support
 - add OPENTAP topics
+- review ew video
