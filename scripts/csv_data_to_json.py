@@ -1,6 +1,7 @@
 import pandas as pd
 import json
 from pathlib import Path
+from collections import defaultdict
 
 def convert_csv_to_d3_json():
     """
@@ -13,13 +14,27 @@ def convert_csv_to_d3_json():
     TOPICS_FILE = DATA_DIR / "topics.csv"
     LINKS_FILE = DATA_DIR / 'links.csv'
     OUTPUT_FILE = DATA_DIR / 'd3_graph_data.json'
+    URLS_FILE = DATA_DIR / 'urls.csv'  # NEW: File containing URLs to embed
 
     try:
-        # Step 1: Read CSV files into pandas DataFrames
+        # --- Step 1: Read all source CSV files ---
         topics_df = pd.read_csv(TOPICS_FILE)
         links_df = pd.read_csv(LINKS_FILE)
+        
+        # --- NEW: Process URLs into a lookup map ---
+        url_map = defaultdict(list)
+        try:
+            urls_df = pd.read_csv(URLS_FILE)
+            # Ensure identifiers are strings for consistent matching
+            urls_df['Identifier'] = urls_df['Identifier'].astype(str)
+            for index, row in urls_df.iterrows():
+                url_map[row['Identifier']].append(row['URL'])
+            print(f"Successfully processed {len(urls_df)} entries from {URLS_FILE}")
+        except FileNotFoundError:
+            print(f"Warning: {URLS_FILE} not found. No URLs will be added to the graph data.")
+        # --- END OF NEW SECTION ---
 
-        # Step 2: Process nodes from topics.csv
+        # --- Step 2: Process nodes and embed URLs ---
         topics_df['Index'] = topics_df['Index'].astype(str)
         nodes_df = topics_df[['Index', 'Topic', 'Description / Key Concepts']].rename(columns={
             'Index': 'id',
@@ -28,7 +43,11 @@ def convert_csv_to_d3_json():
         })
         nodes_list = nodes_df.to_dict(orient='records')
 
-        # Step 3: Process explicit links from links.csv
+        # Add the 'urls' key to each node object
+        for node in nodes_list:
+            node['urls'] = url_map.get(node['id'], [])
+
+        # --- Step 3: Process links (explicit and hierarchical) ---
         links_df['Source Index'] = links_df['Source Index'].astype(str)
         links_df['Target Index'] = links_df['Target Index'].astype(str)
         explicit_links_df = links_df[['Source Index', 'Target Index', 'Relation Type']].rename(columns={
@@ -37,21 +56,13 @@ def convert_csv_to_d3_json():
             'Relation Type': 'type'
         })
         links_list = explicit_links_df.to_dict(orient='records')
-
-        # --- NEW: Generate Hierarchical Links ---
-        print("Generating hierarchical 'sub topic' links...")
+        
         hierarchical_links = []
-        # Create a set of all valid node IDs for fast parent lookups
         node_id_set = set(nodes_df['id'])
-
         for node in nodes_list:
             child_id = node['id']
-            # A child node must have a '.' in its ID
             if '.' in child_id:
-                # Calculate parent ID by removing the last segment
                 parent_id = '.'.join(child_id.split('.')[:-1])
-                
-                # Verify the calculated parent ID actually exists before creating a link
                 if parent_id in node_id_set:
                     hierarchical_links.append({
                         'source': parent_id,
@@ -59,13 +70,16 @@ def convert_csv_to_d3_json():
                         'type': 'sub topic'
                     })
         
-        print(f"Generated {len(hierarchical_links)} hierarchical links.")
-
-        # Combine the explicit links from links.csv with the new hierarchical ones
         all_links = links_list + hierarchical_links
+        
+        # --- NEW: Embed URLs into each link object ---
+        for link in all_links:
+            # Reconstruct the composite ID format used in urls.csv
+            link_identifier = f"{link['source']}|{link['target']}|{link['type']}"
+            link['urls'] = url_map.get(link_identifier, [])
         # --- END OF NEW SECTION ---
 
-        # Step 4: Combine into a single D3.js-compatible JSON object
+        # Step 4: Combine into the final JSON object
         d3_graph_data = {
             'nodes': nodes_list,
             'links': all_links
@@ -75,10 +89,10 @@ def convert_csv_to_d3_json():
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
             json.dump(d3_graph_data, f, ensure_ascii=False, indent=4)
         
-        print(f"Successfully converted data and saved to {OUTPUT_FILE}")
+        print(f"Successfully merged all data and saved to {OUTPUT_FILE}")
 
     except FileNotFoundError as e:
-        print(f"Error: Could not find the file - {e}. Please ensure that '{TOPICS_FILE}' and '{LINKS_FILE}' are in the correct directory.")
+        print(f"Error: Could not find a required file - {e}. Please ensure '{TOPICS_FILE}' and '{LINKS_FILE}' exist.")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 

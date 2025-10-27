@@ -25,13 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Data Loading & Initialization ---
-    // MODIFIED: Load the new single JSON file and the URLs CSV.
-    Promise.all([
-        d3.json("../data/d3_graph_data.json"),
-        d3.csv("../data/urls.csv")
-    ]).then(([graphData, urls]) => {
-        // MODIFIED: Merge URLs into the graph data instead of building the graph from scratch.
-        currentGraphData = mergeUrlsIntoGraph(graphData, urls);
+    // MODIFIED: Load only the single, complete JSON data file.
+    d3.json("d3_graph_data.json").then(graphData => {
+        // The data is already in the correct format with URLs embedded.
+        currentGraphData = graphData; 
         renderD3MindMap(currentGraphData);
         initializeSearch();
     }).catch(error => {
@@ -43,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         searchInput.addEventListener('input', () => {
             const query = searchInput.value;
             if (query.length > 1) {
-                // UPDATED: Search nodes based on the 'name' property.
                 const results = fuzzySearch(query, currentGraphData.nodes);
                 displaySuggestions(results.slice(0, 10));
             } else {
@@ -61,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function fuzzySearch(query, nodes) {
         const lowerCaseQuery = query.toLowerCase();
         return nodes.map(node => {
-            // UPDATED: Match against 'name' instead of 'title'.
             const lowerCaseTitle = node.name.toLowerCase();
             const score = calculateMatchScore(lowerCaseTitle, lowerCaseQuery);
             return { node, score };
@@ -95,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         results.forEach(result => {
             const item = document.createElement('div');
             item.className = 'suggestion-item';
-            // UPDATED: Display the 'name' property.
             item.textContent = result.node.name;
             item.addEventListener('click', () => {
                 focusOnNode(result.node);
@@ -111,53 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
         suggestionsContainer.innerHTML = '';
     }
 
-    // --- Data Transformation ---
-    // NEW/REFACTORED: This function now merges URL data into the pre-structured graph.
-function mergeUrlsIntoGraph(graphData, urlsData) {
-    const urlMap = new Map();
-    urlsData.forEach(entry => {
-        if (!urlMap.has(entry.Identifier)) {
-            urlMap.set(entry.Identifier, []);
-        }
-        urlMap.get(entry.Identifier).push(entry.URL);
-    });
-
-    // --- START OF FIX ---
-    // Create a Set of all valid node IDs for quick, efficient lookups.
-    const nodeIdSet = new Set(graphData.nodes.map(n => n.id));
-
-    // Filter the links to only include those where both source and target nodes actually exist.
-    const validLinks = graphData.links.filter(link => {
-        const sourceExists = nodeIdSet.has(link.source);
-        const targetExists = nodeIdSet.has(link.target);
-
-        // This provides a helpful warning in the console for debugging the JSON file.
-        if (!sourceExists || !targetExists) {
-            console.warn(`Filtering out invalid link: ${link.source} -> ${link.target}. One or both nodes not found.`);
-        }
-
-        return sourceExists && targetExists;
-    });
-
-        // Add URLs to each node
-        graphData.nodes.forEach(node => {
-            node.urls = urlMap.get(node.id) || [];
-        });
-
-        // Add URLs to each link
-        graphData.links.forEach(link => {
-            // UPDATED: Use 'type' property for generating link ID.
-            const linkId = getLinkId(link.source, link.target, link.type);
-            link.urls = urlMap.get(linkId) || [];
-        });
-        
-        // The hierarchical link generation is no longer needed as all links come from the JSON.
-        // The link validation is also no longer needed if the Python script generates a clean file.
-        return graphData;
-    }
+    // REMOVED: The mergeUrlsIntoGraph function is no longer needed.
 
     // --- Helper Functions ---
-    // UPDATED: The third parameter is now 'type' to match the JSON property.
     function getLinkId(sourceId, targetId, type) {
         const sId = typeof sourceId === 'object' ? sourceId.id : sourceId;
         const tId = typeof targetId === 'object' ? targetId.id : targetId;
@@ -177,7 +127,6 @@ function mergeUrlsIntoGraph(graphData, urlsData) {
         });
         graph.links.forEach(link => {
             if (link.urls && link.urls.length > 0) {
-                // UPDATED: Use link.type to generate the identifier.
                 const linkId = getLinkId(link.source, link.target, link.type);
                  link.urls.forEach(url => {
                     csvContent += `${linkId},${escapeCsv(url)}\n`;
@@ -274,15 +223,12 @@ function mergeUrlsIntoGraph(graphData, urlsData) {
             .force("center", d3.forceCenter(width / 2, height / 2))
             .force("collide", d3.forceCollide().radius(d => getNodeStyle(d.id).radius + 60));
 
-        // --- START OF MODIFICATION ---
         const link = g.append("g").attr("class", "links").selectAll("line").data(graph.links)
             .join("line")
             .attr("class", "link")
             .attr("stroke-width", 2)
-            // Apply a dash style to all links that are NOT 'sub topic'
             .attr("stroke-dasharray", d => (d.type === 'sub topic' ? null : "5,5"))
             .on("click", (event, d) => { event.stopPropagation(); showUrlManager(d, 'Link'); });
-        // --- END OF MODIFICATION ---
 
         const node = g.append("g").attr("class", "nodes").selectAll("g").data(graph.nodes)
             .join("g").attr("class", d => `node node-id-${d.id.toString().replace(/\./g, '-')}`)
@@ -323,10 +269,8 @@ function mergeUrlsIntoGraph(graphData, urlsData) {
         
         let title;
         if (type === 'Node') {
-            // UPDATED: Use 'name' property for node title.
             title = element.name;
         } else {
-            // UPDATED: Use 'name' for source/target and 'type' for relation text.
             title = `${element.source.name} <span style="color: #a0e0ff; font-weight: normal;">[${element.type}]</span> ${element.target.name}`;
         }
         
@@ -359,7 +303,6 @@ function mergeUrlsIntoGraph(graphData, urlsData) {
                     const li = document.createElement('li');
                     const button = document.createElement('button');
                     button.className = 'related-topic-button';
-                    // UPDATED: Use 'name' and 'type' for button text.
                     button.innerHTML = isSource ? `<span class="relation">[${link.type}] →</span> ${otherNode.name}` : `<span class="relation">← [${link.type}]</span> ${otherNode.name}`;
                     button.onclick = () => {
                         focusOnNode(otherNode);
