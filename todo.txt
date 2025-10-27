@@ -6,13 +6,12 @@ code tasks :
 - noramal, plaintext display for all the topics
 - clean up redundant pyhton scripts
 - deploy on some cloud
-- bigger spacing
 - split some topics with "compressed" subtopics
 - hierarcial connections should be stronger than logical ones
 - explain missing topics
 - fix duplicate topic indexes - done (manually)
-- make nodes less conjested, more space
-- merge all or most csvs into fat JSON?
+- make nodes less conjested, more space - done?
+- merge all or most csvs into fat JSON - done
 - add user guide / how to
 - add button to find additional sources for a topics (on button press)?
 - generate learning path
