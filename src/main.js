@@ -25,15 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Data Loading & Initialization ---
+    // MODIFIED: Load the new single JSON file and the URLs CSV.
     Promise.all([
-        d3.csv("../data/topics.csv"),
-        d3.csv("../data/links.csv"),
+        d3.json("../data/d3_graph_data.json"),
         d3.csv("../data/urls.csv")
-    ]).then(([topics, links, urls]) => {
-        const validTopics = topics.filter(t => t.Index && t.Index.trim() !== '');
-        currentGraphData = createD3Graph(validTopics, links, urls);
+    ]).then(([graphData, urls]) => {
+        // MODIFIED: Merge URLs into the graph data instead of building the graph from scratch.
+        currentGraphData = mergeUrlsIntoGraph(graphData, urls);
         renderD3MindMap(currentGraphData);
-        // Activate search functionality once data is loaded
         initializeSearch();
     }).catch(error => {
         console.error("Error loading or parsing data:", error);
@@ -44,14 +43,14 @@ document.addEventListener("DOMContentLoaded", () => {
         searchInput.addEventListener('input', () => {
             const query = searchInput.value;
             if (query.length > 1) {
+                // UPDATED: Search nodes based on the 'name' property.
                 const results = fuzzySearch(query, currentGraphData.nodes);
-                displaySuggestions(results.slice(0, 10)); // Show top 10 results
+                displaySuggestions(results.slice(0, 10));
             } else {
                 clearSuggestions();
             }
         });
 
-        // Hide suggestions when clicking outside
         document.addEventListener('click', (event) => {
             if (!document.getElementById('search-container').contains(event.target)) {
                 clearSuggestions();
@@ -62,7 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function fuzzySearch(query, nodes) {
         const lowerCaseQuery = query.toLowerCase();
         return nodes.map(node => {
-            const lowerCaseTitle = node.title.toLowerCase();
+            // UPDATED: Match against 'name' instead of 'title'.
+            const lowerCaseTitle = node.name.toLowerCase();
             const score = calculateMatchScore(lowerCaseTitle, lowerCaseQuery);
             return { node, score };
         })
@@ -77,8 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         while (queryIndex < query.length && textIndex < text.length) {
             if (text[textIndex] === query[queryIndex]) {
-                score += 1; // Base score for a match
-                // Bonus for consecutive matches
+                score += 1;
                 if (queryIndex > 0 && text[textIndex - 1] === query[queryIndex - 1]) {
                     score += 2;
                 }
@@ -87,14 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
             textIndex++;
         }
         
-        // Only consider it a match if all characters of the query were found
-        if (queryIndex !== query.length) {
-            return 0;
-        }
-
-        // Higher score for shorter (more precise) matches
-        score = score / text.length;
-        return score;
+        if (queryIndex !== query.length) return 0;
+        return score / text.length;
     }
 
     function displaySuggestions(results) {
@@ -102,7 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
         results.forEach(result => {
             const item = document.createElement('div');
             item.className = 'suggestion-item';
-            item.textContent = result.node.title;
+            // UPDATED: Display the 'name' property.
+            item.textContent = result.node.name;
             item.addEventListener('click', () => {
                 focusOnNode(result.node);
                 showUrlManager(result.node, 'Node');
@@ -118,71 +112,56 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- Data Transformation ---
-    function createD3Graph(topics, links, urlsData) {
-        const urlMap = new Map();
-        urlsData.forEach(entry => {
-            if (!urlMap.has(entry.Identifier)) {
-                urlMap.set(entry.Identifier, []);
-            }
-            urlMap.get(entry.Identifier).push(entry.URL);
+    // NEW/REFACTORED: This function now merges URL data into the pre-structured graph.
+function mergeUrlsIntoGraph(graphData, urlsData) {
+    const urlMap = new Map();
+    urlsData.forEach(entry => {
+        if (!urlMap.has(entry.Identifier)) {
+            urlMap.set(entry.Identifier, []);
+        }
+        urlMap.get(entry.Identifier).push(entry.URL);
+    });
+
+    // --- START OF FIX ---
+    // Create a Set of all valid node IDs for quick, efficient lookups.
+    const nodeIdSet = new Set(graphData.nodes.map(n => n.id));
+
+    // Filter the links to only include those where both source and target nodes actually exist.
+    const validLinks = graphData.links.filter(link => {
+        const sourceExists = nodeIdSet.has(link.source);
+        const targetExists = nodeIdSet.has(link.target);
+
+        // This provides a helpful warning in the console for debugging the JSON file.
+        if (!sourceExists || !targetExists) {
+            console.warn(`Filtering out invalid link: ${link.source} -> ${link.target}. One or both nodes not found.`);
+        }
+
+        return sourceExists && targetExists;
+    });
+
+        // Add URLs to each node
+        graphData.nodes.forEach(node => {
+            node.urls = urlMap.get(node.id) || [];
         });
 
-        const nodes = topics.map(topic => ({
-            id: topic.Index,
-            title: topic.Topic,
-            description: topic['Description / Key Concepts'],
-            urls: urlMap.get(topic.Index) || []
-        }));
-
-        const nodeIdSet = new Set(nodes.map(n => n.id));
-
-        const dependencyLinks = links.map(link => {
-            const linkId = getLinkId(link['Source Index'], link['Target Index'], link['Relation Type']);
-            return {
-                source: link['Source Index'],
-                target: link['Target Index'],
-                relation: link['Relation Type'],
-                type: 'dependency',
-                urls: urlMap.get(linkId) || []
-            };
+        // Add URLs to each link
+        graphData.links.forEach(link => {
+            // UPDATED: Use 'type' property for generating link ID.
+            const linkId = getLinkId(link.source, link.target, link.type);
+            link.urls = urlMap.get(linkId) || [];
         });
         
-        const hierarchicalLinks = [];
-        nodes.forEach(node => {
-            const parts = node.id.toString().split('.');
-            if (parts.length > 1) {
-                const parentId = parts.slice(0, -1).join('.');
-                if (nodeIdSet.has(parentId)) {
-                    const relationType = 'sub topic';
-                    const linkId = getLinkId(parentId, node.id, relationType);
-                    hierarchicalLinks.push({
-                        source: parentId,
-                        target: node.id,
-                        relation: relationType,
-                        type: 'hierarchical',
-                        urls: urlMap.get(linkId) || []
-                    });
-                }
-            }
-        });
-
-        const allLinks = [...dependencyLinks, ...hierarchicalLinks];
-        const validLinks = allLinks.filter(link => {
-            const sourceExists = nodeIdSet.has(link.source);
-            const targetExists = nodeIdSet.has(link.target);
-            if (!sourceExists) console.warn(`Filtering link: source node '${link.source}' not found.`);
-            if (!targetExists) console.warn(`Filtering link: target node '${link.target}' not found.`);
-            return sourceExists && targetExists;
-        });
-
-        return { nodes, links: validLinks };
+        // The hierarchical link generation is no longer needed as all links come from the JSON.
+        // The link validation is also no longer needed if the Python script generates a clean file.
+        return graphData;
     }
 
     // --- Helper Functions ---
-    function getLinkId(sourceId, targetId, relation) {
+    // UPDATED: The third parameter is now 'type' to match the JSON property.
+    function getLinkId(sourceId, targetId, type) {
         const sId = typeof sourceId === 'object' ? sourceId.id : sourceId;
         const tId = typeof targetId === 'object' ? targetId.id : targetId;
-        return `${sId}|${tId}|${relation}`;
+        return `${sId}|${tId}|${type}`;
     }
     
     function saveUrlsToCsv(graph) {
@@ -198,7 +177,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         graph.links.forEach(link => {
             if (link.urls && link.urls.length > 0) {
-                const linkId = getLinkId(link.source, link.target, link.relation);
+                // UPDATED: Use link.type to generate the identifier.
+                const linkId = getLinkId(link.source, link.target, link.type);
                  link.urls.forEach(url => {
                     csvContent += `${linkId},${escapeCsv(url)}\n`;
                 });
@@ -245,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- D3 & UI Interaction ---
     function focusOnNode(targetNode) {
         if (!targetNode.x || !targetNode.y) {
-            console.warn("focusOnNode called on a node without coordinates. This can happen if the simulation hasn't run yet.", targetNode);
+            console.warn("focusOnNode called on a node without coordinates.", targetNode);
             return;
         }
         const safeId = targetNode.id.toString().replace(/\./g, '-');
@@ -287,21 +267,22 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         
         const g = svg.append("g");
-
-        // --- START OF LAYOUT CHANGES ---
+        
         const simulation = d3.forceSimulation(graph.nodes)
-            // 1. Increase link distance to push connected nodes further apart
             .force("link", d3.forceLink(graph.links).id(d => d.id).distance(200))
-            // 2. Increase repulsion strength to spread out all nodes
             .force("charge", d3.forceManyBody().strength(-800))
             .force("center", d3.forceCenter(width / 2, height / 2))
-            // 3. Add collision detection to prevent nodes and text from overlapping
             .force("collide", d3.forceCollide().radius(d => getNodeStyle(d.id).radius + 60));
-        // --- END OF LAYOUT CHANGES ---
 
+        // --- START OF MODIFICATION ---
         const link = g.append("g").attr("class", "links").selectAll("line").data(graph.links)
-            .join("line").attr("class", d => `link ${d.type}`).attr("stroke-width", 2)
+            .join("line")
+            .attr("class", "link")
+            .attr("stroke-width", 2)
+            // Apply a dash style to all links that are NOT 'sub topic'
+            .attr("stroke-dasharray", d => (d.type === 'sub topic' ? null : "5,5"))
             .on("click", (event, d) => { event.stopPropagation(); showUrlManager(d, 'Link'); });
+        // --- END OF MODIFICATION ---
 
         const node = g.append("g").attr("class", "nodes").selectAll("g").data(graph.nodes)
             .join("g").attr("class", d => `node node-id-${d.id.toString().replace(/\./g, '-')}`)
@@ -314,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .attr("stroke", d => getNodeStyle(d.id).stroke)
             .attr("stroke-width", d => getNodeStyle(d.id).strokeWidth);
 
-        node.append("text").text(d => d.title).attr("x", d => getNodeStyle(d.id).radius + 5).attr("y", 3);
+        node.append("text").text(d => d.name).attr("x", d => getNodeStyle(d.id).radius + 5).attr("y", 3);
         node.append("title").text(d => d.description);
 
         simulation.on("tick", () => {
@@ -342,9 +323,11 @@ document.addEventListener("DOMContentLoaded", () => {
         
         let title;
         if (type === 'Node') {
-            title = element.title;
+            // UPDATED: Use 'name' property for node title.
+            title = element.name;
         } else {
-            title = `${element.source.title} <span style="color: #a0e0ff; font-weight: normal;">[${element.relation}]</span> ${element.target.title}`;
+            // UPDATED: Use 'name' for source/target and 'type' for relation text.
+            title = `${element.source.name} <span style="color: #a0e0ff; font-weight: normal;">[${element.type}]</span> ${element.target.name}`;
         }
         
         const h3 = document.createElement('h3');
@@ -376,7 +359,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     const li = document.createElement('li');
                     const button = document.createElement('button');
                     button.className = 'related-topic-button';
-                    button.innerHTML = isSource ? `<span class="relation">[${link.relation}] →</span> ${otherNode.title}` : `<span class="relation">← [${link.relation}]</span> ${otherNode.title}`;
+                    // UPDATED: Use 'name' and 'type' for button text.
+                    button.innerHTML = isSource ? `<span class="relation">[${link.type}] →</span> ${otherNode.name}` : `<span class="relation">← [${link.type}]</span> ${otherNode.name}`;
                     button.onclick = () => {
                         focusOnNode(otherNode);
                         showUrlManager(otherNode, 'Node');
