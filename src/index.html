@@ -35,6 +35,50 @@
             background-color: #f0f0f0;
         }
 
+        /* --- NEW: Search Bar Styling --- */
+        #search-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001; /* Above notes section */
+            width: 300px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #444;
+            border: 1px solid #eee;
+            color: #eee;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        #search-suggestions {
+            background-color: #444;
+            border: 1px solid #eee;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            color: #eee;
+            border-bottom: 1px solid #555;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background-color: #5E5E5E;
+        }
+
         /* --- Mind Map Element Styling --- */
         .node {
             cursor: pointer;
@@ -94,6 +138,7 @@
             text-decoration: none;
             color: #eee;
             display: block;
+            position: relative;
         }
 
         .url-entry a:hover {
@@ -106,16 +151,23 @@
             word-wrap: break-word;
         }
         
-        .url-entry.youtube-preview .url-text {
-            font-weight: bold;
+        .youtube-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            padding: 6px 8px;
             font-size: 13px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: opacity 0.3s;
         }
-        
-        .url-entry img {
-            max-width: 100%;
-            display: block;
-        }
-        
+
         /* --- Notes Section Styling --- */
         #notes-section {
             position: fixed;
@@ -148,9 +200,9 @@
         }
         
         #notes-content {
-            display: none; /* Hidden by default */
+            display: none;
             position: absolute;
-            bottom: 65px; /* Position above the icon */
+            bottom: 65px;
             left: 0;
             width: 300px;
             background-color: #444;
@@ -161,7 +213,7 @@
         }
         
         #notes-section.notes-visible #notes-content {
-            display: block; /* Show when parent has class */
+            display: block;
         }
         
         #notes-content h3 {
@@ -184,35 +236,7 @@
             margin-left: 15px;
             font-size: 14px;
         }
-                body { font-family: Arial, sans-serif; display: flex; margin: 0; height: 100vh; overflow: hidden; background-color: #333; color: #eee; }
-        #mind-map-container { flex-grow: 1; border-right: 1px solid #555; }
-        #controls-container { width: 300px; padding: 10px; box-sizing: border-box; overflow-y: auto; background-color: #444; }
-        svg { width: 100%; height: 100%; background-color: #f0f0f0; }
-        .node { cursor: pointer; }
-        .node text { fill: #111; stroke: none; }
-        .link { stroke: #555; stroke-opacity: 0.8; }
-        .link.hierarchical { stroke: #999; stroke-dasharray: 4; }
-        #save-csv-button { padding: 5px 10px; margin-top: 5px; }
-        .node-description { font-size: 14px; font-style: italic; color: #ccc; margin-top: 5px; margin-bottom: 15px; padding: 10px; border-left: 3px solid #666; background-color: #3a3a3a; border-radius: 0 5px 5px 0; }
-        #url-manager h3, #url-manager h4 { margin-top: 0; }
-        #url-manager ul { list-style-type: none; padding: 0; }
-        .url-entry { margin-bottom: 12px; border: 1px solid #555; border-radius: 5px; overflow: hidden; background-color: #505050; }
-        .url-entry a { text-decoration: none; color: #eee; display: block; }
-        .url-entry a:hover { background-color: #666; }
-        .url-entry .url-text { padding: 8px; font-size: 14px; word-wrap: break-word; }
-        .url-entry.youtube-preview .url-text { font-weight: bold; font-size: 13px; }
-        .url-entry img { max-width: 100%; display: block; }
-        #notes-section { position: fixed; bottom: 20px; left: 20px; z-index: 1000; }
-        #notes-toggle { width: 50px; height: 50px; background-color: #444; border: 2px solid #eee; border-radius: 50%; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        #notes-toggle span { display: block; width: 25px; height: 3px; background-color: #eee; margin: 2px 0; border-radius: 3px; }
-        #notes-content { display: none; position: absolute; bottom: 65px; left: 0; width: 300px; background-color: #444; border: 1px solid #eee; border-radius: 5px; padding: 15px; color: #eee; }
-        #notes-section.notes-visible #notes-content { display: block; }
-        #notes-content h3 { margin-top: 0; border-bottom: 1px solid #666; padding-bottom: 5px; }
-        #notes-content dl { margin: 0; }
-        #notes-content dt { font-weight: bold; color: #a0e0ff; margin-top: 10px; }
-        #notes-content dd { margin-left: 15px; font-size: 14px; }
 
-        /* --- NEW CSS FOR RELATED TOPICS --- */
         .related-topics-list {
             list-style-type: none;
             padding: 0;
@@ -239,42 +263,15 @@
             color: #a0e0ff;
             font-style: italic;
         }
-        
-        .url-entry a {
-            text-decoration: none;
-            color: #eee;
-            display: block;
-            position: relative; /* Needed for positioning the title */
-        }
-
-        /* --- NEW CSS FOR THE VIDEO TITLE --- */
-        .youtube-title {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.75); /* Darker for better contrast */
-            color: #fff;
-            padding: 6px 8px;
-            font-size: 13px;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px #000;
-            /* Hide long titles gracefully */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transition: opacity 0.3s; /* Smooth appearance */
-        }
-
-        .url-entry .url-text {
-            padding: 8px;
-            font-size: 14px;
-            word-wrap: break-word;
-        }
     </style>
 </head>
 <body>
-    <!-- The HTML body is unchanged -->
+    <!-- NEW: Search Bar -->
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search for a topic...">
+        <div id="search-suggestions"></div>
+    </div>
+
     <div id="mind-map-container"></div>
     <div id="controls-container">
         <h2>Controls</h2>
@@ -302,5 +299,5 @@
     </div>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>
