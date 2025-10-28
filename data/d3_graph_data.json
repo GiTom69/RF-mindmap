@@ -78,26 +78,10 @@
         },
         {
             "id": "2.2",
-            "name": "analysis",
-            "description": "The systematic process of examining complex electrical systems, circuits, and electromagnetic wave propagation using mathematical models and fundamental engineering laws, including Kirchhoff's laws, Maxwell's equations, and network theory. In RF and high-speed electrical engineering, techniques such as S-parameter derivation, Fourier transformation, steady-state and transient response modeling, and impedance matching calculations are crucial for predicting system performance metrics like gain, bandwidth, noise figure, and stability. This predictive characterization is essential for validating system architecture, optimizing component selection, and ensuring compliance with established performance specifications across the frequency spectrum.",
-            "urls": [
-                "https://www.youtube.com/watch?v=30dWNYNzjfI"
-            ]
-        },
-        {
-            "id": "2.2",
             "name": "Dynamic Range and Linearity",
             "description": "System linearity and compression performance.",
             "urls": [
                 "https://www.youtube.com/watch?v=30dWNYNzjfI"
-            ]
-        },
-        {
-            "id": "2.3",
-            "name": "and performance optimization",
-            "description": "Noise performance in RF systems quantifies the system's ability to receive and process weak signals relative to the inherent electrical noise. Key metrics include Noise Figure (NF), which measures the degradation of the signal-to-noise ratio (SNR) caused by components, and system sensitivity, which dictates the minimum detectable signal power. Optimizing noise performance, particularly in the receiver front-end, is crucial for maximizing range, data rates, and overall link quality.",
-            "urls": [
-                "https://www.youtube.com/watch?v=_-AkINSPkhw"
             ]
         },
         {
@@ -492,16 +476,16 @@
         },
         {
             "id": "1.1.6",
-            "name": "ASK / FSK / PSK / QAM",
-            "description": "Core digital modulation types.",
+            "name": "Core digital modulation types",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=aUOwbzVSPXY"
             ]
         },
         {
             "id": "1.1.7",
-            "name": "OFDM / FBMC / UFMC",
-            "description": "Multicarrier modulation schemes.",
+            "name": "Multicarrier modulation schemes",
+            "description": "MISSING",
             "urls": []
         },
         {
@@ -522,39 +506,41 @@
         },
         {
             "id": "1.2.1",
-            "name": "HF / VHF / UHF / SHF / EHF",
-            "description": "Band definitions and characteristics.",
+            "name": "RF spectrum bands",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=DTXJ3bS2UcE"
             ]
         },
         {
-            "id": "1.2.2",
-            "name": "HF Applications",
-            "description": "Long-range communications and propagation.",
+            "id": "1.2.1.1",
+            "name": "HF Band",
+            "description": "MISSING",
             "urls": []
         },
         {
             "id": "1.2.3",
-            "name": "VHF Applications",
-            "description": "Broadcast and airband communications.",
+            "name": "VHF Band",
+            "description": "MISSING",
             "urls": [
-                "https://www.youtube.com/watch?v=R0Vzaf14SKQ"
+                "https://www.youtube.com/watch?v=R0Vzaf14SKQ",
+                "https://www.youtube.com/watch?v=DTXJ3bS2UcE"
             ]
         },
         {
             "id": "1.2.4",
-            "name": "UHF Applications",
+            "name": "UHF Band",
             "description": "The Ultra High Frequency (UHF) band, spanning 300 MHz to 3 GHz, is extensively used for both mobile and fixed communication systems due to its favorable balance between penetration capabilities, which are better than higher microwave frequencies, and reasonably compact antenna sizes. Key applications include mobile cellular services, broadcast TV, Global Positioning System (GPS), and modern wireless local area network (WLAN) technologies.",
             "urls": [
-                "https://www.youtube.com/watch?v=1JZG9x_VOwA"
             ]
         },
         {
             "id": "1.2.4.1",
             "name": "Cellular",
             "description": "Cellular systems rely heavily on the UHF band for wide-area mobile connectivity, leveraging licensed frequencies typically between 700 MHz and 2.7 GHz for 3G, 4G LTE, and mid-band 5G deployments. These frequencies provide the necessary balance of wide coverage range, low path loss relative to higher bands, and sufficient data capacity needed for dense urban and suburban mobile communication networks.",
-            "urls": []
+            "urls": [
+                "https://www.youtube.com/watch?v=1JZG9x_VOwA"
+            ]
         },
         {
             "id": "1.2.4.2",
@@ -564,8 +550,16 @@
         },
         {
             "id": "1.2.5",
-            "name": "SHF/EHF Applications",
-            "description": "Radar and satellite systems.",
+            "name": "SHF Band",
+            "description": "MISSING",
+            "urls": [
+                "https://www.youtube.com/watch?v=xUGWHGjCtII"
+            ]
+        },
+                {
+            "id": "1.2.8",
+            "name": "EHF Band",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=xUGWHGjCtII"
             ]
@@ -597,7 +591,7 @@
         {
             "id": "1.2.7",
             "name": "Frequency Reuse and Planning",
-            "description": "Reuse factors and guard bands.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=abkcbOX6veM"
             ]
@@ -605,7 +599,7 @@
         {
             "id": "1.3.1",
             "name": "Carrier Synchronization",
-            "description": "PLLs and Costas loops.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=A9qt0JYdvFU"
             ]
@@ -613,7 +607,7 @@
         {
             "id": "1.3.2",
             "name": "Symbol Timing Recovery",
-            "description": "Gardner and Mueller & Müller algorithms.",
+            "description": "MISSING",
             "urls": []
         },
         {
@@ -669,7 +663,7 @@
         {
             "id": "1.3.5",
             "name": "Spectral Efficiency",
-            "description": "Trade-offs between bits/Hz and robustness.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=RJMqMa4E1u0"
             ]
@@ -677,7 +671,7 @@
         {
             "id": "1.4.1",
             "name": "Transmitter Chain",
-            "description": "DAC → Mixer → PA → Filter → Antenna.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=pJle528JLVU"
             ]
@@ -685,13 +679,13 @@
         {
             "id": "1.4.2",
             "name": "Receiver Chain",
-            "description": "Antenna → LNA → Mixer → Filter → ADC.",
+            "description": "MISSING",
             "urls": []
         },
         {
             "id": "1.4.3",
             "name": "LNA",
-            "description": "Noise figure optimization and impedance matching.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=ctzdRhdKQLo"
             ]
@@ -699,7 +693,7 @@
         {
             "id": "1.4.4",
             "name": "Mixer",
-            "description": "LO leakage and image rejection.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=O2GqyJxWOGE"
             ]
@@ -729,6 +723,18 @@
             "urls": []
         },
         {
+            "id": "1.4.5.4",
+            "name": "HPF",
+            "description": "MISSING",
+            "urls": []
+        },
+        {
+            "id": "1.4.5.5",
+            "name": "BSF",
+            "description": "MISSING",
+            "urls": []
+        },
+        {
             "id": "1.4.6",
             "name": "Power Amplifiers",
             "description": "Power Amplifiers (PAs) are crucial components in the transmitter chain responsible for boosting the low-power processed RF signal to a sufficient magnitude for transmission via the antenna, overcoming significant path loss and meeting regulatory power limits. PA design involves complex trade-offs among high output power, voltage gain, operating efficiency, and linearity, as poor performance in these areas can lead to rapid battery drain, excessive heat generation, and signal distortion that causes spectral regrowth and adjacent channel interference.",
@@ -738,25 +744,25 @@
         },
         {
             "id": "1.4.6.1",
-            "name": "Efficiency",
+            "name": "PA Efficiency",
             "description": "Efficiency in a Power Amplifier measures the ratio of the RF output power to the DC power consumed, determining the overall power wasted as heat and directly influencing the battery life and thermal management requirements of a communication system. Maximizing efficiency, often achieved through dynamic biasing techniques like Envelope Tracking (ET) or using switching classes (e.g., Class D, E, F) for constant envelope signals, is paramount, especially when handling high Peak-to-Average Power Ratio (PAPR) modulations common in modern systems.",
             "urls": []
         },
         {
             "id": "1.4.6.2",
-            "name": "linearity",
+            "name": "PA linearity",
             "description": "Linearity refers to the Power Amplifier's ability to amplify the input signal without introducing distortion, ensuring the modulated signal's spectral integrity is maintained. Non-linear operation generates unwanted spectral components, quantified by metrics like the third-order intercept point (IP3) and Adjacent Channel Power Ratio (ACPR), necessitating techniques like Digital Predistortion (DPD) to compensate for amplifier compression and maintain compliance with strict spectral masks.",
             "urls": []
         },
         {
             "id": "1.4.6.3",
-            "name": "and thermal effects",
+            "name": "PA thermal effects",
             "description": "Thermal effects relate to the consequences of heat generated within the Power Amplifier due to wasted DC power, directly impacting device reliability and electrical performance. High operating temperatures can shift transistor bias points, decrease gain, worsen linearity, and drastically reduce the lifetime of semiconductor devices, making robust thermal management—including optimized packaging, effective heat sinking, and temperature-aware biasing—a critical aspect of high-power RF design.",
             "urls": []
         },
         {
             "id": "1.4.7",
-            "name": "Architectures",
+            "name": "Reciever Architectures",
             "description": "RF transceiver architectures define the configuration of essential components, including mixers, local oscillators, filters, and amplifiers, used to convert baseband signals up to radio frequency for transmission or down from RF to baseband for reception. The fundamental choices—such as superheterodyne versus direct conversion (Zero-IF/Low-IF)—dictate crucial system characteristics, including complexity, selectivity, power consumption, susceptibility to issues like image rejection and DC offset, and the overall level of integration achievable on a single chip.",
             "urls": [
                 "https://www.youtube.com/watch?v=pJle528JLVU"
@@ -764,19 +770,19 @@
         },
         {
             "id": "1.4.7.1",
-            "name": "Direct conversion",
+            "name": "Direct conversion reciever",
             "description": "Direct conversion, also known as Zero-IF (ZIF) architecture, converts the incoming RF signal directly down to the baseband frequency (centered at 0 Hz) using a single, high-frequency mixing stage. This architecture enables high integration and lower power consumption by eliminating bulky Intermediate Frequency (IF) filters, but its primary challenge lies in mitigating DC offset accumulation caused by local oscillator leakage and self-mixing, requiring sophisticated digital calibration techniques.",
             "urls": []
         },
         {
             "id": "1.4.7.2",
-            "name": "superheterodyne",
+            "name": "Superheterodyne reciever",
             "description": "Superheterodyne architecture utilizes one or more intermediate frequency (IF) stages to convert the RF signal to a fixed, usually lower frequency before final demodulation, allowing for superior selectivity through fixed-frequency, high-Q filtering at the IF stage. Although resulting in higher complexity, greater component count, and increased power consumption compared to ZIF, the superheterodyne design offers excellent sensitivity and inherent immunity to DC offset issues, along with robust image frequency rejection capabilities.",
             "urls": []
         },
         {
             "id": "1.4.7.3",
-            "name": "zero-IF",
+            "name": "Zero-IF reciever",
             "description": "Zero-IF (ZIF) is a specialized direct conversion architecture where the Local Oscillator (LO) frequency is precisely matched to the incoming RF carrier frequency, mixing the RF signal down directly to 0 Hz (DC). This approach facilitates maximum integration and size reduction but makes the receiver highly vulnerable to DC offsets from LO leakage and demands stringent I/Q channel matching (amplitude and phase) to correctly reconstruct the complex baseband signal and avoid signal degradation.",
             "urls": []
         },
@@ -971,7 +977,7 @@
         {
             "id": "1.6.3",
             "name": "Matching and Baluns",
-            "description": "Impedance matching for maximum power transfer.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=QLUrwoHRLJM"
             ]
@@ -979,7 +985,7 @@
         {
             "id": "1.6.4",
             "name": "Radiation Pattern",
-            "description": "Beamwidth and sidelobe control.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=HKpQP8H4JRc"
             ]
@@ -987,7 +993,7 @@
         {
             "id": "1.6.5",
             "name": "Antenna Diversity and MIMO",
-            "description": "Spatial diversity and correlation.",
+            "description": "MISSING",
             "urls": []
         },
         {
@@ -1018,22 +1024,14 @@
         },
         {
             "id": "1.6.6.4",
-            "name": "and S11 testing",
-            "description": "and S11 testing involves measuring the reflection coefficient ($\\Gamma$) at the input port of the antenna using a Vector Network Analyzer (VNA), where S11 quantifies the reflected power relative to the incident power in dB (return loss), providing a frequency-dependent measure that is mathematically convertible to VSWR.",
+            "name": "S parameter",
+            "description": "MISSING",
             "urls": []
-        },
-        {
-            "id": "2.1.1",
-            "name": "Core Formula",
-            "description": "Pr = Pt + Gt + Gr − Lp − Lsys.",
-            "urls": [
-                "https://www.youtube.com/watch?v=_FWgvvoPmQQ"
-            ]
         },
         {
             "id": "2.1.2",
             "name": "Free Space Path Loss (FSPL)",
-            "description": "Lfs = 32.4 + 20 log d + 20 log f.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=_FWgvvoPmQQ"
             ]
@@ -1041,15 +1039,15 @@
         {
             "id": "2.1.3",
             "name": "Fade Margin",
-            "description": "Design margin for reliability.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=YFOKkA8gL3w"
             ]
         },
         {
             "id": "2.1.4",
-            "name": "Link Tools",
-            "description": "Spreadsheet and MATLAB simulations.",
+            "name": "RF Link Budget Analysis",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=swjgr4YBhRM"
             ]
@@ -1057,7 +1055,7 @@
         {
             "id": "2.2.1",
             "name": "Receiver Dynamic Range",
-            "description": "Difference between MDS and max input.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=nfHp7fn-2Bc"
             ]
@@ -1091,7 +1089,7 @@
         {
             "id": "2.2.3",
             "name": "Testing Methods",
-            "description": "Two-tone and sweep measurements.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=m-2H8ddSwTI"
             ]
@@ -1159,7 +1157,7 @@
         {
             "id": "2.4.1",
             "name": "Intermodulation Distortion",
-            "description": "3rd and 5th order products.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=Wv4Zq5ty0jM"
             ]
@@ -1167,7 +1165,7 @@
         {
             "id": "2.4.2",
             "name": "Blocking Performance",
-            "description": "Adjacent channel immunity.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=FrmU_8bf_0Y"
             ]
@@ -1175,29 +1173,15 @@
         {
             "id": "2.4.3",
             "name": "ACPR Measurement",
-            "description": "Output spectral purity.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=mco_BJ1mjNo"
             ]
         },
         {
-            "id": "2.5.1",
-            "name": "PA Efficiency",
-            "description": "PAE and drain efficiency.",
-            "urls": []
-        },
-        {
-            "id": "2.5.2",
-            "name": "Thermal Management",
-            "description": "Heat sinks and derating.",
-            "urls": [
-                "https://www.youtube.com/watch?v=6EG8_zwxRCI"
-            ]
-        },
-        {
             "id": "2.5.3",
             "name": "Envelope Tracking",
-            "description": "Doherty and supply modulation.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=JWcX2fSxN_w"
             ]
@@ -1257,7 +1241,7 @@
         {
             "id": "2.6.4",
             "name": "Stability Circles",
-            "description": "Feedback and oscillation control.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=rUDMo7hwihs"
             ]
@@ -1265,7 +1249,7 @@
         {
             "id": "3.1.1",
             "name": "Occupied Bandwidth (OBW)",
-            "description": "99% power bandwidth.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=GmZItI66ToI&pp=ygUOT0JXIG1lYXN1cm1lbnQ%3D"
             ]
@@ -1273,7 +1257,7 @@
         {
             "id": "3.1.2",
             "name": "ACPR/ACLR",
-            "description": "Adjacent channel leakage.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=mco_BJ1mjNo"
             ]
@@ -1281,7 +1265,7 @@
         {
             "id": "3.1.3",
             "name": "Harmonics & Spurious",
-            "description": "Compliance with spectral limits.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=L8gU74DCuuk"
             ]
@@ -1289,7 +1273,7 @@
         {
             "id": "3.1.4",
             "name": "Phase Noise",
-            "description": "Frequency stability and jitter.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=hfgaEjf1154"
             ]
@@ -1321,7 +1305,7 @@
         {
             "id": "3.2.4",
             "name": "Desensitization",
-            "description": "In-band interference effects.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=FrmU_8bf_0Y"
             ]
@@ -1329,7 +1313,7 @@
         {
             "id": "3.3.1",
             "name": "BER vs Eb/N0",
-            "description": "Performance curves.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=-qUQrImVZog"
             ]
@@ -1337,7 +1321,7 @@
         {
             "id": "3.3.2",
             "name": "EVM",
-            "description": "Error vector magnitude.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=rMVAQsUudSs"
             ]
@@ -1345,7 +1329,7 @@
         {
             "id": "3.3.3",
             "name": "Constellation Analysis",
-            "description": "IQ scatter visualization.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=aQd_zBytid8"
             ]
@@ -1353,7 +1337,7 @@
         {
             "id": "3.3.4",
             "name": "Eye Diagram",
-            "description": "Timing and jitter analysis.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=qaUGPcPRJLQ"
             ]
@@ -1361,7 +1345,7 @@
         {
             "id": "3.4.1",
             "name": "Throughput",
-            "description": "Measured data rate.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=aTVrSWR2CU4"
             ]
@@ -1369,7 +1353,7 @@
         {
             "id": "3.4.2",
             "name": "Latency and Jitter",
-            "description": "Timing consistency.",
+            "description": "MISSING",
             "urls": [
                 "https://www.youtube.com/watch?v=lGGJv5AWwdo"
             ]
@@ -1915,12 +1899,6 @@
             "urls": []
         },
         {
-            "source": "1.2",
-            "target": "2.1",
-            "type": "depends on",
-            "urls": []
-        },
-        {
             "source": "1.5",
             "target": "2.1",
             "type": "depends on",
@@ -2104,12 +2082,6 @@
             "source": "5.2",
             "target": "5.4",
             "type": "extends",
-            "urls": []
-        },
-        {
-            "source": "5.3",
-            "target": "1.2",
-            "type": "depends on",
             "urls": []
         },
         {
@@ -2421,12 +2393,6 @@
         {
             "source": "1",
             "target": "1.1",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "1",
-            "target": "1.2",
             "type": "sub topic",
             "urls": []
         },
@@ -2785,30 +2751,6 @@
             "urls": []
         },
         {
-            "source": "1.2",
-            "target": "1.2.1",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "1.2",
-            "target": "1.2.2",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "1.2",
-            "target": "1.2.3",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "1.2",
-            "target": "1.2.4",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
             "source": "1.2.4",
             "target": "1.2.4.1",
             "type": "sub topic",
@@ -2817,18 +2759,6 @@
         {
             "source": "1.2.4",
             "target": "1.2.4.2",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "1.2",
-            "target": "1.2.5",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "1.2",
-            "target": "1.2.6",
             "type": "sub topic",
             "urls": []
         },
@@ -2847,12 +2777,6 @@
         {
             "source": "1.2.6",
             "target": "1.2.6.3",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "1.2",
-            "target": "1.2.7",
             "type": "sub topic",
             "urls": []
         },
@@ -3236,7 +3160,7 @@
         },
         {
             "source": "2.1",
-            "target": "2.1.1",
+            "target": "1.2.1.1",
             "type": "sub topic",
             "urls": []
         },
@@ -3357,18 +3281,6 @@
         {
             "source": "2.4",
             "target": "2.4.3",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "2.5",
-            "target": "2.5.1",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "2.5",
-            "target": "2.5.2",
             "type": "sub topic",
             "urls": []
         },
