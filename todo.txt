@@ -6,9 +6,9 @@ code tasks :
 - noramal, plaintext display for all the topics
 - clean up redundant pyhton scripts
 - deploy on some cloud
-- split some topics with "compressed" subtopics
-- hierarcial connections should be stronger than logical ones
-- explain missing topics
+- split some topics with "compressed" subtopics - done
+- hierarcial connections should be stronger than logical ones - done
+- explain missing topics - done
 - fix duplicate topic indexes - done (manually)
 - make nodes less conjested, more space - done?
 - merge all or most csvs into fat JSON - done
@@ -18,6 +18,9 @@ code tasks :
 - highlight the currently selected node
 - animation for node selection (same as from topic list in right window)
 - add support for up/down arrows and enter keys for search navigation.
+- add debug mode or editor to:
+    - easily fix misplaced topics
+    - create and delete connections
 
 topics tasks:
 - add glossaries to data
