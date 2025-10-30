@@ -15,6 +15,7 @@ code tasks :
 - add user guide / how to
 - add button to find additional sources for a topics (on button press)?
 - generate learning path
+- feature to reset and redo all the links
 
 topics tasks:
 - add glossaries to data

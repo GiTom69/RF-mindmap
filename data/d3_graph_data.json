@@ -159,7 +159,7 @@
         {
             "id": "3.3",
             "name": "Bit-Level Metrics",
-            "description": "Bit error and vector error measurements.",
+            "description": "Bit-Level Metrics Bit-level metrics focus on the accuracy and quality of the transmission medium at the most fundamental level, measuring how accurately individual bits or symbols are successfully transferred across a communications link. The primary metric is the Bit Error Rate (BER), which quantifies the ratio of incorrectly received bits to the total number of bits transmitted, often expressed as a power of ten (e.g., $10^{-6}$). Related metrics include the Symbol Error Rate (SER) and the required $E_b/N_0$ (Energy per bit to Noise power spectral density ratio), which is the minimum signal quality required at the receiver input to achieve a target BER.",
             "urls": [
                 "https://www.youtube.com/watch?v=rMVAQsUudSs"
             ]
@@ -167,7 +167,7 @@
         {
             "id": "3.4",
             "name": "System-Level Metrics",
-            "description": "End-to-end system KPIs.",
+            "description": "System-Level Metrics System-level metrics quantify the overall user experience and macroscopic performance of the entire communication system, incorporating the effects of protocols, network load, and processing delays, moving beyond simple physical layer errors. Key system metrics include throughput, measured in bits per second (e.g., Mbps or Gbps), which represents the effective data rate delivered to the application layer, and latency, which measures the total time delay incurred by data moving from source to destination. Other crucial measures are link availability, which is the percentage of time the system is operational, and spectral efficiency, which is the throughput normalized by occupied bandwidth (b/s/Hz).",
             "urls": [
                 "https://www.youtube.com/watch?v=tpuCxGu-PXY"
             ]
@@ -235,10 +235,22 @@
         {
             "id": "4.6",
             "name": "EMC/EMI Testing",
-            "description": "Regulatory emissions and susceptibility testing.",
+            "description": "EMC/EMI Testing Electromagnetic Compatibility (EMC) testing is a regulatory requirement that ensures a device operates correctly within its electromagnetic environment (immunity) and does not cause excessive electromagnetic interference (EMI) that disrupts other systems (emissions). This testing involves assessing both radiated and conducted disturbances using specialized facilities, such as anechoic or reverberation chambers, across a broad frequency range to verify compliance with international standards set by bodies like the FCC and CISPR.",
             "urls": [
                 "https://www.youtube.com/watch?v=ZM3jWYGNoLU"
             ]
+        },
+        {
+            "id": "4.7",
+            "name": "Regulatory emissions",
+            "description": "Regulatory emissions Regulatory emissions testing specifically measures the unintentional RF energy radiated (radiated emissions) or coupled onto power/signal lines (conducted emissions) produced by a device during its normal operation. These tests confirm that the device's spurious outputs and harmonic content fall below mandatory limits established by national and international regulatory bodies, protecting the integrity of licensed spectrum users and critical radio services from interference.",
+            "urls": []
+        },
+        {
+            "id": "4.8",
+            "name": "susceptibility testing",
+            "description": "susceptibility testing Susceptibility testing, a core component of EMC immunity testing, evaluates a device's ability to operate without degradation or permanent damage when exposed to intentional, high-intensity external electromagnetic fields or conducted transients. This testing simulates worst-case environmental RF noise scenarios, subjecting the equipment to controlled levels of noise (e.g., electrostatic discharge, burst pulses, or strong RF fields) to ensure reliable performance in electromagnetically polluted environments.",
+            "urls": []
         },
         {
             "id": "5",
@@ -259,7 +271,7 @@
         {
             "id": "5.2",
             "name": "System-Level Testing",
-            "description": "KPI and multi-user testing.",
+            "description": "System-Level Testing System-level testing involves the comprehensive validation of the fully integrated communications product, examining the end-to-end performance of the hardware, software, protocols, and network interfaces working together under operational conditions. This typically includes validation of data throughput, latency under heavy load, reliability of handover processes in mobility scenarios, and overall compliance with the intended application requirements (e.g., successful video streaming, or reliable device connectivity).",
             "urls": [
                 "https://www.youtube.com/watch?v=f7UGwrEsoXQ"
             ]
@@ -289,7 +301,7 @@
         {
             "id": "5.6",
             "name": "Network-Level Coexistence",
-            "description": "Inter-system interference and coexistence.",
+            "description": "Network-Level Coexistence Network-level coexistence addresses the strategies and mechanisms required to enable multiple disparate wireless networks (such as Wi-Fi, Bluetooth, cellular, and proprietary IoT protocols) to share the same physical radio environment or unlicensed spectrum bands without severely degrading each other's performance. This requires sophisticated interference mitigation techniques, coordinated channel access schemes (like Listen Before Talk), dynamic frequency selection (DFS), and power control algorithms to manage shared spectrum resources efficiently.",
             "urls": [
                 "https://www.youtube.com/watch?v=5G5zlWX2s0w"
             ]
@@ -297,7 +309,7 @@
         {
             "id": "6",
             "name": "Advanced Topics",
-            "description": "Emerging and research-level areas in RF.",
+            "description": "Advanced Topics Advanced Topics in RF communications encompass cutting-edge research, evolving standards, and complex deployment technologies aimed at fundamentally improving spectral efficiency, data capacity, and reliability in modern wireless systems. This category typically includes concepts like massive Multiple-Input Multiple-Output (MIMO) systems, highly sophisticated beamforming, dynamic spectrum access (DSA), Terahertz communications, integration of machine learning for optimization, and technologies driving 5G and future 6G networks.",
             "urls": [
                 "https://www.youtube.com/watch?v=fPTrifr-wLw"
             ]
@@ -305,7 +317,7 @@
         {
             "id": "6.1",
             "name": "MIMO and Beamforming",
-            "description": "Simulation and modeling are critical RF engineering tools utilized to predict system behavior, optimize component placement, and analyze propagation effects before physical prototyping. This involves creating mathematical representations of RF channels, circuits, antennas, and complex system interactions using specialized software (like Keysight ADS or MATLAB) to accelerate design cycles and accurately characterize performance boundaries.",
+            "description": "Simulation & Modeling Simulation and modeling involve using mathematical representations and specialized software tools, such as MATLAB, Keysight ADS, or Ansys HFSS, to predict and analyze the behavior of RF circuits, components, channels, and full communication systems before physical fabrication. This crucial phase allows engineers to rapidly optimize design parameters, assess the impact of non-linearities, estimate link budget performance, and validate complex signal processing algorithms, thereby accelerating development cycles and minimizing hardware prototyping costs.",
             "urls": [
                 "https://www.youtube.com/watch?v=g84f4mP0u30"
             ]
@@ -313,7 +325,7 @@
         {
             "id": "6.1",
             "name": "Simulation & Modeling",
-            "description": "Simulation and modeling are critical RF engineering tools utilized to predict system behavior, optimize component placement, and analyze propagation effects before physical prototyping. This involves creating mathematical representations of RF channels, circuits, antennas, and complex system interactions using specialized software (like Keysight ADS or MATLAB) to accelerate design cycles and accurately characterize performance boundaries.",
+            "description": "Simulation & Modeling Simulation and modeling involve using mathematical representations and specialized software tools, such as MATLAB, Keysight ADS, or Ansys HFSS, to predict and analyze the behavior of RF circuits, components, channels, and full communication systems before physical fabrication. This crucial phase allows engineers to rapidly optimize design parameters, assess the impact of non-linearities, estimate link budget performance, and validate complex signal processing algorithms, thereby accelerating development cycles and minimizing hardware prototyping costs.",
             "urls": [
                 "https://www.youtube.com/watch?v=g84f4mP0u30"
             ]
@@ -445,7 +457,7 @@
         {
             "id": "1.1.1",
             "name": "Amplitude Modulation (AM)",
-            "description": "Basic analog modulation varying carrier amplitude.",
+            "description": "Amplitude Modulation (AM) Amplitude Modulation (AM) is an analog modulation technique where the instantaneous amplitude of the high-frequency carrier wave is varied linearly according to the instantaneous amplitude of the lower-frequency baseband message signal. AM is simple to implement but suffers from poor power efficiency because significant power is wasted transmitting the static carrier component, and it is highly susceptible to atmospheric and electrical noise, which introduces amplitude variations.",
             "urls": [
                 "https://www.youtube.com/watch?v=3HLjYIpGcGc"
             ]
@@ -453,7 +465,7 @@
         {
             "id": "1.1.10",
             "name": "Up/Down Conversion",
-            "description": "Frequency translation and mixing operations.",
+            "description": "Up/Down Conversion Up/Down Conversion is the essential frequency translation process performed in all superheterodyne radio architectures, achieved by mixing the input signal with a Local Oscillator (LO) signal. Up-conversion shifts a lower-frequency baseband signal to a higher Radio Frequency (RF) suitable for over-the-air transmission, while down-conversion shifts the received high-frequency RF signal to a lower, more manageable Intermediate Frequency (IF) or directly to baseband for efficient filtering and demodulation.",
             "urls": [
                 "https://www.youtube.com/watch?v=O2GqyJxWOGE"
             ]
@@ -461,7 +473,7 @@
         {
             "id": "1.1.2",
             "name": "Frequency Modulation (FM)",
-            "description": "Frequency deviation based analog modulation.",
+            "description": "Frequency Modulation (FM) Frequency Modulation (FM) is an analog modulation technique where the instantaneous frequency of the carrier wave is varied linearly in proportion to the instantaneous amplitude of the baseband message signal, while the carrier amplitude remains constant. FM offers a significant advantage over AM in noise immunity because most noise manifests as amplitude variations, which the FM receiver can easily discard via limiting circuits, resulting in higher fidelity transmission, typically at the cost of requiring greater bandwidth.",
             "urls": [
                 "https://www.youtube.com/watch?v=gFu7-7lUGDg"
             ]
@@ -469,7 +481,7 @@
         {
             "id": "1.1.3",
             "name": "Phase Modulation (PM)",
-            "description": "Phase-based analog modulation scheme.",
+            "description": "Phase Modulation (PM) Phase Modulation (PM) is an analog modulation technique where the instantaneous phase of the carrier wave is varied linearly in proportion to the instantaneous amplitude of the baseband message signal, while both the carrier amplitude and frequency remain constant. While conceptually similar to FM—since frequency is the derivative of phase—PM is less common in pure analog form due to complexity, but it serves as the foundation for digital Phase Shift Keying (PSK), a crucial digital modulation family.",
             "urls": [
                 "https://www.youtube.com/watch?v=K9fPrA7QLEw"
             ]
@@ -477,7 +489,7 @@
         {
             "id": "1.1.4",
             "name": "SSB / DSB-SC / VSB",
-            "description": "Sideband modulation techniques and efficiency.",
+            "description": "SSB / DSB-SC / VSB These are bandwidth-efficient variants of AM: Double Sideband Suppressed Carrier (DSB-SC) removes the power-intensive carrier component, saving power but requiring a coherent receiver for demodulation. Single Sideband (SSB) achieves maximum bandwidth efficiency by removing both the carrier and one of the sidebands, demanding complex filtering and precise frequency synchronization. Vestigial Sideband (VSB) transmits the carrier, a full sideband, and a filtered vestige of the second sideband, offering a pragmatic compromise between efficiency and receiver complexity, historically used in terrestrial analog television.",
             "urls": [
                 "https://www.youtube.com/watch?v=wE-X0tzrGZk"
             ]
@@ -485,29 +497,77 @@
         {
             "id": "1.1.5",
             "name": "Bandwidth Efficiency and Demodulation",
-            "description": "Trade-offs and demodulation principles.",
+            "description": "Bandwidth Efficiency and Demodulation Bandwidth efficiency quantifies how effectively a communication system utilizes spectrum, measured in bits per second per hertz (b/s/Hz), aiming to maximize the data rate within a fixed channel width, often through higher-order modulation. Demodulation is the receiver process of extracting the original baseband message signal from the modulated carrier wave, employing techniques ranging from simple envelope detection (for AM) to complex coherent detection, phase-locked loops, and digital signal processing to accurately recover the transmitted data.",
             "urls": [
                 "https://www.youtube.com/watch?v=RJMqMa4E1u0"
             ]
         },
         {
             "id": "1.1.6",
-            "name": "ASK / FSK / PSK / QAM",
-            "description": "Core digital modulation types.",
+            "name": "Core digital modulation types",
+            "description": "Core digital modulation types Core digital modulation types map discrete blocks of input data bits (symbols) onto distinct, measurable changes in the fundamental properties of the carrier wave—amplitude, frequency, or phase—enabling the transmission of digital information over an analog channel. The selection of a core digital modulation type is a critical trade-off between maximizing spectral efficiency (data rate per bandwidth) and maintaining robust bit error rate performance against channel noise and interference.",
             "urls": [
                 "https://www.youtube.com/watch?v=aUOwbzVSPXY"
             ]
         },
         {
+            "id": "1.1.6.1",
+            "name": "ASK",
+            "description": "MISSING.",
+            "urls": []
+        },
+        {
+            "id": "1.1.6.1",
+            "name": "FSK",
+            "description": "MISSING.",
+            "urls": []
+        },
+        {
+            "id": "1.1.6.1",
+            "name": "PSK",
+            "description": "Phase Shift Keying (PSK) is a highly common digital modulation scheme that transmits data by varying the phase of the carrier wave while maintaining constant amplitude and frequency. By utilizing multiple phase states (e.g., BPSK, QPSK, 8-PSK), higher data rates can be achieved per Hertz of bandwidth, though coherent detection is often required, making synchronization critical.",
+            "urls": []
+        },
+        {
+            "id": "1.1.6.1",
+            "name": "QAM",
+            "description": "QAM Quadrature Amplitude Modulation (QAM) is a high-order digital modulation scheme that simultaneously varies both the amplitude and the phase of the carrier signal, representing digital symbols as points on the complex I/Q plane. By combining both parameters, QAM systems (e.g., 16-QAM, 64-QAM) significantly increase spectral efficiency, allowing higher data rates, but this increased efficiency demands a higher signal-to-noise ratio and makes the system more sensitive to channel non-linearities and noise floor fluctuations.",
+            "urls": []
+        },
+        {
             "id": "1.1.7",
-            "name": "OFDM / FBMC / UFMC",
-            "description": "Multicarrier modulation schemes.",
+            "name": "Multicarrier modulation schemes",
+            "description": "Multicarrier modulation schemes divide a high-rate data stream into many lower-rate streams, modulating each onto a separate, closely spaced subcarrier. This technique effectively mitigates frequency-selective fading and intersymbol interference (ISI) prevalent in broadband channels, enhancing robustness and spectral efficiency compared to single-carrier systems by allowing simpler equalization in the frequency domain.",
+            "urls": []
+        },
+        {
+            "id": "1.1.7.1",
+            "name": "OFDM",
+            "description": "MISSING.",
+            "urls": []
+        },
+        {
+            "id": "1.1.7.1",
+            "name": "FBMC",
+            "description": "MISSING.",
+            "urls": []
+        },
+        {
+            "id": "1.1.7.1",
+            "name": "UFMC",
+            "description": "Universal Filtered Multi-Carrier (UFMC) is a waveform candidate that filters blocks of subcarriers, or subbands, rather than filtering each individual subcarrier like FBMC or utilizing a cyclic prefix like OFDM. This block-filtering approach yields significantly better spectral containment and lower Out-of-Band Emissions (OOBE) than OFDM, while maintaining lower implementation complexity than full FBMC, optimizing it for short burst transmissions and enabling flexible spectrum allocation.",
+            "urls": []
+        },
+        {
+            "id": "1.1.7.1",
+            "name": "NOMA",
+            "description": "NOMA allows multiple users to share the same time/frequency resource block by employing power-domain multiplexing, where distinct power levels are assigned to different users based on their channel conditions. The receiver utilizes Successive Interference Cancellation (SIC) to decode the strongest signal first and then subtract it to decode weaker signals, significantly improving system throughput and spectral efficiency, particularly in scenarios with disparate channel gains.",
             "urls": []
         },
         {
             "id": "1.1.8",
             "name": "Pulse Shaping Filters",
-            "description": "Raised Cosine and SRRC filtering.",
+            "description": "Pulse Shaping Filters are essential components in digital modulation systems used to limit the bandwidth of transmitted signals and mitigate Intersymbol Interference (ISI). They smooth the sharp transitions created by digital symbols, typically employing pairs of Root Raised Cosine (RRC) filters at both the transmitter and receiver to ensure the combined channel and filter response satisfies the Nyquist ISI criterion.",
             "urls": [
                 "https://www.youtube.com/watch?v=uTI0qLLbS74"
             ]
@@ -515,15 +575,21 @@
         {
             "id": "1.1.9",
             "name": "IQ Representation and Complex Envelope",
-            "description": "Baseband/passband modeling concepts.",
+            "description": "IQ Representation and Complex Envelope models a real-valued bandpass signal using a complex baseband signal called the complex envelope, where the In-phase (I) and Quadrature (Q) components represent the amplitude and phase modulation relative to the high-frequency carrier. This transformation allows complex signal processing, such as filtering, mixing, and modulation, to be performed efficiently at lower frequencies.",
             "urls": [
                 "https://www.youtube.com/watch?v=h_7d-m1ehoY"
             ]
         },
         {
+            "id": "1.1.9.1",
+            "name": "Baseband/passband modeling concept",
+            "description": "Baseband modeling simplifies mathematical analysis, simulation, and implementation by shifting the signal spectrum down to zero frequency, representing the signal by its complex envelope, thereby removing the rapid oscillation of the high-frequency carrier. Conversely, passband modeling describes the actual physical RF signal centered around a high carrier frequency $f_c$, representing the signal in its form ready for transmission.",
+            "urls": []
+        },
+        {
             "id": "1.2.1",
-            "name": "HF / VHF / UHF / SHF / EHF",
-            "description": "Band definitions and characteristics.",
+            "name": "Band definitions and characteristics",
+            "description": "Band definitions categorize the radio spectrum into standardized ranges (e.g., VLF, HF, VHF, UHF, SHF, EHF) defined by organizations like the ITU, with characteristics dictated by frequency. Higher frequencies generally offer vast bandwidths capable of supporting high data rates but suffer from increased atmospheric attenuation and reduced range, while lower frequencies enable robust, long-distance communication via ionospheric reflection or ground waves.",
             "urls": [
                 "https://www.youtube.com/watch?v=DTXJ3bS2UcE"
             ]
@@ -531,13 +597,13 @@
         {
             "id": "1.2.2",
             "name": "HF Applications",
-            "description": "Long-range communications and propagation.",
+            "description": "HF Applications (3–30 MHz) rely heavily on skywave propagation, where signals are reflected by the ionosphere back to Earth, enabling long-distance, over-the-horizon communications. Key uses include military and amateur radio, shortwave broadcasting, aeronautical communications, and maritime mobile service, though the channel quality is highly dynamic and dependent on solar activity.",
             "urls": []
         },
         {
             "id": "1.2.3",
             "name": "VHF Applications",
-            "description": "Broadcast and airband communications.",
+            "description": "VHF Applications (30–300 MHz) primarily utilize line-of-sight propagation and ground wave, suitable for local terrestrial communications over moderate distances. This band is crucial for FM radio broadcasting, non-digital television broadcasting, public safety, land mobile systems, and marine/aeronautical communication due to reliable propagation and relatively low ambient noise.",
             "urls": [
                 "https://www.youtube.com/watch?v=R0Vzaf14SKQ"
             ]
@@ -565,7 +631,7 @@
         {
             "id": "1.2.5",
             "name": "SHF/EHF Applications",
-            "description": "Radar and satellite systems.",
+            "description": "SHF/EHF Applications (3–30 GHz / 30–300 GHz) offer enormous bandwidth, supporting extremely high-capacity data links essential for modern systems like satellite communications, high-speed 5G/6G cellular backhaul, radar, and short-range broadband wireless access (millimeter wave). Their primary limitations are susceptibility to severe atmospheric absorption, especially rain fade, and the requirement for highly directional, strict line-of-sight paths.",
             "urls": [
                 "https://www.youtube.com/watch?v=xUGWHGjCtII"
             ]
@@ -605,15 +671,39 @@
         {
             "id": "1.3.1",
             "name": "Carrier Synchronization",
-            "description": "PLLs and Costas loops.",
+            "description": "Carrier Synchronization is the critical receiving process dedicated to accurately estimating and tracking the frequency and phase of the incoming carrier wave, which is mandatory for coherent demodulation. Imperfect synchronization results in constellation rotation and common phase error, which severely degrades the signal quality and dramatically increases the Bit Error Rate (BER).",
             "urls": [
                 "https://www.youtube.com/watch?v=A9qt0JYdvFU"
             ]
         },
         {
+            "id": "1.1.1.1",
+            "name": "PLL",
+            "description": "A PLL is a feedback control system widely used for carrier synchronization, frequency synthesis, and clock recovery, comprising a phase detector, a loop filter, and a voltage-controlled oscillator (VCO). It operates by continuously adjusting the VCO frequency and phase to match the input signal, maintaining a precise locked state with minimal steady-state phase error.",
+            "urls": []
+        },
+        {
+            "id": "1.1.1.2",
+            "name": "Costas loops",
+            "description": "Costas loops are a crucial type of phase-locked loop (PLL) utilized extensively in coherent digital communications for carrier recovery and synchronization, especially in suppressed-carrier modulation schemes like PSK. The loop employs two phase detectors operating in quadrature and a loop filter to generate an error voltage that is proportional to the phase difference between the incoming modulated signal and the local Voltage Controlled Oscillator (VCO), allowing for highly accurate phase tracking without needing an unmodulated carrier pilot tone.",
+            "urls": []
+        },
+        {
             "id": "1.3.2",
             "name": "Symbol Timing Recovery",
-            "description": "Gardner and Mueller & Müller algorithms.",
+            "description": "Symbol Timing Recovery ensures the receiver samples the received signal at the exact optimal moment—the peak energy point of the transmitted pulse—to maximize the signal-to-noise ratio (SNR) and minimize the effects of intersymbol interference (ISI). This process compensates for inevitable timing offsets and clock drift between the transmitter and receiver oscillators.",
+            "urls": []
+        },
+        {
+            "id": "1.3.2.1",
+            "name": "Gardner Timing Error Detector",
+            "description": "The Gardner Timing Error Detector is a non-data-aided (NDA) synchronization algorithm that requires two samples per symbol period, generating a timing error estimate based on the product of a sample taken at the fractional symbol interval and the difference between two adjacent symbol interval samples. Its primary advantage is that it is insensitive to residual carrier phase error, allowing timing recovery to precede phase synchronization.",
+            "urls": []
+        },
+        {
+            "id": "1.3.2.2",
+            "name": "Mueller and Muller Timing Synchronization Algorithm",
+            "description": "The Mueller and Muller Timing Synchronization Algorithm is a decision-directed (DD) technique that computes the timing error signal based on the difference between the received symbol sample and the instantaneous symbol decision (the slicer output). This algorithm provides highly accurate timing estimation, but its reliance on accurate symbol decisions means that it performs poorly during initial acquisition or under very low SNR conditions.",
             "urls": []
         },
         {
@@ -669,7 +759,7 @@
         {
             "id": "1.3.5",
             "name": "Spectral Efficiency",
-            "description": "Trade-offs between bits/Hz and robustness.",
+            "description": "Spectral Efficiency measures how effectively a communication system utilizes its allocated frequency spectrum, defined as the ratio of the achievable data rate (bits per second) to the utilized channel bandwidth (Hertz), typically expressed in bits/s/Hz. High spectral efficiency is attained through advanced techniques like high-order modulation schemes (e.g., 256-QAM), coding, and spatial multiplexing (e.g., MIMO).",
             "urls": [
                 "https://www.youtube.com/watch?v=RJMqMa4E1u0"
             ]
@@ -677,7 +767,7 @@
         {
             "id": "1.4.1",
             "name": "Transmitter Chain",
-            "description": "DAC → Mixer → PA → Filter → Antenna.",
+            "description": "The Transmitter Chain processes the source data by applying encoding, mapping bits to symbols, performing pulse shaping to restrict bandwidth, and then upconverting the resulting baseband signal to the desired high RF carrier frequency using mixers and frequency synthesizers, followed by power amplification to boost the signal level before radiation via the antenna.",
             "urls": [
                 "https://www.youtube.com/watch?v=pJle528JLVU"
             ]
@@ -685,24 +775,42 @@
         {
             "id": "1.4.2",
             "name": "Receiver Chain",
-            "description": "Antenna → LNA → Mixer → Filter → ADC.",
+            "description": "The Receiver Chain captures the faint RF signal via the antenna, filters it, amplifies it using a Low Noise Amplifier (LNA), downconverts the signal back to an intermediate or baseband frequency using a mixer, and then performs crucial digital processing functions including channel equalization, carrier and timing synchronization, and final demodulation to accurately recover the original data stream.",
             "urls": []
         },
         {
             "id": "1.4.3",
             "name": "LNA",
-            "description": "Noise figure optimization and impedance matching.",
+            "description": "The Low Noise Amplifier (LNA) is a critical component in the receiver front-end, positioned immediately after the antenna filtering, designed to amplify the extremely weak incoming RF signal. Its defining characteristic is a very low Noise Figure (NF), which is essential because the LNA determines the overall noise performance and sensitivity of the entire receiver system; high gain here ensures subsequent noise contributions are negligible.",
             "urls": [
                 "https://www.youtube.com/watch?v=ctzdRhdKQLo"
             ]
         },
         {
+            "id": "1.4.3.1",
+            "name": "Noise figure optimization",
+            "description": "Noise figure optimization involves designing an RF receiver chain to minimize the overall noise power added by the system, thereby maximizing the output Signal-to-Noise Ratio (SNR). This process is critical in the early stages of the receiver, particularly the Low Noise Amplifier (LNA), where Friis's formula dictates that the system's total noise figure is dominated by the noise figure and gain of the very first stage; therefore, optimization focuses on selecting a low-noise, high-gain LNA to ensure subsequent stages contribute minimally to the overall system noise degradation.",
+            "urls": []
+        },
+        {
             "id": "1.4.4",
             "name": "Mixer",
-            "description": "LO leakage and image rejection.",
+            "description": "The mixer is a non-linear circuit used in transceivers to perform frequency translation, typically converting a high RF carrier frequency to a lower Intermediate Frequency (IF) or baseband. It operates by multiplying the incoming signal with a Local Oscillator (LO) signal, generating new frequency components that are the sum and difference of the inputs, allowing for easier signal processing at lower frequencies after filtering.",
             "urls": [
                 "https://www.youtube.com/watch?v=O2GqyJxWOGE"
             ]
+        },
+        {
+            "id": "1.4.9",
+            "name": "LO leakage",
+            "description": "LO leakage occurs when the powerful Local Oscillator signal couples unintentionally from the mixer circuitry, most critically exiting through the antenna port or coupling back into the RF input stage. This phenomenon can cause significant issues, including violating regulatory spectral masks (TX leakage), or creating unwanted DC offsets in direct conversion receivers when the leaked signal self-mixes.",
+            "urls": []
+        },
+        {
+            "id": "1.4.10",
+            "name": "Image Rejection",
+            "description": "Image rejection is the metric defining a superheterodyne receiver's ability to suppress signals arriving at the image frequency. The image frequency is a spurious input that, when mixed with the Local Oscillator (LO), translates down to the same Intermediate Frequency (IF) as the desired signal, thereby causing interference if not significantly attenuated by a pre-selection filter placed before the mixer stage.",
+            "urls": []
         },
         {
             "id": "1.4.5",
@@ -814,35 +922,83 @@
         },
         {
             "id": "1.5.1",
-            "name": "Free-space and Reflection",
-            "description": "Line-of-sight and multipath.",
+            "name": "Free-space Channel",
+            "description": "The free-space channel is an idealized propagation model assuming an unobstructed path in a vacuum where the signal travels only via the direct line-of-sight (LOS) path without reflection, diffraction, or absorption. Path loss in this model is solely determined by the spreading of energy (spherical wavefronts) and is mathematically described by the Friis transmission equation, which depends on distance squared and frequency squared.",
             "urls": [
                 "https://www.youtube.com/watch?v=uGfviI-vbr8"
             ]
         },
         {
+            "id": "1.5.7",
+            "name": "Reflection Channel",
+            "description": "A reflection channel describes propagation where radio waves strike large, smooth surfaces, such as the ground or building facades, and bounce off, changing their direction toward the receiver. The reflected wave contributes to the overall received signal, and its intensity and phase relative to the direct path are governed by the surface material's properties (dielectric constant), the wave's polarization, and Snell's law.",
+            "urls": []
+        },
+        {
+            "id": "1.5.8",
+            "name": "Line-of-sight Channel",
+            "description": "The Line-of-sight (LOS) channel exists when there is a clear, unobstructed path between the transmitter and receiver, allowing the direct signal component to reach the destination without intervention from solid objects. While ideal for transmission, real-world LOS channels are still subject to minor atmospheric losses, and their power must often be assessed using Fresnel zone clearance criteria, rather than just geometric visibility.",
+            "urls": []
+        },
+        {
+            "id": "1.5.9",
+            "name": "multipath Channel",
+            "description": "A multipath channel occurs when the transmitted signal reaches the receiver via two or more different propagation paths, resulting from reflection, diffraction, or scattering off various objects. Because each path has a unique length, the arriving signals are delayed and phase-shifted relative to each other, causing destructive and constructive interference, leading to frequency-selective fading and signal distortion (inter-symbol interference).",
+            "urls": []
+        },
+        {
             "id": "1.5.2",
-            "name": "Fresnel Zones and Diffraction",
-            "description": "Path clearance and shadowing.",
+            "name": "Fresnel Zones",
+            "description": "Fresnel zones are concentric, ellipsoidal volumes centered on the line connecting the transmitter and receiver, used to analyze diffraction effects. They define regions where clearance must be maintained to ensure the direct path signal dominates; specifically, the first Fresnel zone must be substantially clear (ideally 60% or more) to prevent significant signal cancellation and maintain near free-space path loss performance.",
             "urls": [
                 "https://www.youtube.com/watch?v=hs12_KpvSn0"
             ]
         },
         {
+            "id": "1.5.10",
+            "name": "Wave Diffraction",
+            "description": "Wave diffraction is the process by which radio waves bend around the sharp edges of obstacles, such as mountain ridges or buildings, allowing signal energy to penetrate into shadowed areas not covered by line-of-sight. The degree of diffraction is dependent on the signal wavelength relative to the size of the obstruction, with lower frequencies exhibiting better penetration into these geometrically obscured regions.",
+            "urls": []
+        },
+        {
+            "id": "1.5.11",
+            "name": "shadowing",
+            "description": "Shadowing, also known as slow fading or large-scale fading, is the significant reduction in average received signal power due to large obstructions, such as hills or large buildings, blocking the primary path. This effect causes long-term variations in signal strength as the receiver moves, distinct from the rapid fluctuations of multipath fading, and is typically modeled using a log-normal distribution for coverage prediction.",
+            "urls": []
+        },
+        {
             "id": "1.5.3",
-            "name": "Ground and Sky Wave",
-            "description": "Long-distance and atmospheric effects.",
+            "name": "Ground Wave propagation",
+            "description": "Ground wave propagation is a mechanism, primarily used by low and medium frequency (LF/MF) signals, where the radio wave follows the contour and curvature of the Earth's surface. This propagation relies on the wave inducing currents in the ground, making the path loss dependent on soil conductivity and frequency, and is vital for reliable, long-distance broadcasting.",
             "urls": [
                 "https://www.youtube.com/watch?v=7Y_RTdPs3NI"
             ]
         },
         {
+            "id": "1.5.12",
+            "name": "Sky Wave propagation",
+            "description": "Sky wave propagation utilizes the refraction of radio signals, primarily in the High Frequency (HF) bands, off the ionized layers of the atmosphere (the ionosphere) to return energy back to Earth. This method facilitates very long-distance, intercontinental communication via single or multiple \"hops,\" but its reliability is highly variable due to the ionosphere’s density being sensitive to time of day, season, and solar activity.",
+            "urls": []
+        },
+        {
+            "id": "1.5.13",
+            "name": "Long-distance and atmospheric effects",
+            "description": "Long-distance and atmospheric effects encompass various complex phenomena that influence propagation over vast ranges, including bending due to atmospheric refraction, the trapping and guiding of signals via atmospheric ducting, and interaction with the ionosphere, such as scintillation. These effects critically influence long-haul links, often leading to unpredictable signal fading or enhancement depending on current meteorological and solar conditions.",
+            "urls": []
+        },
+        {
             "id": "1.5.4",
             "name": "Atmospheric and Rain Attenuation",
-            "description": "Frequency-dependent losses (ITU models).",
+            "description": "Atmospheric and rain attenuation describes the loss of signal power due to absorption by gaseous molecules (oxygen and water vapor) and scattering/absorption by hydrometeors like rain, snow, or hail. This effect is negligible below 10 GHz but increases rapidly with frequency, becoming the dominant path loss factor for millimeter wave and satellite communications, severely limiting link availability during heavy precipitation.",
             "urls": [
                 "https://www.youtube.com/watch?v=sS0oWHpNL-k"
             ]
+        },
+        {
+            "id": "1.5.14",
+            "name": "Frequency-dependent losses (ITU models)",
+            "description": "Frequency-dependent losses refer to mathematical propagation models, such as those standardized by the ITU-R, that predict the total path loss based specifically on the operating frequency, environment type, distance, and terrain. These models statistically combine the effects of free-space loss, diffraction, ground reflection, and shadowing to offer reliable, empirical or semi-empirical estimations necessary for link budgets and cell planning in complex environments.",
+            "urls": []
         },
         {
             "id": "1.5.5",
@@ -871,7 +1027,7 @@
         {
             "id": "1.5.6",
             "name": "Doppler and Mobility",
-            "description": "Coherence time and Doppler spread.",
+            "description": "Doppler shift is the frequency offset experienced by a radio signal caused by the relative velocity between the transmitter and receiver, defined as proportional to the speed and the cosine of the angle of arrival. This effect, induced by mobility, causes frequency smearing and rapid variations in the received signal phase and amplitude (fast fading), requiring robust synchronization and equalization techniques in high-speed mobile systems.",
             "urls": [
                 "https://www.youtube.com/watch?v=uuMoexleLZk"
             ]
@@ -971,7 +1127,7 @@
         {
             "id": "1.6.3",
             "name": "Matching and Baluns",
-            "description": "Impedance matching for maximum power transfer.",
+            "description": "Impedance matching is the technique of adjusting the input or output impedance of an RF component to that of the connected transmission line to ensure maximum power transfer and minimize reflections (VSWR). A Balun (BALance-to-UNbalance) is a specific component used to interface a balanced antenna structure (e.g., a dipole) with an unbalanced transmission line (e.g., coax), often providing both impedance transformation and rejection of common-mode currents.",
             "urls": [
                 "https://www.youtube.com/watch?v=QLUrwoHRLJM"
             ]
@@ -979,15 +1135,21 @@
         {
             "id": "1.6.4",
             "name": "Radiation Pattern",
-            "description": "Beamwidth and sidelobe control.",
+            "description": "The radiation pattern is a graphical description of the relative field strength or power density of the electromagnetic wave radiated or received by an antenna in all spatial directions. This pattern defines key antenna characteristics such as directivity, gain, beamwidth, and the extent of sidelobes, determining the spatial efficiency and coverage area of the communication link.",
             "urls": [
                 "https://www.youtube.com/watch?v=HKpQP8H4JRc"
             ]
         },
         {
             "id": "1.6.5",
-            "name": "Antenna Diversity and MIMO",
-            "description": "Spatial diversity and correlation.",
+            "name": "Antenna Diversity",
+            "description": "Antenna diversity is a technique utilizing multiple antennas whose received signals are assumed to be statistically uncorrelated due to separation in space, polarization, or angle of arrival, thereby mitigating the detrimental effects of multipath fading. By employing combining, selection, or switching methods among the diverse antenna signals, the receiver can significantly increase the probability of capturing a strong, error-free signal, thus improving link robustness and capacity.",
+            "urls": []
+        },
+        {
+            "id": "1.6.7",
+            "name": "MIMO",
+            "description": "MIMO Multiple-Input Multiple-Output (MIMO) is a technology utilizing multiple antennas at both the transmitter and receiver to exploit multipath propagation, significantly increasing channel capacity, spectral efficiency, and link reliability through spatial processing techniques like spatial multiplexing for higher data rates and diversity coding for improved robustness against fading.",
             "urls": []
         },
         {
@@ -1023,17 +1185,9 @@
             "urls": []
         },
         {
-            "id": "2.1.1",
-            "name": "Core Formula",
-            "description": "Pr = Pt + Gt + Gr − Lp − Lsys.",
-            "urls": [
-                "https://www.youtube.com/watch?v=_FWgvvoPmQQ"
-            ]
-        },
-        {
             "id": "2.1.2",
             "name": "Free Space Path Loss (FSPL)",
-            "description": "Lfs = 32.4 + 20 log d + 20 log f.",
+            "description": "Free Space Path Loss (FSPL) Free Space Path Loss is the theoretical signal power reduction that occurs solely due to the spreading of the electromagnetic wave as it travels through a vacuum, proportional to the square of the distance between the antennas and the square of the operating frequency, and serves as the fundamental, baseline metric for all RF link budget calculations.",
             "urls": [
                 "https://www.youtube.com/watch?v=_FWgvvoPmQQ"
             ]
@@ -1041,7 +1195,7 @@
         {
             "id": "2.1.3",
             "name": "Fade Margin",
-            "description": "Design margin for reliability.",
+            "description": "Fade Margin Fade margin is a deliberate reserve of system gain (measured in dB) included in the link budget calculation to account for unpredictable, time-varying propagation impairments, such as rain absorption, atmospheric ducting, or multipath fading, ensuring the receiver maintains the required signal-to-noise ratio (SNR) to meet performance targets for a specified percentage of time.",
             "urls": [
                 "https://www.youtube.com/watch?v=YFOKkA8gL3w"
             ]
@@ -1049,7 +1203,7 @@
         {
             "id": "2.1.4",
             "name": "Link Tools",
-            "description": "Spreadsheet and MATLAB simulations.",
+            "description": "Link Tools Link tools are specialized software or calculation methodologies used by RF engineers to analyze and predict the end-to-end performance of a wireless communication channel by integrating factors such as transmitter power, antenna gains, receiver sensitivity, propagation models (including FSPL and terrain effects), and fade margin to determine maximum range and achievable data quality.",
             "urls": [
                 "https://www.youtube.com/watch?v=swjgr4YBhRM"
             ]
@@ -1090,10 +1244,18 @@
         },
         {
             "id": "2.2.3",
-            "name": "Testing Methods",
-            "description": "Two-tone and sweep measurements.",
+            "name": "PA Testing Methods",
+            "description": "PA Testing Methods Power Amplifier (PA) testing methods involve procedures to characterize key performance metrics, primarily focusing on linearity (measured via P1dB, OIP3, and ACPR), gain compression, power added efficiency (PAE), and S-parameters, typically utilizing complex modulated signals from vector signal generators and analyzed by high-speed spectrum analyzers or network analyzers.",
             "urls": [
                 "https://www.youtube.com/watch?v=m-2H8ddSwTI"
+            ]
+        },
+        {
+            "id": "3.2.4",
+            "name": "NF Measurments",
+            "description": "Desensitization Desensitization is a receiver degradation where a strong, unwanted interfering signal drives the receiver's front-end (LNA or mixer) into non-linear operation, causing a significant rise in the effective noise floor and potentially generating intermodulation products, resulting in the masking or \"desensing\" of the weak desired signal.",
+            "urls": [
+                "https://www.youtube.com/watch?v=FrmU_8bf_0Y"
             ]
         },
         {
@@ -1159,7 +1321,7 @@
         {
             "id": "2.4.1",
             "name": "Intermodulation Distortion",
-            "description": "3rd and 5th order products.",
+            "description": "Intermodulation Distortion Intermodulation distortion (IMD) is the generation of unwanted, spurious frequency products (intermods, such as IM3, IM5) that result when two or more distinct input frequencies simultaneously pass through a non-linear active device, like an amplifier or mixer, potentially causing interference if the resulting products fall within or near the desired operating band.",
             "urls": [
                 "https://www.youtube.com/watch?v=Wv4Zq5ty0jM"
             ]
@@ -1167,29 +1329,21 @@
         {
             "id": "2.4.2",
             "name": "Blocking Performance",
-            "description": "Adjacent channel immunity.",
+            "description": "Blocking Performance Blocking performance defines a receiver's ability to maintain sensitivity to a weak desired signal while simultaneously being subjected to a strong, unwanted interference signal (the \"blocker\") tuned to an adjacent or nearby frequency; poor blocking occurs when the blocker drives the LNA or mixer into non-linearity, raising the noise floor or generating IM products that mask the target signal.",
             "urls": [
                 "https://www.youtube.com/watch?v=FrmU_8bf_0Y"
             ]
         },
         {
-            "id": "2.4.3",
-            "name": "ACPR Measurement",
-            "description": "Output spectral purity.",
-            "urls": [
-                "https://www.youtube.com/watch?v=mco_BJ1mjNo"
-            ]
-        },
-        {
             "id": "2.5.1",
             "name": "PA Efficiency",
-            "description": "PAE and drain efficiency.",
+            "description": "PA Efficiency Power Amplifier (PA) efficiency measures the effectiveness of the PA in converting the DC input power supplied to the device into useful RF output power, often expressed as Power Added Efficiency (PAE) or Drain Efficiency ($\\eta_D$), a critical design parameter, especially for mobile devices, as low efficiency results in wasted battery life and excessive thermal load.",
             "urls": []
         },
         {
             "id": "2.5.2",
             "name": "Thermal Management",
-            "description": "Heat sinks and derating.",
+            "description": "Thermal Management Thermal management involves the design and implementation of methods, such as heat sinks, thermal vias, forced air cooling, and specialized material selection, to control and dissipate the waste heat generated by active RF components, particularly Power Amplifiers, ensuring components operate within safe temperature limits to maintain specified performance, reliability, and lifespan.",
             "urls": [
                 "https://www.youtube.com/watch?v=6EG8_zwxRCI"
             ]
@@ -1197,7 +1351,7 @@
         {
             "id": "2.5.3",
             "name": "Envelope Tracking",
-            "description": "Doherty and supply modulation.",
+            "description": "Envelope Tracking Envelope tracking (ET) is a power supply technique used primarily with RF Power Amplifiers that dynamically adjusts the PA's supply voltage in real-time to match the instantaneous amplitude (envelope) of the modulated signal, significantly improving efficiency compared to fixed-voltage bias, especially when handling high Peak-to-Average Power Ratio (PAPR) signals like OFDM.",
             "urls": [
                 "https://www.youtube.com/watch?v=JWcX2fSxN_w"
             ]
@@ -1257,7 +1411,7 @@
         {
             "id": "2.6.4",
             "name": "Stability Circles",
-            "description": "Feedback and oscillation control.",
+            "description": "Stability Circles Stability circles are graphical representations plotted on the Smith Chart that define the ranges of source and load impedance values which, if presented to the input or output port of an active two-port network (like a transistor), would cause the device to exhibit an unstable response, thereby guiding designers in selecting matching networks to ensure unconditional stability.",
             "urls": [
                 "https://www.youtube.com/watch?v=rUDMo7hwihs"
             ]
@@ -1265,7 +1419,7 @@
         {
             "id": "3.1.1",
             "name": "Occupied Bandwidth (OBW)",
-            "description": "99% power bandwidth.",
+            "description": "Occupied Bandwidth (OBW) Occupied Bandwidth is the frequency range containing a specified percentage (typically 99%) of the total integrated power of a modulated transmission, serving as a regulatory metric that quantifies the actual spectral width consumed by a signal and ensures efficient utilization of the frequency spectrum without undue encroachment on adjacent channels.",
             "urls": [
                 "https://www.youtube.com/watch?v=GmZItI66ToI&pp=ygUOT0JXIG1lYXN1cm1lbnQ%3D"
             ]
@@ -1273,15 +1427,15 @@
         {
             "id": "3.1.2",
             "name": "ACPR/ACLR",
-            "description": "Adjacent channel leakage.",
+            "description": "ACPR/ACLR Adjacent Channel Power Ratio (ACPR) or Adjacent Channel Leakage Ratio (ACLR) is a measure of the leakage power from a desired transmitting channel into its adjacent frequency channels, resulting primarily from non-linear distortion (spectral regrowth) in the Power Amplifier, and is a mandatory metric for regulatory compliance to prevent interference with neighboring users.",
             "urls": [
                 "https://www.youtube.com/watch?v=mco_BJ1mjNo"
             ]
         },
         {
             "id": "3.1.3",
-            "name": "Harmonics & Spurious",
-            "description": "Compliance with spectral limits.",
+            "name": "Harmonics",
+            "description": "Harmonics Harmonics are spectral components that appear at integer multiples (2f, 3f, 4f, etc.) of the fundamental operating frequency, generated due to the inherent non-linear characteristics of active RF components; these must be filtered efficiently to meet regulatory spectral mask standards and avoid polluting the electromagnetic spectrum in higher frequency bands.",
             "urls": [
                 "https://www.youtube.com/watch?v=L8gU74DCuuk"
             ]
@@ -1289,10 +1443,16 @@
         {
             "id": "3.1.4",
             "name": "Phase Noise",
-            "description": "Frequency stability and jitter.",
+            "description": "Phase Noise Phase noise represents rapid, random, short-term fluctuations in the phase of a signal relative to the ideal carrier, typically manifested as spectral skirts around the carrier in the frequency domain, which degrades the achievable Bit Error Rate (BER) in digital systems and limits receiver selectivity by mixing down adjacent channel energy into the desired band.",
             "urls": [
                 "https://www.youtube.com/watch?v=hfgaEjf1154"
             ]
+        },
+        {
+            "id": "3.1.5",
+            "name": "Spurious Emmisions",
+            "description": "Spurious Emmisions Spurious emissions are unintended, non-harmonic signals radiated by a transmitter or generated internally within an RF system that fall outside the authorized channel bandwidth, arising from sources like clock signals, mixing products, or broadband noise; these emissions must be suppressed according to stringent regulatory spectral mask requirements to prevent widespread interference.",
+            "urls": []
         },
         {
             "id": "3.2.1",
@@ -1321,15 +1481,27 @@
         {
             "id": "3.2.4",
             "name": "Desensitization",
-            "description": "In-band interference effects.",
+            "description": "Desensitization Desensitization is a receiver degradation where a strong, unwanted interfering signal drives the receiver's front-end (LNA or mixer) into non-linear operation, causing a significant rise in the effective noise floor and potentially generating intermodulation products, resulting in the masking or \"desensing\" of the weak desired signal.",
             "urls": [
                 "https://www.youtube.com/watch?v=FrmU_8bf_0Y"
             ]
         },
         {
+            "id": "3.3.5",
+            "name": "Eb/N0",
+            "description": "Eb/N0 Eb/N0 (Energy per bit to Noise power spectral density ratio) is a fundamental measure of the energy efficiency in a digital communication system, representing the ratio of the energy contained in one received information bit (Eb) to the noise power in a 1 Hz bandwidth (N0), and directly dictates the theoretical achievable Bit Error Rate (BER) for a given coding scheme.",
+            "urls": []
+        },
+        {
+            "id": "3.3.6",
+            "name": "BER",
+            "description": "BER Bit Error Rate (BER) is the primary measure of quality for digital communication links, defined as the ratio of the number of incorrectly received bits to the total number of bits transmitted over a specified measurement period, and must be minimized through effective link design and error correction coding to meet the required quality of service (QoS).",
+            "urls": []
+        },
+        {
             "id": "3.3.1",
             "name": "BER vs Eb/N0",
-            "description": "Performance curves.",
+            "description": "BER (Bit Error Rate) quantifies the ratio of incorrectly received bits to the total transmitted bits, serving as the primary metric for digital link reliability. $E_b/N_0$ (Energy per bit to Noise power spectral density) is the fundamental theoretical metric representing the energy efficiency and signal quality required to achieve a specific BER, independent of data rate or bandwidth. The relationship is inverse: system performance curves typically demonstrate that increasing the $E_b/N_0$ value exponentially lowers the BER, closer to the theoretical Shannon limit for a given modulation and coding scheme.",
             "urls": [
                 "https://www.youtube.com/watch?v=-qUQrImVZog"
             ]
@@ -1337,7 +1509,7 @@
         {
             "id": "3.3.2",
             "name": "EVM",
-            "description": "Error vector magnitude.",
+            "description": "EVM (Error Vector Magnitude) is a measure of modulation quality, defined as the root mean square (RMS) average of the vector difference between the ideal constellation symbol location and the actual measured symbol location. Expressed typically in percentage or dB, EVM captures the cumulative effects of transmitter impairments—such as phase noise, non-linear amplification, and filter distortion—allowing engineers to quantify the fidelity of the transmitted signal before hard decision decoding occurs.",
             "urls": [
                 "https://www.youtube.com/watch?v=rMVAQsUudSs"
             ]
@@ -1345,7 +1517,7 @@
         {
             "id": "3.3.3",
             "name": "Constellation Analysis",
-            "description": "IQ scatter visualization.",
+            "description": "Constellation analysis is a graphical representation where received modulation symbols are plotted on the complex I/Q plane, with each point ideally corresponding to a specific symbol state (e.g., in QPSK or 64-QAM). By examining the tightness and separation of the symbol clusters, engineers can visually and quantitatively diagnose critical system impairments, including Gaussian noise (which spreads the clusters), phase noise (which smears them angularly), and inadequate filtering or non-linear distortion, which impacts inter-symbol distance.",
             "urls": [
                 "https://www.youtube.com/watch?v=aQd_zBytid8"
             ]
@@ -1353,7 +1525,7 @@
         {
             "id": "3.3.4",
             "name": "Eye Diagram",
-            "description": "Timing and jitter analysis.",
+            "description": "An Eye Diagram is a composite oscilloscopic display created by repeatedly overlapping segments of a received digital data stream, triggered by the symbol clock, used primarily for evaluating the performance of baseband or IF digital signaling. The shape of the resulting \"eye\" reveals critical parameters such as inter-symbol interference (ISI), timing jitter (measured by the horizontal closure), and noise margin (measured by the vertical opening), with the maximum opening point indicating the optimum time for the receiver to sample the signal.",
             "urls": [
                 "https://www.youtube.com/watch?v=qaUGPcPRJLQ"
             ]
@@ -1361,18 +1533,24 @@
         {
             "id": "3.4.1",
             "name": "Throughput",
-            "description": "Measured data rate.",
+            "description": "Throughput is the actual rate at which data is successfully delivered and processed over a communication channel, typically measured in bits per second (bps), representing the realized performance of the system. Unlike the theoretical gross data rate, throughput accounts for various losses and inefficiencies, including protocol overhead, retransmissions due to errors, medium access contention, and processing limitations, thus representing the effective bandwidth available to the end-user application.",
             "urls": [
                 "https://www.youtube.com/watch?v=aTVrSWR2CU4"
             ]
         },
         {
             "id": "3.4.2",
-            "name": "Latency and Jitter",
-            "description": "Timing consistency.",
+            "name": "Jitter",
+            "description": "Jitter refers to the short-term deviation of a signal's significant instants (like the rising or falling edges) from their ideal temporal positions, manifesting as instability in timing critical to digital sampling and clock synchronization. In RF systems, excessive jitter, which can be random or deterministic, degrades the phase noise of synthesized carriers and clocks, reducing the receiver's effective sampling margin and ultimately contributing to higher EVM and increased Bit Error Rate.",
             "urls": [
                 "https://www.youtube.com/watch?v=lGGJv5AWwdo"
             ]
+        },
+        {
+            "id": "3.4.4",
+            "name": "Latency",
+            "description": "Latency, often referred to as delay, is the total time interval between the initiation of a data transfer request and the completion of the delivery of that data or signal across the communication link. It comprises various components, including propagation delay (the physical speed-of-light travel time), serialization delay, buffering delay, and processing time required for encoding and decoding, making it a critical performance metric for real-time and interactive RF systems.",
+            "urls": []
         },
         {
             "id": "3.4.3",
@@ -1595,7 +1773,7 @@
         {
             "id": "6.10",
             "name": "TBD",
-            "description": "MISSING",
+            "description": "TBD (To Be Determined) is a standard placeholder designation used in technical documentation, specifications, and requirements lists to explicitly indicate that a specific value, parameter, design feature, or piece of information has not yet been finalized, measured, or assigned and requires future action or resolution.",
             "urls": [
                 "https://www.youtube.com/watch?v=Pqe2w-aM5_c"
             ]
@@ -2581,6 +2759,18 @@
             "urls": []
         },
         {
+            "source": "4",
+            "target": "4.7",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "4",
+            "target": "4.8",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
             "source": "5",
             "target": "5.1",
             "type": "sub topic",
@@ -2767,8 +2957,56 @@
             "urls": []
         },
         {
+            "source": "1.1.6",
+            "target": "1.1.6.1",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.1.6",
+            "target": "1.1.6.1",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.1.6",
+            "target": "1.1.6.1",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.1.6",
+            "target": "1.1.6.1",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
             "source": "1.1",
             "target": "1.1.7",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.1.7",
+            "target": "1.1.7.1",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.1.7",
+            "target": "1.1.7.1",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.1.7",
+            "target": "1.1.7.1",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.1.7",
+            "target": "1.1.7.1",
             "type": "sub topic",
             "urls": []
         },
@@ -2781,6 +3019,12 @@
         {
             "source": "1.1",
             "target": "1.1.9",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.1.9",
+            "target": "1.1.9.1",
             "type": "sub topic",
             "urls": []
         },
@@ -2863,8 +3107,32 @@
             "urls": []
         },
         {
+            "source": "1.1.1",
+            "target": "1.1.1.1",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.1.1",
+            "target": "1.1.1.2",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
             "source": "1.3",
             "target": "1.3.2",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.3.2",
+            "target": "1.3.2.1",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.3.2",
+            "target": "1.3.2.2",
             "type": "sub topic",
             "urls": []
         },
@@ -2941,8 +3209,26 @@
             "urls": []
         },
         {
+            "source": "1.4.3",
+            "target": "1.4.3.1",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
             "source": "1.4",
             "target": "1.4.4",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.4",
+            "target": "1.4.9",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.4",
+            "target": "1.4.10",
             "type": "sub topic",
             "urls": []
         },
@@ -3056,7 +3342,37 @@
         },
         {
             "source": "1.5",
+            "target": "1.5.7",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.5",
+            "target": "1.5.8",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.5",
+            "target": "1.5.9",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.5",
             "target": "1.5.2",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.5",
+            "target": "1.5.10",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.5",
+            "target": "1.5.11",
             "type": "sub topic",
             "urls": []
         },
@@ -3068,7 +3384,25 @@
         },
         {
             "source": "1.5",
+            "target": "1.5.12",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.5",
+            "target": "1.5.13",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.5",
             "target": "1.5.4",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.5",
+            "target": "1.5.14",
             "type": "sub topic",
             "urls": []
         },
@@ -3206,6 +3540,12 @@
         },
         {
             "source": "1.6",
+            "target": "1.6.7",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "1.6",
             "target": "1.6.6",
             "type": "sub topic",
             "urls": []
@@ -3231,12 +3571,6 @@
         {
             "source": "1.6.6",
             "target": "1.6.6.4",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "2.1",
-            "target": "2.1.1",
             "type": "sub topic",
             "urls": []
         },
@@ -3291,6 +3625,12 @@
         {
             "source": "2.2",
             "target": "2.2.3",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "3.2",
+            "target": "3.2.4",
             "type": "sub topic",
             "urls": []
         },
@@ -3351,12 +3691,6 @@
         {
             "source": "2.4",
             "target": "2.4.2",
-            "type": "sub topic",
-            "urls": []
-        },
-        {
-            "source": "2.4",
-            "target": "2.4.3",
             "type": "sub topic",
             "urls": []
         },
@@ -3457,6 +3791,12 @@
             "urls": []
         },
         {
+            "source": "3.1",
+            "target": "3.1.5",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
             "source": "3.2",
             "target": "3.2.1",
             "type": "sub topic",
@@ -3477,6 +3817,18 @@
         {
             "source": "3.2",
             "target": "3.2.4",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "3.3",
+            "target": "3.3.5",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "3.3",
+            "target": "3.3.6",
             "type": "sub topic",
             "urls": []
         },
@@ -3513,6 +3865,12 @@
         {
             "source": "3.4",
             "target": "3.4.2",
+            "type": "sub topic",
+            "urls": []
+        },
+        {
+            "source": "3.4",
+            "target": "3.4.4",
             "type": "sub topic",
             "urls": []
         },
