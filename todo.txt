@@ -22,3 +22,5 @@ topics tasks:
 - hebrew lang support
 - add OPENTAP topics
 - review ew video
+- FPGA
+- 

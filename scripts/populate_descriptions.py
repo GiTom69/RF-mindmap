@@ -45,7 +45,12 @@ def main():
         print(f"Error: The file {TOPICS_FILE} was not found.")
         return
 
-    topics_to_update = [topic for topic in topics if topic.get("Description / Key Concepts") == "MISSING"]
+    topics_to_update = []
+    for topic in topics:
+        description = topic.get("Description / Key Concepts", "")
+        if description and "missing" in description.strip().lower():
+            topics_to_update.append(topic)
+
 
     if not topics_to_update:
         print("No topics with 'MISSING' description found. Exiting.")
