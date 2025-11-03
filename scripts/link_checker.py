@@ -9,23 +9,23 @@ from tqdm import tqdm
 def main():
     """
     Main function to run the link sanity check, analyze links using the Gemini API,
-    and generate a Markdown report.
+    and generate a Markdown report with immediate saving after each analysis.
     """
-    print("--- Starting Link Sanity Check Script ---")
+    print("--- Starting Link Sanity Check Script (Optimized with Immediate Save) ---")
 
-    # --- Setup Paths ---
-    # Assumes this script is in 'scripts/', so we go up one level for the project root
+    # --- Configuration and Paths ---
     project_root = Path(__file__).resolve().parent.parent
     data_file = project_root / "data" / "d3_graph_data.json"
     output_file = project_root / "data" / "link_review_report.md"
     env_file = project_root / ".env"
+    TARGET_INTERVAL = 16.0  # seconds
 
     # --- Handle API Key ---
     print(f"Loading API key from {env_file}...")
     load_dotenv(dotenv_path=env_file)
     gemini_key = os.getenv("GEMINI_API_KEY")
     if not gemini_key:
-        print("Error: GEMINI_API_KEY not found in .env file. Please check your configuration.")
+        print("Error: GEMINI_API_KEY not found in .env file.")
         return
 
     # --- Initialize Gemini ---
@@ -46,10 +46,9 @@ def main():
         print(f"Error: The data file was not found at {data_file}.")
         return
     except json.JSONDecodeError:
-        print(f"Error: Could not decode JSON from {data_file}. Please check its format.")
+        print(f"Error: Could not decode JSON from {data_file}.")
         return
 
-    # Create a dictionary for fast node lookups by ID
     node_map = {node['id']: node for node in graph_data.get('nodes', [])}
     links_to_review = graph_data.get('links', [])
     
@@ -59,30 +58,34 @@ def main():
     
     print(f"Found {len(node_map)} nodes and {len(links_to_review)} links to review.")
 
-    # --- Prepare for Report Generation ---
-    report_lines = [
-        "# Link Sanity Check Report",
-        "\nThis report was automatically generated to review the logical soundness of the links in `d3_graph_data.json`.",
-        "\n---"
-    ]
+    # --- Create Initial Report File ---
+    print(f"Initializing report file at {output_file}...")
+    try:
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write("# Link Sanity Check Report\n")
+            f.write("\nThis report was automatically generated to review the logical soundness of the links in `d3_graph_data.json`.\n")
+            f.write("\n---\n")
+    except Exception as e:
+        print(f"Error: Could not create the initial report file: {e}")
+        return
 
-    # --- Iterate and Analyze ---
-    print("Beginning analysis of links... (Note: A ~16 second delay between requests is required to respect API rate limits)")
+    # --- Iterate, Analyze, and Append to Report ---
+    print(f"Beginning analysis... Results will be saved immediately. Target interval: {TARGET_INTERVAL}s.")
     with tqdm(total=len(links_to_review), desc="Analyzing Links") as pbar:
         for link in links_to_review:
+            start_time = time.monotonic()
+
             source_id = link.get('source')
             target_id = link.get('target')
             link_type = link.get('type')
 
-            # Look up full node details
             source_node = node_map.get(source_id)
             target_node = node_map.get(target_id)
 
             if not source_node or not target_node:
                 pbar.update(1)
-                continue # Skip links with non-existent nodes
+                continue
 
-            # Construct the prompt for the Gemini API
             prompt = (
                 'You are a subject matter expert in science and engineering. Your task is to analyze a '
                 'conceptual link between two topics from a mind map and determine its logical soundness.\n\n'
@@ -97,44 +100,48 @@ def main():
                 '1. "confidence": A string, either "High", "Medium", or "Low".\n'
                 '2. "justification": A brief, one-sentence justification for your confidence score.'
             )
-
+            
+            report_block = "" # Initialize an empty string for the report content
             try:
-                # API Call and Response Parsing
                 response = model.generate_content(prompt)
-                
-                # Clean the response text to extract the JSON object
                 cleaned_text = response.text.strip().replace("```json", "").replace("```", "")
                 ai_result = json.loads(cleaned_text)
 
                 confidence = ai_result.get("confidence", "N/A").upper()
                 justification = ai_result.get("justification", "No justification provided.")
 
-                # Format the result for the Markdown report
-                report_lines.append(f"\n### Link: `{source_id}` → `{target_id}` (\"{link_type}\")")
-                report_lines.append(f"- **Source:** {source_node['name']}")
-                report_lines.append(f"- **Target:** {target_node['name']}")
-                report_lines.append(f"- **AI Confidence:** {confidence}")
-                report_lines.append(f"- **Justification:** {justification}")
-                report_lines.append("\n---")
+                report_block = (
+                    f"\n### Link: `{source_id}` → `{target_id}` (\"{link_type}\")\n"
+                    f"- **Source:** {source_node['name']}\n"
+                    f"- **Target:** {target_node['name']}\n"
+                    f"- **AI Confidence:** {confidence}\n"
+                    f"- **Justification:** {justification}\n"
+                    f"\n---\n"
+                )
 
             except Exception as e:
                 print(f"\nAn error occurred while processing link {source_id} -> {target_id}: {e}")
-                report_lines.append(f"\n### Link: `{source_id}` → `{target_id}` (\"{link_type}\")")
-                report_lines.append("- **Error:** Could not get AI analysis for this link.")
-                report_lines.append("\n---")
+                report_block = (
+                    f"\n### Link: `{source_id}` → `{target_id}` (\"{link_type}\")\n"
+                    f"- **Error:** Could not get AI analysis for this link.\n"
+                    f"\n---\n"
+                )
             
-            pbar.update(1)
-            # Rate Limiting: 4 requests/minute = 15s/request. 16s is a safe buffer.
-            time.sleep(16)
+            # --- Append the result to the report file ---
+            try:
+                with open(output_file, 'a', encoding='utf-8') as f:
+                    f.write(report_block)
+            except Exception as e:
+                print(f"Error: Could not append to report file: {e}")
 
-    # --- Generate Markdown Report ---
-    print(f"\nAnalysis complete. Writing report to {output_file}...")
-    try:
-        with open(output_file, 'w', encoding='utf-8') as f:
-            f.write("\n".join(report_lines))
-        print("Report successfully generated.")
-    except Exception as e:
-        print(f"Error writing report file: {e}")
+            pbar.update(1)
+            
+            # Dynamic Delay Logic
+            end_time = time.monotonic()
+            elapsed_time = end_time - start_time
+            delay_needed = TARGET_INTERVAL - elapsed_time
+            if delay_needed > 0:
+                time.sleep(delay_needed)
 
     print("\n--- Script Finished ---")
 
