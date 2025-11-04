@@ -1,7 +1,9 @@
 *.env
 venv*
 .vscode
-data/youtube_cache.json
+.\data\**
+!youtube_cache.json
+!d3_graph_data.json
 log.txt
 dump
 __pycache__/

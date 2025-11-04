@@ -149,9 +149,9 @@ def graph_metrics(nodes, links):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python verify_mindmap.py d3_graph_data.json")
-        sys.exit(1)
+    #if len(sys.argv) < 2:
+    #    print("Usage: python verify_mindmap.py d3_graph_data.json")
+    #    sys.exit(1)
 
     nodes, links = load_data(path)
     print(f"Loaded {len(nodes)} nodes and {len(links)} links from {path}")

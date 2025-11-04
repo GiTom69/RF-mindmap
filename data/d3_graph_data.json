@@ -67,7 +67,7 @@
     {
       "id": "1.1.6.1",
       "name": "ASK",
-      "description": "MISSING.",
+      "description": "Amplitude-shift keying (ASK) is a digital modulation technique that transmits digital data by changing the amplitude of a carrier wave. In its simplest form (binary ASK), a digital '1' is represented by a high-amplitude carrier wave, and a '0' is represented by the absence of a signal (zero amplitude). This method is often used in simple, low-cost applications like garage door openers and RFID tags.",
       "urls": []
     },
     {
@@ -79,7 +79,7 @@
     {
       "id": "1.1.7.1",
       "name": "OFDM",
-      "description": "MISSING.",
+      "description": "OFDM (Orthogonal Frequency-Division Multiplexing) is a digital modulation technique that splits a high-speed data stream into many parallel, lower-speed sub-streams. Each sub-stream is transmitted on a different, equally spaced sub-carrier frequency. The sub-carriers are made 'orthogonal' so they overlap without interfering with each other, which makes the system highly resistant to frequency-selective fading and spectrally efficient.",
       "urls": []
     },
     {
@@ -784,7 +784,7 @@
     },
     {
       "id": "1.3.3.3",
-      "name": "and adaptive methods",
+      "name": "Adaptive equalization",
       "description": "Adaptive equalization methods allow the equalizer coefficients (taps) to continuously adjust over time based on real-time channel estimation and tracking algorithms, such as Least Mean Squares (LMS) or Recursive Least Squares (RLS). This adaptation is essential in mobile communication environments where channel characteristics, determined by motion and fading, vary rapidly, ensuring the receiver maintains optimal performance.",
       "urls": []
     },
@@ -855,12 +855,6 @@
       "urls": [
         "https://www.youtube.com/watch?v=O2GqyJxWOGE"
       ]
-    },
-    {
-      "id": "1.4.9",
-      "name": "LO leakage",
-      "description": "LO leakage occurs when the powerful Local Oscillator signal couples unintentionally from the mixer circuitry, most critically exiting through the antenna port or coupling back into the RF input stage. This phenomenon can cause significant issues, including violating regulatory spectral masks (TX leakage), or creating unwanted DC offsets in direct conversion receivers when the leaked signal self-mixes.",
-      "urls": []
     },
     {
       "id": "1.4.10",
@@ -962,12 +956,6 @@
       "id": "1.4.8.2",
       "name": "NF",
       "description": "Noise Figure (NF) is a measure of the degradation of the signal-to-noise ratio (SNR) as a signal passes through a device, quantifying the amount of excess noise added by the component itself relative to an ideal noise source. Minimizing NF is fundamentally important, especially in the receiver front-end (Low Noise Amplifier or LNA), because noise introduced early in the chain is amplified by all subsequent stages, limiting the receiver's sensitivity to weak incoming signals.",
-      "urls": []
-    },
-    {
-      "id": "1.4.8.3",
-      "name": "linearity",
-      "description": "Linearity testing in RF systems determines the point at which an active device’s output power ceases to increase proportionally with its input power, leading to compression and the generation of unwanted intermodulation products. Key linearity test metrics include the 1 dB compression point (P1dB), indicating the onset of gain compression, and the Third-Order Intercept Point (IP3), which models the severity of spectral distortion caused by mixing products falling into the operating band.",
       "urls": []
     },
     {
@@ -1090,8 +1078,8 @@
     },
     {
       "id": "1.6.1.1",
-      "name": "Gain",
-      "description": "Gain is a measure of an antenna’s ability to concentrate transmitted or received energy in a specific direction relative to a hypothetical isotropic radiator (measured in dBi) or a reference dipole (measured in dBd); it is achieved through directional focusing rather than the addition of actual power, resulting in a higher Effective Isotropic Radiated Power (EIRP).",
+      "name": "Antenna Gain",
+      "description": "Antenna Gain is a measure of an antenna’s ability to concentrate transmitted or received energy in a specific direction relative to a hypothetical isotropic radiator (measured in dBi) or a reference dipole (measured in dBd); it is achieved through directional focusing rather than the addition of actual power, resulting in a higher Effective Isotropic Radiated Power (EIRP).",
       "urls": []
     },
     {
@@ -1183,12 +1171,6 @@
       "urls": [
         "https://www.youtube.com/watch?v=YHd5K-zIUT4"
       ]
-    },
-    {
-      "id": "1.6.6.1",
-      "name": "Gain",
-      "description": "Gain measurement determines the antenna's directivity efficiency by comparing its received or transmitted power density against a theoretical isotropic source or a calibrated standard antenna, typically requiring precise positioning and power level control in a far-field test range.",
-      "urls": []
     },
     {
       "id": "1.6.6.2",
@@ -2346,20 +2328,8 @@
     },
     {
       "source": "6.8",
-      "target": "6.5",
-      "type": "interacts with",
-      "urls": []
-    },
-    {
-      "source": "6.8",
       "target": "6.10",
       "type": "modeled in",
-      "urls": []
-    },
-    {
-      "source": "6.9",
-      "target": "4.4",
-      "type": "depends on",
       "urls": []
     },
     {
@@ -2466,12 +2436,6 @@
     },
     {
       "source": "7.3",
-      "target": "4.4",
-      "type": "verified by",
-      "urls": []
-    },
-    {
-      "source": "7.3",
       "target": "4.6",
       "type": "applied to",
       "urls": []
@@ -2520,25 +2484,7 @@
     },
     {
       "source": "2",
-      "target": "2.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "2",
       "target": "2.2",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "2",
-      "target": "2.2",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "2",
-      "target": "2.3",
       "type": "sub topic",
       "urls": []
     },
@@ -2694,12 +2640,6 @@
     },
     {
       "source": "6",
-      "target": "6.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "6",
       "target": "6.11",
       "type": "sub topic",
       "urls": []
@@ -2843,44 +2783,8 @@
       "urls": []
     },
     {
-      "source": "1.1.6",
-      "target": "1.1.6.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.1.6",
-      "target": "1.1.6.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.1.6",
-      "target": "1.1.6.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
       "source": "1.1",
       "target": "1.1.7",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.1.7",
-      "target": "1.1.7.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.1.7",
-      "target": "1.1.7.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.1.7",
-      "target": "1.1.7.1",
       "type": "sub topic",
       "urls": []
     },
@@ -3102,12 +3006,6 @@
     },
     {
       "source": "1.4",
-      "target": "1.4.9",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.4",
       "target": "1.4.10",
       "type": "sub topic",
       "urls": []
@@ -3199,12 +3097,6 @@
     {
       "source": "1.4.8",
       "target": "1.4.8.2",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.4.8",
-      "target": "1.4.8.3",
       "type": "sub topic",
       "urls": []
     },
@@ -3323,12 +3215,6 @@
       "urls": []
     },
     {
-      "source": "1.6",
-      "target": "1.6.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
       "source": "1.6.1",
       "target": "1.6.1.1",
       "type": "sub topic",
@@ -3349,12 +3235,6 @@
     {
       "source": "1.6.1",
       "target": "1.6.1.4",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6",
-      "target": "1.6.2",
       "type": "sub topic",
       "urls": []
     },
@@ -3427,12 +3307,6 @@
     {
       "source": "1.6",
       "target": "1.6.6",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.6",
-      "target": "1.6.6.1",
       "type": "sub topic",
       "urls": []
     },
@@ -3523,18 +3397,6 @@
     {
       "source": "2.3",
       "target": "2.3.2",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.2",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.3",
       "type": "sub topic",
       "urls": []
     },
@@ -3691,12 +3553,6 @@
     {
       "source": "3.2",
       "target": "3.2.3",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "3.2",
-      "target": "3.2.4",
       "type": "sub topic",
       "urls": []
     },
@@ -4312,11 +4168,6 @@
       "type": "sub topic"
     },
     {
-      "source": "2",
-      "target": "2.7",
-      "type": "sub topic"
-    },
-    {
       "source": "2.7",
       "target": "2.1.2",
       "type": "sub topic"
@@ -4340,11 +4191,6 @@
       "source": "6.15",
       "target": "2.8",
       "type": "affects"
-    },
-    {
-      "source": "2",
-      "target": "2.8",
-      "type": "sub topic"
     },
     {
       "source": "2",
@@ -4382,11 +4228,6 @@
       "type": "sub topic"
     },
     {
-      "source": "2",
-      "target": "2.9",
-      "type": "sub topic"
-    },
-    {
       "source": "2.9",
       "target": "2.3.1",
       "type": "sub topic"
@@ -4394,16 +4235,6 @@
     {
       "source": "2.9",
       "target": "2.3.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.3",
       "type": "sub topic"
     },
     {
@@ -4437,11 +4268,6 @@
       "type": "sub topic"
     },
     {
-      "source": "6",
-      "target": "6.16",
-      "type": "sub topic"
-    },
-    {
       "source": "6.16",
       "target": "6.1.1",
       "type": "sub topic"
@@ -4462,43 +4288,8 @@
       "type": "sub topic"
     },
     {
-      "source": "1.1.6",
-      "target": "1.1.6.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.6",
-      "target": "1.1.6.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.6",
-      "target": "1.1.6.2",
-      "type": "sub topic"
-    },
-    {
       "source": "1.1.7",
       "target": "1.1.7.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.7",
-      "target": "1.1.7.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.7",
-      "target": "1.1.7.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.7",
-      "target": "1.1.7.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6",
-      "target": "1.6.8",
       "type": "sub topic"
     },
     {
@@ -4524,11 +4315,6 @@
     {
       "source": "1.6.8",
       "target": "1.6.1.4",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6",
-      "target": "1.6.9",
       "type": "sub topic"
     },
     {
@@ -4572,16 +4358,6 @@
       "type": "sub topic"
     },
     {
-      "source": "3.2",
-      "target": "3.2.5",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.5",
-      "type": "sub topic"
-    },
-    {
       "source": "2.3",
       "target": "2.3.5",
       "type": "sub topic"
@@ -4592,22 +4368,7 @@
       "type": "sub topic"
     },
     {
-      "source": "2.9",
-      "target": "2.3.5",
-      "type": "sub topic"
-    },
-    {
       "source": "2.3",
-      "target": "2.3.6",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.6",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
       "target": "2.3.6",
       "type": "sub topic"
     },
