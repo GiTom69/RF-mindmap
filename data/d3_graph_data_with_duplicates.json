@@ -1,174 +1,6 @@
 {
   "nodes": [
     {
-      "id": "2.1",
-      "name": "System-level design",
-      "description": "System-level design is the foundational phase of engineering where the entire functional architecture of a complex electronic or RF product is defined and partitioned into major subsystems. This process involves establishing top-level performance requirements, allocating critical budgets—such as power consumption, noise figure, link margin, and dynamic range—across the defined blocks (e.g., transceivers, processors, power management units). Key activities include defining standardized internal interfaces, managing system complexity, and executing crucial trade-off analyses (e.g., latency vs. throughput, cost vs. component linearity) to ensure that the integrated solution meets overall mission specifications and provides a verified, feasible blueprint for subsequent detailed component-level implementation.",
-      "urls": [
-        "https://www.youtube.com/watch?v=swjgr4YBhRM"
-      ]
-    },
-    {
-      "id": "2.7",
-      "name": "Link Budget Analysis",
-      "description": "Power balance across the communication path.",
-      "urls": [
-        "https://www.youtube.com/watch?v=swjgr4YBhRM"
-      ]
-    },
-    {
-      "id": "2.2",
-      "name": "analysis",
-      "description": "The systematic process of examining complex electrical systems, circuits, and electromagnetic wave propagation using mathematical models and fundamental engineering laws, including Kirchhoff's laws, Maxwell's equations, and network theory. In RF and high-speed electrical engineering, techniques such as S-parameter derivation, Fourier transformation, steady-state and transient response modeling, and impedance matching calculations are crucial for predicting system performance metrics like gain, bandwidth, noise figure, and stability. This predictive characterization is essential for validating system architecture, optimizing component selection, and ensuring compliance with established performance specifications across the frequency spectrum.",
-      "urls": [
-        "https://www.youtube.com/watch?v=30dWNYNzjfI"
-      ]
-    },
-    {
-      "id": "2.8",
-      "name": "Dynamic Range and Linearity",
-      "description": "System linearity and compression performance.",
-      "urls": [
-        "https://www.youtube.com/watch?v=30dWNYNzjfI"
-      ]
-    },
-    {
-      "id": "2.3",
-      "name": "and performance optimization",
-      "description": "Noise performance in RF systems quantifies the system's ability to receive and process weak signals relative to the inherent electrical noise. Key metrics include Noise Figure (NF), which measures the degradation of the signal-to-noise ratio (SNR) caused by components, and system sensitivity, which dictates the minimum detectable signal power. Optimizing noise performance, particularly in the receiver front-end, is crucial for maximizing range, data rates, and overall link quality.",
-      "urls": [
-        "https://www.youtube.com/watch?v=_-AkINSPkhw"
-      ]
-    },
-    {
-      "id": "2.9",
-      "name": "Noise Performance",
-      "description": "Noise performance in RF systems quantifies the system's ability to receive and process weak signals relative to the inherent electrical noise. Key metrics include Noise Figure (NF), which measures the degradation of the signal-to-noise ratio (SNR) caused by components, and system sensitivity, which dictates the minimum detectable signal power. Optimizing noise performance, particularly in the receiver front-end, is crucial for maximizing range, data rates, and overall link quality.",
-      "urls": [
-        "https://www.youtube.com/watch?v=_-AkINSPkhw"
-      ]
-    },
-    {
-      "id": "6.1",
-      "name": "MIMO and Beamforming",
-      "description": "Simulation & Modeling Simulation and modeling involve using mathematical representations and specialized software tools, such as MATLAB, Keysight ADS, or Ansys HFSS, to predict and analyze the behavior of RF circuits, components, channels, and full communication systems before physical fabrication. This crucial phase allows engineers to rapidly optimize design parameters, assess the impact of non-linearities, estimate link budget performance, and validate complex signal processing algorithms, thereby accelerating development cycles and minimizing hardware prototyping costs.",
-      "urls": [
-        "https://www.youtube.com/watch?v=g84f4mP0u30"
-      ]
-    },
-    {
-      "id": "6.16",
-      "name": "Simulation & Modeling",
-      "description": "Simulation & Modeling Simulation and modeling involve using mathematical representations and specialized software tools, such as MATLAB, Keysight ADS, or Ansys HFSS, to predict and analyze the behavior of RF circuits, components, channels, and full communication systems before physical fabrication. This crucial phase allows engineers to rapidly optimize design parameters, assess the impact of non-linearities, estimate link budget performance, and validate complex signal processing algorithms, thereby accelerating development cycles and minimizing hardware prototyping costs.",
-      "urls": [
-        "https://www.youtube.com/watch?v=g84f4mP0u30"
-      ]
-    },
-    {
-      "id": "1.1.6.1",
-      "name": "ASK",
-      "description": "MISSING.",
-      "urls": []
-    },
-    {
-      "id": "1.1.6.2",
-      "name": "QAM",
-      "description": "QAM Quadrature Amplitude Modulation (QAM) is a high-order digital modulation scheme that simultaneously varies both the amplitude and the phase of the carrier signal, representing digital symbols as points on the complex I/Q plane. By combining both parameters, QAM systems (e.g., 16-QAM, 64-QAM) significantly increase spectral efficiency, allowing higher data rates, but this increased efficiency demands a higher signal-to-noise ratio and makes the system more sensitive to channel non-linearities and noise floor fluctuations.",
-      "urls": []
-    },
-    {
-      "id": "1.1.7.1",
-      "name": "OFDM",
-      "description": "MISSING.",
-      "urls": []
-    },
-    {
-      "id": "1.1.7.2",
-      "name": "NOMA",
-      "description": "NOMA allows multiple users to share the same time/frequency resource block by employing power-domain multiplexing, where distinct power levels are assigned to different users based on their channel conditions. The receiver utilizes Successive Interference Cancellation (SIC) to decode the strongest signal first and then subtract it to decode weaker signals, significantly improving system throughput and spectral efficiency, particularly in scenarios with disparate channel gains.",
-      "urls": []
-    },
-    {
-      "id": "1.6.1",
-      "name": "Antenna theory",
-      "description": "Antenna Parameters are quantitative metrics used to characterize the operational performance and suitability of an antenna for a specific communication link or system. Essential parameters include gain (directional power increase), directivity, radiation pattern (defining spatial energy distribution), efficiency, polarization, operating bandwidth, and impedance matching (quantified by S11 or VSWR).",
-      "urls": [
-        "https://www.youtube.com/watch?v=YHd5K-zIUT4"
-      ]
-    },
-    {
-      "id": "1.6.8",
-      "name": "Antenna Parameters",
-      "description": "Antenna Parameters are quantitative metrics used to characterize the operational performance and suitability of an antenna for a specific communication link or system. Essential parameters include gain (directional power increase), directivity, radiation pattern (defining spatial energy distribution), efficiency, polarization, operating bandwidth, and impedance matching (quantified by S11 or VSWR).",
-      "urls": [
-        "https://www.youtube.com/watch?v=YHd5K-zIUT4"
-      ]
-    },
-    {
-      "id": "1.6.2",
-      "name": "Antenna design",
-      "description": "Antenna Types refers to the fundamental physical structures and architectures used to radiate electromagnetic energy, such as apertures, wires, microstrip patches, and arrays, where the specific type selected is optimized based on criteria like operating frequency, required physical size, environmental ruggedness, and desired directivity characteristics.",
-      "urls": [
-        "https://www.youtube.com/watch?v=eiVrfq10BFE"
-      ]
-    },
-    {
-      "id": "1.6.9",
-      "name": "Antenna Types",
-      "description": "Antenna Types refers to the fundamental physical structures and architectures used to radiate electromagnetic energy, such as apertures, wires, microstrip patches, and arrays, where the specific type selected is optimized based on criteria like operating frequency, required physical size, environmental ruggedness, and desired directivity characteristics.",
-      "urls": [
-        "https://www.youtube.com/watch?v=eiVrfq10BFE"
-      ]
-    },
-    {
-      "id": "3.2.4",
-      "name": "NF Measurments",
-      "description": "Desensitization Desensitization is a receiver degradation where a strong, unwanted interfering signal drives the receiver's front-end (LNA or mixer) into non-linear operation, causing a significant rise in the effective noise floor and potentially generating intermodulation products, resulting in the masking or \"desensing\" of the weak desired signal.",
-      "urls": [
-        "https://www.youtube.com/watch?v=FrmU_8bf_0Y"
-      ]
-    },
-    {
-      "id": "3.2.5",
-      "name": "Desensitization",
-      "description": "Desensitization Desensitization is a receiver degradation where a strong, unwanted interfering signal drives the receiver's front-end (LNA or mixer) into non-linear operation, causing a significant rise in the effective noise floor and potentially generating intermodulation products, resulting in the masking or \"desensing\" of the weak desired signal.",
-      "urls": [
-        "https://www.youtube.com/watch?v=FrmU_8bf_0Y"
-      ]
-    },
-    {
-      "id": "2.3.2",
-      "name": "cascaded effects",
-      "description": "Cascaded effects describe how performance parameters, primarily gain, noise figure, and linearity (IP3), combine when multiple RF stages are connected in series. The Friis formulas govern these effects, showing that the overall system noise figure is heavily dominated by the noise and gain of the first stage, while the system's linearity (IP3) is often constrained by the lowest compression point occurring in subsequent high-gain stages.",
-      "urls": [
-        "https://www.youtube.com/watch?v=xYXWRPDVYoE"
-      ]
-    },
-    {
-      "id": "2.3.5",
-      "name": "Thermal Noise",
-      "description": "Cascaded effects describe how performance parameters, primarily gain, noise figure, and linearity (IP3), combine when multiple RF stages are connected in series. The Friis formulas govern these effects, showing that the overall system noise figure is heavily dominated by the noise and gain of the first stage, while the system's linearity (IP3) is often constrained by the lowest compression point occurring in subsequent high-gain stages.",
-      "urls": [
-        "https://www.youtube.com/watch?v=xYXWRPDVYoE"
-      ]
-    },
-    {
-      "id": "2.3.3",
-      "name": "measurement",
-      "description": "Measurement in RF engineering involves the precise characterization of components and system performance parameters, utilizing specialized instrumentation like VNAs, spectrum analyzers, and noise figure meters, to ensure designs meet specification and standards. Key parameters measured include gain, impedance matching (S-parameters), power output (P1dB), noise figure, and spectral purity (harmonics and spurious emissions), forming the basis for design verification and quality control.",
-      "urls": [
-        "https://www.youtube.com/watch?v=_FWgvvoPmQQ"
-      ]
-    },
-    {
-      "id": "2.3.6",
-      "name": "Friis Formula",
-      "description": "Measurement in RF engineering involves the precise characterization of components and system performance parameters, utilizing specialized instrumentation like VNAs, spectrum analyzers, and noise figure meters, to ensure designs meet specification and standards. Key parameters measured include gain, impedance matching (S-parameters), power output (P1dB), noise figure, and spectral purity (harmonics and spurious emissions), forming the basis for design verification and quality control.",
-      "urls": [
-        "https://www.youtube.com/watch?v=_FWgvvoPmQQ"
-      ]
-    },
-    {
       "id": "1",
       "name": "RF Communications Fundamentals",
       "description": "Foundational concepts in RF communication systems.",
@@ -226,6 +58,54 @@
       "description": "RF system design is fundamentally governed by parameters such as Link Budget analysis, which calculates the total gain and loss from transmitter to receiver to ensure adequate Signal-to-Noise Ratio (SNR) or Bit Error Rate (BER) for reliable communication. Key electrical specifications include transmit power (EIRP/ERP), receiver sensitivity (minimum detectable signal), noise figure (NF), and dynamic range, all of which directly impact the achievable communication distance and data rate. Other critical factors involve frequency allocation, channel bandwidth, antenna gain and pattern, and regulatory compliance (e.g., FCC, ETSI limits) concerning spurious emissions and maximum power output, defining the practical and legal boundaries of the system's performance.",
       "urls": [
         "https://www.youtube.com/watch?v=tpuCxGu-PXY"
+      ]
+    },
+    {
+      "id": "2.1",
+      "name": "System-level design",
+      "description": "System-level design is the foundational phase of engineering where the entire functional architecture of a complex electronic or RF product is defined and partitioned into major subsystems. This process involves establishing top-level performance requirements, allocating critical budgets—such as power consumption, noise figure, link margin, and dynamic range—across the defined blocks (e.g., transceivers, processors, power management units). Key activities include defining standardized internal interfaces, managing system complexity, and executing crucial trade-off analyses (e.g., latency vs. throughput, cost vs. component linearity) to ensure that the integrated solution meets overall mission specifications and provides a verified, feasible blueprint for subsequent detailed component-level implementation.",
+      "urls": [
+        "https://www.youtube.com/watch?v=swjgr4YBhRM"
+      ]
+    },
+    {
+      "id": "2.1",
+      "name": "Link Budget Analysis",
+      "description": "Power balance across the communication path.",
+      "urls": [
+        "https://www.youtube.com/watch?v=swjgr4YBhRM"
+      ]
+    },
+    {
+      "id": "2.2",
+      "name": "analysis",
+      "description": "The systematic process of examining complex electrical systems, circuits, and electromagnetic wave propagation using mathematical models and fundamental engineering laws, including Kirchhoff's laws, Maxwell's equations, and network theory. In RF and high-speed electrical engineering, techniques such as S-parameter derivation, Fourier transformation, steady-state and transient response modeling, and impedance matching calculations are crucial for predicting system performance metrics like gain, bandwidth, noise figure, and stability. This predictive characterization is essential for validating system architecture, optimizing component selection, and ensuring compliance with established performance specifications across the frequency spectrum.",
+      "urls": [
+        "https://www.youtube.com/watch?v=30dWNYNzjfI"
+      ]
+    },
+    {
+      "id": "2.2",
+      "name": "Dynamic Range and Linearity",
+      "description": "System linearity and compression performance.",
+      "urls": [
+        "https://www.youtube.com/watch?v=30dWNYNzjfI"
+      ]
+    },
+    {
+      "id": "2.3",
+      "name": "and performance optimization",
+      "description": "Noise performance in RF systems quantifies the system's ability to receive and process weak signals relative to the inherent electrical noise. Key metrics include Noise Figure (NF), which measures the degradation of the signal-to-noise ratio (SNR) caused by components, and system sensitivity, which dictates the minimum detectable signal power. Optimizing noise performance, particularly in the receiver front-end, is crucial for maximizing range, data rates, and overall link quality.",
+      "urls": [
+        "https://www.youtube.com/watch?v=_-AkINSPkhw"
+      ]
+    },
+    {
+      "id": "2.3",
+      "name": "Noise Performance",
+      "description": "Noise performance in RF systems quantifies the system's ability to receive and process weak signals relative to the inherent electrical noise. Key metrics include Noise Figure (NF), which measures the degradation of the signal-to-noise ratio (SNR) caused by components, and system sensitivity, which dictates the minimum detectable signal power. Optimizing noise performance, particularly in the receiver front-end, is crucial for maximizing range, data rates, and overall link quality.",
+      "urls": [
+        "https://www.youtube.com/watch?v=_-AkINSPkhw"
       ]
     },
     {
@@ -435,6 +315,22 @@
       ]
     },
     {
+      "id": "6.1",
+      "name": "MIMO and Beamforming",
+      "description": "Simulation & Modeling Simulation and modeling involve using mathematical representations and specialized software tools, such as MATLAB, Keysight ADS, or Ansys HFSS, to predict and analyze the behavior of RF circuits, components, channels, and full communication systems before physical fabrication. This crucial phase allows engineers to rapidly optimize design parameters, assess the impact of non-linearities, estimate link budget performance, and validate complex signal processing algorithms, thereby accelerating development cycles and minimizing hardware prototyping costs.",
+      "urls": [
+        "https://www.youtube.com/watch?v=g84f4mP0u30"
+      ]
+    },
+    {
+      "id": "6.1",
+      "name": "Simulation & Modeling",
+      "description": "Simulation & Modeling Simulation and modeling involve using mathematical representations and specialized software tools, such as MATLAB, Keysight ADS, or Ansys HFSS, to predict and analyze the behavior of RF circuits, components, channels, and full communication systems before physical fabrication. This crucial phase allows engineers to rapidly optimize design parameters, assess the impact of non-linearities, estimate link budget performance, and validate complex signal processing algorithms, thereby accelerating development cycles and minimizing hardware prototyping costs.",
+      "urls": [
+        "https://www.youtube.com/watch?v=g84f4mP0u30"
+      ]
+    },
+    {
       "id": "6.11",
       "name": "Non-Terrestrial Networks (NTN)",
       "description": "Non-Terrestrial Networks (NTN) integrate communication systems operating from space (satellites) or high altitude platforms (HAPS) with traditional terrestrial infrastructure to provide ubiquitous global connectivity, particularly in remote or underserved areas. Key challenges involve managing extremely long link distances, significant Doppler shifts, atmospheric attenuation, and ensuring seamless handoffs between terrestrial and non-terrestrial components.",
@@ -615,9 +511,57 @@
       ]
     },
     {
+      "id": "1.1.6.1",
+      "name": "ASK",
+      "description": "MISSING.",
+      "urls": []
+    },
+    {
+      "id": "1.1.6.1",
+      "name": "FSK",
+      "description": "MISSING.",
+      "urls": []
+    },
+    {
+      "id": "1.1.6.1",
+      "name": "PSK",
+      "description": "Phase Shift Keying (PSK) is a highly common digital modulation scheme that transmits data by varying the phase of the carrier wave while maintaining constant amplitude and frequency. By utilizing multiple phase states (e.g., BPSK, QPSK, 8-PSK), higher data rates can be achieved per Hertz of bandwidth, though coherent detection is often required, making synchronization critical.",
+      "urls": []
+    },
+    {
+      "id": "1.1.6.1",
+      "name": "QAM",
+      "description": "QAM Quadrature Amplitude Modulation (QAM) is a high-order digital modulation scheme that simultaneously varies both the amplitude and the phase of the carrier signal, representing digital symbols as points on the complex I/Q plane. By combining both parameters, QAM systems (e.g., 16-QAM, 64-QAM) significantly increase spectral efficiency, allowing higher data rates, but this increased efficiency demands a higher signal-to-noise ratio and makes the system more sensitive to channel non-linearities and noise floor fluctuations.",
+      "urls": []
+    },
+    {
       "id": "1.1.7",
       "name": "Multicarrier modulation schemes",
       "description": "Multicarrier modulation schemes divide a high-rate data stream into many lower-rate streams, modulating each onto a separate, closely spaced subcarrier. This technique effectively mitigates frequency-selective fading and intersymbol interference (ISI) prevalent in broadband channels, enhancing robustness and spectral efficiency compared to single-carrier systems by allowing simpler equalization in the frequency domain.",
+      "urls": []
+    },
+    {
+      "id": "1.1.7.1",
+      "name": "OFDM",
+      "description": "MISSING.",
+      "urls": []
+    },
+    {
+      "id": "1.1.7.1",
+      "name": "FBMC",
+      "description": "MISSING.",
+      "urls": []
+    },
+    {
+      "id": "1.1.7.1",
+      "name": "UFMC",
+      "description": "Universal Filtered Multi-Carrier (UFMC) is a waveform candidate that filters blocks of subcarriers, or subbands, rather than filtering each individual subcarrier like FBMC or utilizing a cyclic prefix like OFDM. This block-filtering approach yields significantly better spectral containment and lower Out-of-Band Emissions (OOBE) than OFDM, while maintaining lower implementation complexity than full FBMC, optimizing it for short burst transmissions and enabling flexible spectrum allocation.",
+      "urls": []
+    },
+    {
+      "id": "1.1.7.1",
+      "name": "NOMA",
+      "description": "NOMA allows multiple users to share the same time/frequency resource block by employing power-domain multiplexing, where distinct power levels are assigned to different users based on their channel conditions. The receiver utilizes Successive Interference Cancellation (SIC) to decode the strongest signal first and then subtract it to decode weaker signals, significantly improving system throughput and spectral efficiency, particularly in scenarios with disparate channel gains.",
       "urls": []
     },
     {
@@ -1089,6 +1033,22 @@
       ]
     },
     {
+      "id": "1.6.1",
+      "name": "Antenna theory",
+      "description": "Antenna Parameters are quantitative metrics used to characterize the operational performance and suitability of an antenna for a specific communication link or system. Essential parameters include gain (directional power increase), directivity, radiation pattern (defining spatial energy distribution), efficiency, polarization, operating bandwidth, and impedance matching (quantified by S11 or VSWR).",
+      "urls": [
+        "https://www.youtube.com/watch?v=YHd5K-zIUT4"
+      ]
+    },
+    {
+      "id": "1.6.1",
+      "name": "Antenna Parameters",
+      "description": "Antenna Parameters are quantitative metrics used to characterize the operational performance and suitability of an antenna for a specific communication link or system. Essential parameters include gain (directional power increase), directivity, radiation pattern (defining spatial energy distribution), efficiency, polarization, operating bandwidth, and impedance matching (quantified by S11 or VSWR).",
+      "urls": [
+        "https://www.youtube.com/watch?v=YHd5K-zIUT4"
+      ]
+    },
+    {
       "id": "1.6.1.1",
       "name": "Gain",
       "description": "Gain is a measure of an antenna’s ability to concentrate transmitted or received energy in a specific direction relative to a hypothetical isotropic radiator (measured in dBi) or a reference dipole (measured in dBd); it is achieved through directional focusing rather than the addition of actual power, resulting in a higher Effective Isotropic Radiated Power (EIRP).",
@@ -1111,6 +1071,22 @@
       "name": "impedance",
       "description": "impedance is the complex ratio of the voltage to the current at the antenna’s input port, ideally matched to the characteristic impedance of the transmission line (typically 50 Ohms) to minimize signal reflections, characterized by a resistive component and a reactive component, where a purely resistive match results in maximum power transfer.",
       "urls": []
+    },
+    {
+      "id": "1.6.2",
+      "name": "Antenna design",
+      "description": "Antenna Types refers to the fundamental physical structures and architectures used to radiate electromagnetic energy, such as apertures, wires, microstrip patches, and arrays, where the specific type selected is optimized based on criteria like operating frequency, required physical size, environmental ruggedness, and desired directivity characteristics.",
+      "urls": [
+        "https://www.youtube.com/watch?v=eiVrfq10BFE"
+      ]
+    },
+    {
+      "id": "1.6.2",
+      "name": "Antenna Types",
+      "description": "Antenna Types refers to the fundamental physical structures and architectures used to radiate electromagnetic energy, such as apertures, wires, microstrip patches, and arrays, where the specific type selected is optimized based on criteria like operating frequency, required physical size, environmental ruggedness, and desired directivity characteristics.",
+      "urls": [
+        "https://www.youtube.com/watch?v=eiVrfq10BFE"
+      ]
     },
     {
       "id": "1.6.2.1",
@@ -1275,11 +1251,51 @@
       ]
     },
     {
+      "id": "3.2.4",
+      "name": "NF Measurments",
+      "description": "Desensitization Desensitization is a receiver degradation where a strong, unwanted interfering signal drives the receiver's front-end (LNA or mixer) into non-linear operation, causing a significant rise in the effective noise floor and potentially generating intermodulation products, resulting in the masking or \"desensing\" of the weak desired signal.",
+      "urls": [
+        "https://www.youtube.com/watch?v=FrmU_8bf_0Y"
+      ]
+    },
+    {
       "id": "2.3.1",
       "name": "Noise figure",
       "description": "Noise figure (NF) is a measure of the degradation of the signal-to-noise ratio (SNR) caused by a component or system, quantifying the noise contribution added by the device relative to the minimum theoretical thermal noise (kTB) at its input. Expressed as a ratio (F) or in decibels (NF), it is a fundamental metric for receiver design; lower NF values indicate superior noise performance and are essential for maximizing receiver sensitivity and dynamic range.",
       "urls": [
         "https://www.youtube.com/watch?v=_-AkINSPkhw"
+      ]
+    },
+    {
+      "id": "2.3.2",
+      "name": "cascaded effects",
+      "description": "Cascaded effects describe how performance parameters, primarily gain, noise figure, and linearity (IP3), combine when multiple RF stages are connected in series. The Friis formulas govern these effects, showing that the overall system noise figure is heavily dominated by the noise and gain of the first stage, while the system's linearity (IP3) is often constrained by the lowest compression point occurring in subsequent high-gain stages.",
+      "urls": [
+        "https://www.youtube.com/watch?v=xYXWRPDVYoE"
+      ]
+    },
+    {
+      "id": "2.3.2",
+      "name": "Thermal Noise",
+      "description": "Cascaded effects describe how performance parameters, primarily gain, noise figure, and linearity (IP3), combine when multiple RF stages are connected in series. The Friis formulas govern these effects, showing that the overall system noise figure is heavily dominated by the noise and gain of the first stage, while the system's linearity (IP3) is often constrained by the lowest compression point occurring in subsequent high-gain stages.",
+      "urls": [
+        "https://www.youtube.com/watch?v=xYXWRPDVYoE"
+      ]
+    },
+    {
+      "id": "2.3.3",
+      "name": "measurement",
+      "description": "Measurement in RF engineering involves the precise characterization of components and system performance parameters, utilizing specialized instrumentation like VNAs, spectrum analyzers, and noise figure meters, to ensure designs meet specification and standards. Key parameters measured include gain, impedance matching (S-parameters), power output (P1dB), noise figure, and spectral purity (harmonics and spurious emissions), forming the basis for design verification and quality control.",
+      "urls": [
+        "https://www.youtube.com/watch?v=_FWgvvoPmQQ"
+      ]
+    },
+    {
+      "id": "2.3.3",
+      "name": "Friis Formula",
+      "description": "Measurement in RF engineering involves the precise characterization of components and system performance parameters, utilizing specialized instrumentation like VNAs, spectrum analyzers, and noise figure meters, to ensure designs meet specification and standards. Key parameters measured include gain, impedance matching (S-parameters), power output (P1dB), noise figure, and spectral purity (harmonics and spurious emissions), forming the basis for design verification and quality control.",
+      "urls": [
+        "https://www.youtube.com/watch?v=_FWgvvoPmQQ"
       ]
     },
     {
@@ -1458,6 +1474,14 @@
       "id": "3.2.3",
       "name": "blocking",
       "description": "Blocking describes the detrimental effect where a strong, out-of-band interfering signal saturates or pushes the receiver's low-noise amplifier (LNA) or mixer into its non-linear operating region, leading to desensitization. This compression drastically reduces the gain and signal handling capability available for the much weaker desired signal, effectively masking it.",
+      "urls": [
+        "https://www.youtube.com/watch?v=FrmU_8bf_0Y"
+      ]
+    },
+    {
+      "id": "3.2.4",
+      "name": "Desensitization",
+      "description": "Desensitization Desensitization is a receiver degradation where a strong, unwanted interfering signal drives the receiver's front-end (LNA or mixer) into non-linear operation, causing a significant rise in the effective noise floor and potentially generating intermodulation products, resulting in the masking or \"desensing\" of the weak desired signal.",
       "urls": [
         "https://www.youtube.com/watch?v=FrmU_8bf_0Y"
       ]
@@ -4275,346 +4299,6 @@
       "target": "7.3.3",
       "type": "sub topic",
       "urls": []
-    },
-    {
-      "source": "1.2",
-      "target": "2.7",
-      "type": "depends on"
-    },
-    {
-      "source": "1.5",
-      "target": "2.7",
-      "type": "depends on"
-    },
-    {
-      "source": "1.6",
-      "target": "2.7",
-      "type": "depends on"
-    },
-    {
-      "source": "2.7",
-      "target": "3.2",
-      "type": "measured by"
-    },
-    {
-      "source": "5.4",
-      "target": "2.7",
-      "type": "verified by"
-    },
-    {
-      "source": "6.11",
-      "target": "2.7",
-      "type": "depends on"
-    },
-    {
-      "source": "2",
-      "target": "2.7",
-      "type": "sub topic"
-    },
-    {
-      "source": "2",
-      "target": "2.7",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.7",
-      "target": "2.1.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.7",
-      "target": "2.1.3",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.7",
-      "target": "2.1.4",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.8",
-      "target": "3.5",
-      "type": "measured by"
-    },
-    {
-      "source": "6.15",
-      "target": "2.8",
-      "type": "affects"
-    },
-    {
-      "source": "2",
-      "target": "2.8",
-      "type": "sub topic"
-    },
-    {
-      "source": "2",
-      "target": "2.8",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.8",
-      "target": "2.2.1",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.8",
-      "target": "2.2.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.8",
-      "target": "2.2.3",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "3.2",
-      "type": "affects"
-    },
-    {
-      "source": "2.9",
-      "target": "3.3",
-      "type": "affects"
-    },
-    {
-      "source": "2",
-      "target": "2.9",
-      "type": "sub topic"
-    },
-    {
-      "source": "2",
-      "target": "2.9",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.1",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.3",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.3",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.4",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6",
-      "target": "6.16",
-      "type": "extends"
-    },
-    {
-      "source": "6.16",
-      "target": "4.5",
-      "type": "verified by"
-    },
-    {
-      "source": "6.14",
-      "target": "6.16",
-      "type": "extends"
-    },
-    {
-      "source": "6",
-      "target": "6.16",
-      "type": "sub topic"
-    },
-    {
-      "source": "6",
-      "target": "6.16",
-      "type": "sub topic"
-    },
-    {
-      "source": "6.16",
-      "target": "6.1.1",
-      "type": "sub topic"
-    },
-    {
-      "source": "6.16",
-      "target": "6.1.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "6.16",
-      "target": "6.1.3",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.6",
-      "target": "1.1.6.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.6",
-      "target": "1.1.6.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.6",
-      "target": "1.1.6.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.6",
-      "target": "1.1.6.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.7",
-      "target": "1.1.7.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.7",
-      "target": "1.1.7.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.7",
-      "target": "1.1.7.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.1.7",
-      "target": "1.1.7.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6",
-      "target": "1.6.8",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6",
-      "target": "1.6.8",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6.8",
-      "target": "1.6.1.1",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6.8",
-      "target": "1.6.1.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6.8",
-      "target": "1.6.1.3",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6.8",
-      "target": "1.6.1.4",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6",
-      "target": "1.6.9",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6",
-      "target": "1.6.9",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6.9",
-      "target": "1.6.2.1",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6.9",
-      "target": "1.6.2.2",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6.9",
-      "target": "1.6.2.3",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6.9",
-      "target": "1.6.2.4",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6.9",
-      "target": "1.6.2.5",
-      "type": "sub topic"
-    },
-    {
-      "source": "1.6.9",
-      "target": "1.6.2.6",
-      "type": "sub topic"
-    },
-    {
-      "source": "3.2",
-      "target": "3.2.5",
-      "type": "sub topic"
-    },
-    {
-      "source": "3.2",
-      "target": "3.2.5",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.5",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.5",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.5",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.5",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.6",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.6",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.6",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.9",
-      "target": "2.3.6",
-      "type": "sub topic"
     }
   ]
 }
