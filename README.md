@@ -145,7 +145,7 @@ GEMINI_API_KEY=your_gemini_api_key
 ## 🛠️ Technologies
 
 * **Frontend:** D3.js (v7), HTML5, CSS3
-* **Backend Scripts:** Python 3.x
+* **Backend Scripts:** Python 3.10
 * **APIs:** YouTube Data API, Google Gemini AI
 * **Data Format:** CSV
 
