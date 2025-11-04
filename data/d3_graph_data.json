@@ -33,14 +33,6 @@
       ]
     },
     {
-      "id": "2.3",
-      "name": "and performance optimization",
-      "description": "Noise performance in RF systems quantifies the system's ability to receive and process weak signals relative to the inherent electrical noise. Key metrics include Noise Figure (NF), which measures the degradation of the signal-to-noise ratio (SNR) caused by components, and system sensitivity, which dictates the minimum detectable signal power. Optimizing noise performance, particularly in the receiver front-end, is crucial for maximizing range, data rates, and overall link quality.",
-      "urls": [
-        "https://www.youtube.com/watch?v=_-AkINSPkhw"
-      ]
-    },
-    {
       "id": "2.9",
       "name": "Noise Performance",
       "description": "Noise performance in RF systems quantifies the system's ability to receive and process weak signals relative to the inherent electrical noise. Key metrics include Noise Figure (NF), which measures the degradation of the signal-to-noise ratio (SNR) caused by components, and system sensitivity, which dictates the minimum detectable signal power. Optimizing noise performance, particularly in the receiver front-end, is crucial for maximizing range, data rates, and overall link quality.",
@@ -51,7 +43,7 @@
     {
       "id": "6.1",
       "name": "MIMO and Beamforming",
-      "description": "Simulation & Modeling Simulation and modeling involve using mathematical representations and specialized software tools, such as MATLAB, Keysight ADS, or Ansys HFSS, to predict and analyze the behavior of RF circuits, components, channels, and full communication systems before physical fabrication. This crucial phase allows engineers to rapidly optimize design parameters, assess the impact of non-linearities, estimate link budget performance, and validate complex signal processing algorithms, thereby accelerating development cycles and minimizing hardware prototyping costs.",
+      "description": "MISSING",
       "urls": [
         "https://www.youtube.com/watch?v=g84f4mP0u30"
       ]
@@ -89,27 +81,11 @@
       "urls": []
     },
     {
-      "id": "1.6.1",
-      "name": "Antenna theory",
-      "description": "Antenna Parameters are quantitative metrics used to characterize the operational performance and suitability of an antenna for a specific communication link or system. Essential parameters include gain (directional power increase), directivity, radiation pattern (defining spatial energy distribution), efficiency, polarization, operating bandwidth, and impedance matching (quantified by S11 or VSWR).",
-      "urls": [
-        "https://www.youtube.com/watch?v=YHd5K-zIUT4"
-      ]
-    },
-    {
       "id": "1.6.8",
       "name": "Antenna Parameters",
       "description": "Antenna Parameters are quantitative metrics used to characterize the operational performance and suitability of an antenna for a specific communication link or system. Essential parameters include gain (directional power increase), directivity, radiation pattern (defining spatial energy distribution), efficiency, polarization, operating bandwidth, and impedance matching (quantified by S11 or VSWR).",
       "urls": [
         "https://www.youtube.com/watch?v=YHd5K-zIUT4"
-      ]
-    },
-    {
-      "id": "1.6.2",
-      "name": "Antenna design",
-      "description": "Antenna Types refers to the fundamental physical structures and architectures used to radiate electromagnetic energy, such as apertures, wires, microstrip patches, and arrays, where the specific type selected is optimized based on criteria like operating frequency, required physical size, environmental ruggedness, and desired directivity characteristics.",
-      "urls": [
-        "https://www.youtube.com/watch?v=eiVrfq10BFE"
       ]
     },
     {
@@ -960,7 +936,7 @@
     },
     {
       "id": "1.4.8.4",
-      "name": "and S11",
+      "name": "S11",
       "description": "S11 (input reflection coefficient) is one of the complex S-parameters measured via a VNA, specifically quantifying the impedance mismatch at a device's input port relative to the system characteristic impedance, typically 50 ohms. A test result with a low magnitude of S11 (often expressed as high Return Loss or low VSWR) indicates that minimal incident power is reflected back toward the source, ensuring maximum power transfer and minimizing potential standing wave issues.",
       "urls": []
     },
@@ -1186,8 +1162,8 @@
     },
     {
       "id": "1.6.6.4",
-      "name": "and S11 testing",
-      "description": "and S11 testing involves measuring the reflection coefficient ($\\Gamma$) at the input port of the antenna using a Vector Network Analyzer (VNA), where S11 quantifies the reflected power relative to the incident power in dB (return loss), providing a frequency-dependent measure that is mathematically convertible to VSWR.",
+      "name": "S11 testing",
+      "description": "S11 testing involves measuring the reflection coefficient ($\\Gamma$) at the input port of the antenna using a Vector Network Analyzer (VNA), where S11 quantifies the reflected power relative to the incident power in dB (return loss), providing a frequency-dependent measure that is mathematically convertible to VSWR.",
       "urls": []
     },
     {
@@ -2117,18 +2093,6 @@
       "urls": []
     },
     {
-      "source": "2.3",
-      "target": "3.2",
-      "type": "affects",
-      "urls": []
-    },
-    {
-      "source": "2.3",
-      "target": "3.3",
-      "type": "affects",
-      "urls": []
-    },
-    {
       "source": "2.4",
       "target": "3.5",
       "type": "measured by",
@@ -2485,12 +2449,6 @@
     {
       "source": "2",
       "target": "2.2",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "2",
-      "target": "2.3",
       "type": "sub topic",
       "urls": []
     },
@@ -3210,78 +3168,6 @@
     },
     {
       "source": "1.6",
-      "target": "1.6.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.1",
-      "target": "1.6.1.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.1",
-      "target": "1.6.1.2",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.1",
-      "target": "1.6.1.3",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.1",
-      "target": "1.6.1.4",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6",
-      "target": "1.6.2",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.2",
-      "target": "1.6.2.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.2",
-      "target": "1.6.2.2",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.2",
-      "target": "1.6.2.3",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.2",
-      "target": "1.6.2.4",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.2",
-      "target": "1.6.2.5",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6.2",
-      "target": "1.6.2.6",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "1.6",
       "target": "1.6.3",
       "type": "sub topic",
       "urls": []
@@ -3385,30 +3271,6 @@
     {
       "source": "3.2",
       "target": "3.2.4",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.1",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.2",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.3",
-      "type": "sub topic",
-      "urls": []
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.4",
       "type": "sub topic",
       "urls": []
     },
@@ -4358,18 +4220,8 @@
       "type": "sub topic"
     },
     {
-      "source": "2.3",
-      "target": "2.3.5",
-      "type": "sub topic"
-    },
-    {
       "source": "2.9",
       "target": "2.3.5",
-      "type": "sub topic"
-    },
-    {
-      "source": "2.3",
-      "target": "2.3.6",
       "type": "sub topic"
     },
     {
