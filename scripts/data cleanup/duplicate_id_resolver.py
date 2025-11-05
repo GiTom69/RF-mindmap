@@ -14,7 +14,7 @@ import copy
 import re
 from pathlib import Path
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 path = DATA_DIR / "d3_graph_data.json"
 
 def load_data(path):
@@ -155,9 +155,9 @@ def resolve_duplicates(data):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python duplicate_id_resolver.py d3_graph_data.json")
-        sys.exit(1)
+    # if len(sys.argv) < 2:
+    #     print("Usage: python duplicate_id_resolver.py d3_graph_data.json")
+    #     sys.exit(1)
 
     data = load_data(path)
     data = resolve_duplicates(data)
