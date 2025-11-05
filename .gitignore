@@ -2,17 +2,13 @@
 venv*
 .vscode
 .\data\**
-!youtube_cache.json
-!d3_graph_data.json
+
 log.txt
 dump
 __pycache__/
 *.pyc
 how-branch --all
 link_review_report.md
-data/d3_graph_data.json.bak.20251104T142747
-data/Glossary of Electronic Terms used in text_ \[Analog Devices Wiki].json
-data/Glossary of Electronic Terms used in text_ \[Analog Devices Wiki].txt
-data/microwave_acronyms.json
-data/RF-Opedia - Glossary of RF Terms.htm
-data/RF-Opedia - Glossary of RF Terms.json
+data/*
+!data/d3_graph_data.json
+**old**

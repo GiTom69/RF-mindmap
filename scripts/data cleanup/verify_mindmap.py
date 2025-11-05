@@ -53,7 +53,7 @@ def structural_checks(nodes, links):
     # Check for orphan nodes (missing parents based on ID pattern)
     orphans = []
     for n in nodes:
-        if "." in n["id"]:
+        if "." in str(n["id"]):
             parent_id = ".".join(n["id"].split(".")[:-1])
             if parent_id not in ids:
                 orphans.append(n["id"])
@@ -82,7 +82,7 @@ def semantic_checks(nodes, threshold=0.25):
     id_to_node = {n["id"]: n for n in nodes}
     pairs = []
     for node in nodes:
-        if "." in node["id"]:
+        if "." in str(node["id"]):
             parent_id = ".".join(node["id"].split(".")[:-1])
             if parent_id in id_to_node:
                 pairs.append((parent_id, node["id"]))
