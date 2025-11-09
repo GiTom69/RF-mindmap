@@ -1199,12 +1199,6 @@
       "urls": []
     },
     {
-      "id": "48fc4570-eab5-42d6-b2cd-0ae95bcbd5e1",
-      "name": "FUBAR",
-      "description": "f***ed up beyond all repair. One of the two excellent acronyms that are the legacy of the greatest generation (see snafu)",
-      "urls": []
-    },
-    {
       "id": "2c3e806a-3390-4103-8d01-bb511ea73614",
       "name": "G",
       "description": "gravity unit. Measurement of how hard a part will be accelerated.",
@@ -2842,12 +2836,6 @@
       "id": "28e0925e-459d-4daf-a285-df26533d8b97",
       "name": "SNA",
       "description": "scalar network analyzer. Used to measure return loss and gain, magnitude only.",
-      "urls": []
-    },
-    {
-      "id": "edf1a9b0-a1de-4bf4-bb4e-f8d6378caa32",
-      "name": "SNAFU",
-      "description": "situation normal, all f**ed up. One of two excellent acronyms that are the legacy of the greatest generation (see fubar).",
       "urls": []
     },
     {

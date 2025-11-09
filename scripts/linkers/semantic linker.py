@@ -412,8 +412,9 @@ class SemanticLinkGenerator:
     def merge_small_clusters_with_high_level_topics(self, clusters: List[List[int]], 
                                                      high_level_topics: List[Dict]) -> List[Dict]:
         """
-        For small clusters (<10 nodes), if a single high-level topic contains 50%+ of nodes,
-        merge all cluster nodes into that topic.
+        For small clusters (<10 nodes), find the most similar large cluster.
+        If the small cluster has high average similarity to a large cluster topic,
+        merge all small cluster nodes into that topic.
         
         Args:
             clusters: List of clusters (each cluster is list of node indices)
@@ -426,72 +427,114 @@ class SemanticLinkGenerator:
         print("MERGING SMALL CLUSTERS WITH DOMINANT TOPICS")
         print("="*60)
         
-        # Create a mapping of node_id to topic for quick lookup
-        node_to_topics = defaultdict(list)
+        # Create a mapping from cluster indices to topic indices
+        cluster_to_topic = {}
         for topic_idx, topic in enumerate(high_level_topics):
-            for node_id in topic['sub_topics']:
-                node_to_topics[node_id].append(topic_idx)
+            # Find which cluster this topic came from
+            topic_node_ids = set(topic['sub_topics'])
+            for cluster_idx, cluster_indices in enumerate(clusters):
+                cluster_node_ids = set(self.nodes[idx]['id'] for idx in cluster_indices)
+                # If this topic contains all nodes from this cluster, they match
+                if topic_node_ids == cluster_node_ids:
+                    cluster_to_topic[cluster_idx] = topic_idx
+                    break
         
         merged_count = 0
         nodes_added = 0
+        topics_to_remove = set()
         
-        for cluster_indices in clusters:
-            cluster_size = len(cluster_indices)
+        for small_cluster_idx, small_cluster_indices in enumerate(clusters):
+            cluster_size = len(small_cluster_indices)
             
             # Only process small clusters
             if cluster_size >= 10:
                 continue
             
-            # Get node IDs for this cluster
-            cluster_node_ids = [self.nodes[idx]['id'] for idx in cluster_indices]
+            # Find the most similar large cluster
+            best_large_cluster_idx = None
+            best_avg_similarity = 0
+            overlap_count = 0
             
-            # Count how many nodes from this cluster belong to each topic
-            topic_counts = defaultdict(int)
-            for node_id in cluster_node_ids:
-                for topic_idx in node_to_topics[node_id]:
-                    topic_counts[topic_idx] += 1
-            
-            # Check if there's only one topic and it has 50%+ of nodes
-            if len(topic_counts) == 1:
-                topic_idx = list(topic_counts.keys())[0]
-                count = topic_counts[topic_idx]
+            for large_cluster_idx, large_cluster_indices in enumerate(clusters):
+                # Skip if it's the same cluster or also small
+                if large_cluster_idx == small_cluster_idx or len(large_cluster_indices) < 10:
+                    continue
                 
-                if count >= cluster_size / 2:
-                    # Merge: add all cluster nodes to this topic
-                    topic = high_level_topics[topic_idx]
+                # Calculate average similarity between small and large cluster
+                similarities = []
+                for small_idx in small_cluster_indices:
+                    for large_idx in large_cluster_indices:
+                        similarities.append(self.similarity_matrix[small_idx, large_idx])
+                
+                avg_sim = np.mean(similarities) if similarities else 0
+                
+                # Also count how many nodes from small cluster are already in large cluster
+                small_node_ids = set(self.nodes[idx]['id'] for idx in small_cluster_indices)
+                large_node_ids = set(self.nodes[idx]['id'] for idx in large_cluster_indices)
+                current_overlap = len(small_node_ids & large_node_ids)
+                
+                # Update best if this is better
+                if avg_sim > best_avg_similarity or (avg_sim == best_avg_similarity and current_overlap > overlap_count):
+                    best_avg_similarity = avg_sim
+                    best_large_cluster_idx = large_cluster_idx
+                    overlap_count = current_overlap
+            
+            # Check if we found a good match (high similarity threshold)
+            if best_large_cluster_idx is not None and best_avg_similarity >= 0.5:
+                # Get the topic for the large cluster
+                if best_large_cluster_idx in cluster_to_topic:
+                    target_topic_idx = cluster_to_topic[best_large_cluster_idx]
+                    target_topic = high_level_topics[target_topic_idx]
                     
-                    # Find nodes not already in the topic
-                    existing_nodes = set(topic['sub_topics'])
-                    new_nodes = [nid for nid in cluster_node_ids if nid not in existing_nodes]
+                    # Get all nodes from small cluster
+                    small_cluster_node_ids = [self.nodes[idx]['id'] for idx in small_cluster_indices]
+                    
+                    # Find nodes not already in the target topic
+                    existing_nodes = set(target_topic['sub_topics'])
+                    new_nodes = [nid for nid in small_cluster_node_ids if nid not in existing_nodes]
                     
                     if new_nodes:
-                        topic['sub_topics'].extend(new_nodes)
+                        target_topic['sub_topics'].extend(new_nodes)
                         merged_count += 1
                         nodes_added += len(new_nodes)
                         
-                        # Update the node_to_topics mapping
-                        for node_id in new_nodes:
-                            node_to_topics[node_id].append(topic_idx)
+                        # Mark small cluster's topic for removal if it exists
+                        if small_cluster_idx in cluster_to_topic:
+                            topics_to_remove.add(cluster_to_topic[small_cluster_idx])
                         
-                        print(f"Merged cluster ({cluster_size} nodes) into '{topic['name']}'")
+                        small_node_names = [self.nodes[idx]['name'] for idx in small_cluster_indices[:3]]
+                        preview = ", ".join(small_node_names)
+                        if len(small_cluster_indices) > 3:
+                            preview += "..."
+                        
+                        print(f"Merged small cluster ({cluster_size} nodes: {preview})")
+                        print(f"  → into '{target_topic['name']}' (avg similarity: {best_avg_similarity:.3f})")
                         print(f"  Added {len(new_nodes)} new nodes to topic")
+        
+        # Remove topics that were merged into others
+        if topics_to_remove:
+            high_level_topics = [topic for idx, topic in enumerate(high_level_topics) 
+                                if idx not in topics_to_remove]
+            print(f"\nRemoved {len(topics_to_remove)} small topic(s) that were merged")
         
         if merged_count > 0:
             print(f"\nTotal: Merged {merged_count} small clusters, added {nodes_added} nodes to topics")
         else:
-            print("\nNo small clusters met the merging criteria")
+            print("\nNo small clusters met the merging criteria (similarity >= 0.5 with large cluster)")
         
         return high_level_topics
     
-    def create_high_level_topics(self, clusters: List[List[int]]) -> List[Dict]:
+    def create_high_level_topics(self, clusters: List[List[int]], 
+                                apply_merging: bool = True) -> Tuple[List[Dict], List[List[int]]]:
         """
         Create high-level topic structures from clusters.
         
         Args:
             clusters: List of clusters (each cluster is list of node indices)
+            apply_merging: Whether to apply small cluster merging after creation
             
         Returns:
-            List of high-level topic dictionaries
+            Tuple of (high-level topics list, original clusters list)
         """
         print("\n" + "="*60)
         print("GENERATING HIGH-LEVEL TOPICS")
@@ -527,12 +570,10 @@ class SemanticLinkGenerator:
         if len(clusters) > 10:
             print(f"\n... and {len(clusters)-10} more clusters")
         
-        # Apply small cluster merging
-        high_level_topics = self.merge_small_clusters_with_high_level_topics(
-            clusters, high_level_topics
-        )
+        print(f"\nCreated {len(high_level_topics)} initial high-level topics")
         
-        return high_level_topics
+        # Store clusters for later merging
+        return high_level_topics, clusters
     
     def save_with_new_links(self, data: Dict, new_links: List[Dict], output_file: Path,
                            high_level_topics: List[Dict] = None):
