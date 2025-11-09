@@ -153,12 +153,6 @@
       "urls": []
     },
     {
-      "id": "7d8650ec-cb1e-4df6-9495-635dd438f555",
-      "name": "ADC (Concept 1 - ID 9)",
-      "description": "analog to digital converter.",
-      "urls": []
-    },
-    {
       "id": "a442cd75-0c5e-4198-b856-16d0a3375100",
       "name": "ADS",
       "description": "Advanced Design System. Agilient's microwave design tool.",
@@ -280,14 +274,14 @@
     },
     {
       "id": "521ec99c-4deb-4261-8298-5902b1a4fb3b",
-      "name": "AWG",
-      "description": "Abbreviation for Arbitrary Waveform Generator. Abbreviation for American Wire Gauge. B",
+      "name": "AWG (Arbitrary Waveform Generator)",
+      "description": "MISSING",
       "urls": []
     },
     {
       "id": "d4959155-61cf-4ba3-a2cf-3b6af114d017",
-      "name": "AWG (Concept 1 - ID 30)",
-      "description": "American wire gauge. A standard for copper wire diameter.",
+      "name": "AWG (American wire gauge)",
+      "description": "MISSING",
       "urls": []
     },
     {
@@ -318,12 +312,6 @@
       "id": "a8040ef0-3fc0-4673-9599-490a140aa356",
       "name": "BER",
       "description": "BER Bit Error Rate (BER) is the primary measure of quality for digital communication links, defined as the ratio of the number of incorrectly received bits to the total number of bits transmitted over a specified measurement period, and must be minimized through effective link design and error correction coding to meet the required quality of service (QoS).",
-      "urls": []
-    },
-    {
-      "id": "965856b6-10e1-4b7c-8fcf-95f98778bdb8",
-      "name": "BER (Concept 1 - ID 35)",
-      "description": "bit error rate. The number of errors over a given period of time expressed as a percentage.",
       "urls": []
     },
     {
@@ -363,12 +351,6 @@
       "urls": []
     },
     {
-      "id": "f4105cbc-4bb9-47dc-8442-5fdb9ddd2292",
-      "name": "BLUETOOTH",
-      "description": "Bluetooth. A wireless networking convention named after a dead Danish king",
-      "urls": []
-    },
-    {
       "id": "2d82693a-10e5-4b1d-92c4-2ab95e7028b2",
       "name": "BNC",
       "description": "bayonet N-type connector. A type of RF connector from the dark ages (useful only to UHF frequencies).",
@@ -384,12 +366,6 @@
       "id": "610fdbdd-0f35-4412-88ee-f1e1c43af0a7",
       "name": "BPF",
       "description": "A Band Pass Filter (BPF) allows signals within a designated range of frequencies to pass through essentially unimpeded while rapidly rejecting frequencies both above and below the passband. BPFs are typically employed in intermediate frequency (IF) stages and RF front-ends for channel selection, isolating the intended signal from adjacent channels.",
-      "urls": []
-    },
-    {
-      "id": "55ea59cd-2459-4d8b-885e-2c40fd19e558",
-      "name": "BPF (Concept 1 - ID 45)",
-      "description": "band-pass filter. A two-port network that rejects signals outside of a certain frequency band.",
       "urls": []
     },
     {
@@ -444,12 +420,6 @@
       "id": "57a15fcc-d7a3-46da-aab4-e6e3b7cab288",
       "name": "CAD",
       "description": "computer-aided design. Examples: software such as Eagleware and AutoCAD.",
-      "urls": []
-    },
-    {
-      "id": "edc7898f-095f-4473-a3c0-bf344452f7b5",
-      "name": "CAD (Concept 1 - ID 34)",
-      "description": "Abbreviation for “computer aided design”",
       "urls": []
     },
     {
@@ -639,12 +609,6 @@
       "urls": []
     },
     {
-      "id": "6452d696-13f9-412c-82c5-c8b8785b4f2e",
-      "name": "CPW (Concept 1 - ID 85)",
-      "description": "coplanar waveguide. A TEM transmission line media popular for extremely high-frequency (>75 GHz) circuits.",
-      "urls": []
-    },
-    {
       "id": "9f57359b-9958-4012-91bd-da4040980d34",
       "name": "CSO",
       "description": "composite second order (distortion).",
@@ -699,12 +663,6 @@
       "urls": []
     },
     {
-      "id": "bf006310-c964-4f65-bec1-78f9d4e926a9",
-      "name": "DAC (Concept 1 - ID 94)",
-      "description": "digital to analog converter.",
-      "urls": []
-    },
-    {
       "id": "0811359c-624b-48cc-923b-701578ff5933",
       "name": "DAD",
       "description": "not an acronym. The guy who used to fill your gas tank while you were in college studying to be a microwave big shot. Don't wait until father's day to call him.",
@@ -738,12 +696,6 @@
       "id": "f52cfd29-7c64-4e72-9163-82484574221a",
       "name": "DBM",
       "description": "decibel relative to one milliwatt. Log scale that refers to absolute RF power levels. For example, 0 dBm refers to 1 mW, 30 dBm refers to 1 Watt.",
-      "urls": []
-    },
-    {
-      "id": "78743d3a-eee9-48b1-8c83-b34adb501d42",
-      "name": "DBM (Concept 1 - ID 101)",
-      "description": "double balanced mixer. One of many cases of acronym reuse!",
       "urls": []
     },
     {
@@ -870,12 +822,6 @@
       "id": "a11de1a0-c14e-4232-bac7-8b6c7c2ceb14",
       "name": "DSP",
       "description": "DSP Digital Signal Processing involves the application of mathematical algorithms to sampled and digitized signals to perform essential communication functions. In RF systems, DSP handles baseband operations including modulation, demodulation, filtering, equalization, error correction coding, and implementation of complex antenna array techniques, forming the computational core of Software Defined Radios (SDR).",
-      "urls": []
-    },
-    {
-      "id": "198bb6b6-8ff3-45b1-885a-0b4ed3973385",
-      "name": "DSP (Concept 1 - ID 122)",
-      "description": "digital signal processor. What the nerds do with your IF output signal.",
       "urls": []
     },
     {
@@ -1071,12 +1017,6 @@
       "urls": []
     },
     {
-      "id": "1e74cea0-85d3-4b0f-a69a-1b287d8a8c21",
-      "name": "ETSI (Concept 1 - ID 154)",
-      "description": "European Telecommunications Standards Institute.",
-      "urls": []
-    },
-    {
       "id": "8c1523f3-9bc1-4345-a1b1-15e97a11b671",
       "name": "EUT",
       "description": "end user terminal.",
@@ -1157,12 +1097,6 @@
       "urls": []
     },
     {
-      "id": "4141e274-e4f1-496a-bda9-78674091fbeb",
-      "name": "FER (Concept 1 - ID 167)",
-      "description": "Front end receiver OR frame error rate, depending on the context.. A semiconductor device.",
-      "urls": []
-    },
-    {
       "id": "a72745dc-5e45-4db6-82e9-74c057462008",
       "name": "FET",
       "description": "FET, or field effect transistor, has three terminals known as the gate, drain, and the source. It has uses in microwave amplifying and switching.",
@@ -1170,14 +1104,14 @@
     },
     {
       "id": "3806683f-e179-4050-b7b4-bd887c105fec",
-      "name": "FF",
+      "name": "FF (femto-farad)",
       "description": "femto-farad. A unit of capacitance, 10E-15 farads.",
       "urls": []
     },
     {
       "id": "98004434-fe46-47b9-a22c-01276dafd8a5",
-      "name": "FF (Concept 1 - ID 170)",
-      "description": "Far field. A type of antenna measurement",
+      "name": "FF (Far field)",
+      "description": "MISSING",
       "urls": []
     },
     {
@@ -1225,13 +1159,7 @@
     {
       "id": "dd30203b-3d43-49dc-895b-cd531fad5e17",
       "name": "FMCW",
-      "description": "FMCW A radar technique where the transmitted signal is a continuous wave whose frequency is linearly varied over time, or chirped, allowing highly accurate determination of both target range and velocity simultaneously by mixing the received and transmitted signals to measure the resulting beat frequency.",
-      "urls": []
-    },
-    {
-      "id": "c7c5cf17-c09f-4896-aabd-3d24369e275d",
-      "name": "FMCW (Concept 1 - ID 178)",
-      "description": "frequency modulated continuous wave. A type of radar waveform.",
+      "description": "Frequency Modulated Continuous Wave. A radar technique where the transmitted signal is a continuous wave whose frequency is linearly varied over time, or chirped, allowing highly accurate determination of both target range and velocity simultaneously by mixing the received and transmitted signals to measure the resulting beat frequency.",
       "urls": []
     },
     {
@@ -1559,12 +1487,6 @@
       "urls": []
     },
     {
-      "id": "02aab7e8-26e3-4273-8fd8-023faf317bd5",
-      "name": "IC (Concept 1 - ID 233)",
-      "description": "integrated circuit.",
-      "urls": []
-    },
-    {
       "id": "7954e403-0dc2-4756-ada5-df3fcf87055e",
       "name": "ICD",
       "description": "interconnect diagram. A type of block diagram.",
@@ -1604,18 +1526,6 @@
       "id": "8a0234f3-727a-41fd-bd46-d0a6e71874f1",
       "name": "IEEE",
       "description": "IEEE The Institute of Electrical and Electronics Engineers is a global professional organization that develops standards across various technological domains, with its 802 committee being highly influential in RF communications. Key IEEE standards include the 802.11 family (Wi-Fi), 802.15 (WPAN/Bluetooth), and standards for Ethernet and wired networks, defining the physical and MAC layer operation of wireless local and metropolitan area networks.",
-      "urls": []
-    },
-    {
-      "id": "af56396f-e5c3-4486-9c01-abe2ade65a0a",
-      "name": "IEEE (Concept 1 - ID 240)",
-      "description": "Institute of Electrical and Electronics Engineers. The subgroup MTT-S hosts an annual gathering of all things microwaves, publishes a lot of excellent but often hard-to-read microwave-related papers, and is helping to review some of our MW101 articles.",
-      "urls": []
-    },
-    {
-      "id": "2fcadadd-ae3a-45f2-afc8-5db5b8437ba6",
-      "name": "IEEE (Concept 2 - ID 619)",
-      "description": "An acronym for Institute of Electrical and Electronics Engineers. IEEE sets many of the standards in the fields of electronics.",
       "urls": []
     },
     {
@@ -1663,13 +1573,7 @@
     {
       "id": "f0f25bd7-3222-450a-a63d-9bee81184b58",
       "name": "IMD",
-      "description": "IMD Intermodulation Distortion (IMD) occurs when two or more distinct frequencies ($\\text{f}_1, \\text{f}_2$) pass through a non-linear device, resulting in the creation of spurious output frequencies that are linear combinations of the input frequencies ($m\\text{f}_1 \\pm n\\text{f}_2$). Third-order intermodulation products ($\\text{IM}_3$) are the most problematic because they fall close to the desired operational bandwidth, leading to unwanted spectral energy, receiver desensitization, and adjacent channel interference.",
-      "urls": []
-    },
-    {
-      "id": "9f9890f7-eec5-4814-bcc7-bffc39666776",
-      "name": "IMD (Concept 1 - ID 248)",
-      "description": "intermodulation distortion. Often refers to \"TOI\".",
+      "description": "Intermodulation Distortion (IMD) occurs when two or more distinct frequencies ($\\text{f}_1, \\text{f}_2$) pass through a non-linear device, resulting in the creation of spurious output frequencies that are linear combinations of the input frequencies ($m\\text{f}_1 \\pm n\\text{f}_2$). Third-order intermodulation products ($\\text{IM}_3$) are the most problematic because they fall close to the desired operational bandwidth, leading to unwanted spectral energy, receiver desensitization, and adjacent channel interference.",
       "urls": []
     },
     {
@@ -1843,12 +1747,6 @@
       ]
     },
     {
-      "id": "f79e5830-3684-49cf-b762-089dd1e9f303",
-      "name": "LNA (Concept 1 - ID 277)",
-      "description": "low noise amplifier. A low noise amplifier has good noise figure, but limited power handling. Used in a receiver.",
-      "urls": []
-    },
-    {
       "id": "d869ff15-9e76-44d9-a1e4-98ed8c56cf4b",
       "name": "LNB",
       "description": "low noise block. Downconverter module consisting of a low noise amplifier and a mixer. Often used to describe the first section of a receiver.",
@@ -1876,12 +1774,6 @@
       "id": "8aadc3e3-ef33-47f6-9431-5766e368db2f",
       "name": "LPF",
       "description": "A Low Pass Filter (LPF) allows frequencies from DC up to a specified cutoff frequency to pass while attenuating higher frequencies. LPFs are critical in RF systems for smoothing modulation waveforms, removing unwanted harmonics generated by power amplifiers, and suppressing spurious high-frequency content before transmission or after the final stage of demodulation.",
-      "urls": []
-    },
-    {
-      "id": "c1879ca5-a812-4523-9cfe-5beea2b7bf5e",
-      "name": "LPF (Concept 1 - ID 282)",
-      "description": "low-pass filter. A two-port network that rejects signals above a certain frequency band.",
       "urls": []
     },
     {
@@ -1958,14 +1850,14 @@
     },
     {
       "id": "07330bb4-d920-4869-82fa-1c2a90a01681",
-      "name": "MCM",
-      "description": "multi-chip module. Refers to a method of fabricating a microwave circuit using directly-bonded integrated circuit chips.",
+      "name": "MCM (multi-chip module)",
+      "description": "A method of fabricating a microwave circuit using directly-bonded integrated circuit chips.",
       "urls": []
     },
     {
       "id": "53ca9ba7-d862-4521-a6f1-2c42845a5bc0",
-      "name": "MCM (Concept 1 - ID 296)",
-      "description": "multi-carrier modulation. A method of transmitting data by splitting it into multiple signals.",
+      "name": "MCM (multi-carrier modulation)",
+      "description": "A method of transmitting data by splitting it into multiple signals.",
       "urls": []
     },
     {
@@ -2026,12 +1918,6 @@
       "id": "59036ddb-2cae-49f1-9678-df4b118f36af",
       "name": "MIMO",
       "description": "MIMO Multiple-Input Multiple-Output (MIMO) is a technology utilizing multiple antennas at both the transmitter and receiver to exploit multipath propagation, significantly increasing channel capacity, spectral efficiency, and link reliability through spatial processing techniques like spatial multiplexing for higher data rates and diversity coding for improved robustness against fading.",
-      "urls": []
-    },
-    {
-      "id": "d9059010-df7e-46d7-8c25-acd2fcc6628e",
-      "name": "MIMO (Concept 1 - ID 306)",
-      "description": "multiple input multiple output. A radio architecture for maximizing capacity",
       "urls": []
     },
     {
@@ -2113,12 +1999,6 @@
       "urls": []
     },
     {
-      "id": "28052462-4166-4e46-b069-92807f9154ec",
-      "name": "MOSFET (Concept 1 - ID 319)",
-      "description": "metal/oxide/semiconductor field-effect transistor. A three-terminal semiconductor device which usually is limited to UHF band.",
-      "urls": []
-    },
-    {
       "id": "af0d5ff5-10e8-4d34-8e5f-89bb3829eebd",
       "name": "MOVPE",
       "description": "metallorganic vapor-phase epitaxy. One of many ways to grow semiconductor films onto a substrate.",
@@ -2155,12 +2035,6 @@
       "urls": []
     },
     {
-      "id": "e3c2d184-7071-478e-afe8-9564dda19941",
-      "name": "MS (Concept 1 - ID 327)",
-      "description": "milli-Siemens. 1/1000 of a Seimen.",
-      "urls": []
-    },
-    {
       "id": "adc9f359-f586-40fd-b4f9-c0bc0cffe31a",
       "name": "MSA",
       "description": "microstrip antenna.",
@@ -2176,12 +2050,6 @@
       "id": "bf890275-32bb-47bd-a505-9d9add7e69cb",
       "name": "MTBF",
       "description": "MTBF Mean Time Between Failures is a reliability metric representing the predicted average time expected to elapse between inherent failures of a system or component during normal operation. In critical RF infrastructure like base stations or satellite transponders, a high MTBF indicates hardware robustness and longevity, minimizing maintenance costs and ensuring consistent network uptime.",
-      "urls": []
-    },
-    {
-      "id": "4e92d929-6949-4af7-8fc4-30ae78ed6d3e",
-      "name": "MTBF (Concept 1 - ID 330)",
-      "description": "mean time between failure. A measure of reliability.",
       "urls": []
     },
     {
@@ -2210,13 +2078,13 @@
     },
     {
       "id": "dde994e5-4c92-4c73-b127-54101751d379",
-      "name": "MW",
+      "name": "MW (Micro Wave)",
       "description": "microwave. As opposed to \"MMW\" which is millimeter-wave.",
       "urls": []
     },
     {
       "id": "85873024-8d95-45ab-83da-ec1c334f4580",
-      "name": "MW (Concept 1 - ID 335)",
+      "name": "MW (MilliWatt)",
       "description": "milliwatt. Unit of power, 1/1000 of a watt",
       "urls": []
     },
@@ -2258,21 +2126,15 @@
     },
     {
       "id": "3709fd7b-3568-431b-a67b-575f7692278e",
-      "name": "NF",
-      "description": "Noise Figure (NF) is a measure of the degradation of the signal-to-noise ratio (SNR) as a signal passes through a device, quantifying the amount of excess noise added by the component itself relative to an ideal noise source. Minimizing NF is fundamentally important, especially in the receiver front-end (Low Noise Amplifier or LNA), because noise introduced early in the chain is amplified by all subsequent stages, limiting the receiver's sensitivity to weak incoming signals.",
+      "name": "NF (Noise Figure)",
+      "description": "A measure of the degradation of the signal-to-noise ratio (SNR) as a signal passes through a device, quantifying the amount of excess noise added by the component itself relative to an ideal noise source. Minimizing NF is fundamentally important, especially in the receiver front-end (Low Noise Amplifier or LNA), because noise introduced early in the chain is amplified by all subsequent stages, limiting the receiver's sensitivity to weak incoming signals.",
       "urls": []
     },
     {
       "id": "6d89b207-f243-495c-9da2-e9309feae516",
-      "name": "NF (Concept 1 - ID 345)",
-      "description": "Near field. A type of antenna measurement https://www.microwaves101.com/encyclopedias/antenna-measurements",
-      "urls": []
-    },
-    {
-      "id": "dd757d2b-6642-486c-9615-a95fc3c13c84",
-      "name": "NF (Concept 2 - ID 344)",
-      "description": "noise figure. A measurement of how much a component degrades the signal-to-noise ratio of a system.",
-      "urls": []
+      "name": "NF (Near field)",
+      "description": "A type of antenna measurement performed close to the antenna under test (AUT) to capture detailed spatial field distributions. Near-field measurements are then mathematically transformed to far-field patterns, enabling accurate characterization of antenna performance parameters such as gain, radiation pattern, and polarization without requiring large open-area test sites.",
+      "urls": ["https://www.microwaves101.com/encyclopedias/antenna-measurements"]
     },
     {
       "id": "72fffe6d-e8e7-4fac-9c6c-761238f64858",
@@ -2380,12 +2242,6 @@
       "id": "a88f9ab1-63de-4706-8fa7-f375174e6c0d",
       "name": "OFDM",
       "description": "OFDM (Orthogonal Frequency-Division Multiplexing) is a digital modulation technique that splits a high-speed data stream into many parallel, lower-speed sub-streams. Each sub-stream is transmitted on a different, equally spaced sub-carrier frequency. The sub-carriers are made 'orthogonal' so they overlap without interfering with each other, which makes the system highly resistant to frequency-selective fading and spectrally efficient.",
-      "urls": []
-    },
-    {
-      "id": "0e9581f9-3ad8-419b-a58f-c30a7a369216",
-      "name": "OFDM (Concept 1 - ID 363)",
-      "description": "orthagonal frequency division multiplexing. A method of sending multiple closely spaced carrier signals from a single transmitter.",
       "urls": []
     },
     {
@@ -2695,12 +2551,6 @@
       "urls": []
     },
     {
-      "id": "188c0b2a-17b1-4e9b-9bac-c82039109a7d",
-      "name": "QAM (Concept 1 - ID 414)",
-      "description": "Quadrature amplitude modulation. A form of RF modulation in communications systems",
-      "urls": []
-    },
-    {
       "id": "4c2fcc3c-b695-425d-ae15-69d3c3db0d4a",
       "name": "QFN",
       "description": "quad flat-pack no-lead. A type of package for surface mount. Because it has no leads it is nearly impossible to hand solder. \"Quad\" refers to the geometry where connections are made on all four sides of the package; a \"DFN\" (dual) has leads only on two opposite sides.",
@@ -2929,12 +2779,6 @@
       "urls": []
     },
     {
-      "id": "8e83bf4f-bf69-4f6b-b54a-34586bf7eed2",
-      "name": "SFDR (Concept 1 - ID 452)",
-      "description": "spurious-free dynamic range. A measure of the range of amplitudes that a receiver can process.",
-      "urls": []
-    },
-    {
       "id": "132967b0-d7eb-4844-a627-6a2c04d498b6",
       "name": "SHM",
       "description": "Sub-harmonic mixer. A mixer that internally multiplies the LO signal, usually 2X",
@@ -3121,12 +2965,6 @@
       "urls": []
     },
     {
-      "id": "d3fa6344-e846-431f-8d85-627f349e841f",
-      "name": "SPI (Concept 1 - ID 483)",
-      "description": "Serial peripheral interface. Commonly used to send data from a controller to a peripheral",
-      "urls": []
-    },
-    {
       "id": "e798bb2b-b155-4713-b0c8-de9f8c4e644c",
       "name": "SPST",
       "description": "single-pole, single throw. The simplest possible switch.",
@@ -3298,12 +3136,6 @@
       "id": "5241005d-5353-4712-820f-f04b3e0bd6b3",
       "name": "TDU",
       "description": "Time Delay Unit. This is a structure similar to a phase shifter and allows specific or programmable time delay using a multi-path structure. Unlike a phase shifter, TDUs do not provide a fixed insertion phase difference between two states. A TDU can provide a large number of wavelengths of phase shift which is exactly proportional to frequency such that the difference between group delays is flat over required bandwidth.",
-      "urls": []
-    },
-    {
-      "id": "c05a932b-c318-474e-a040-67fbfde6f1f9",
-      "name": "TDU (Concept 1 - ID 512)",
-      "description": "time delay unit. A network that provides switchable path lengths for delaying a signal by a specified time.",
       "urls": []
     },
     {
@@ -3483,25 +3315,13 @@
     {
       "id": "7e077751-e82b-4c0b-9bd6-41087274b75b",
       "name": "UGA",
-      "description": "An arrangement of antennas in a grid pattern, where they are spaced equally apart in both dimensions",
-      "urls": []
-    },
-    {
-      "id": "bc18cfe4-6fac-4fd1-926b-37589034e793",
-      "name": "UGA (Concept 1 - ID 543)",
-      "description": "uniform grid array. Another way to group antennas into an array.",
+      "description": "uniform grid array. An arrangement of antennas in a grid pattern, where they are spaced equally apart in both dimensions",
       "urls": []
     },
     {
       "id": "ec05db1b-546b-4563-ac78-15e73d20c740",
       "name": "ULA",
-      "description": "A Uniform Linear Array is a collection of transmitters aligned with equal spacing in a linear fashion.",
-      "urls": []
-    },
-    {
-      "id": "7c322437-6f98-4664-903c-d25bd64e06f8",
-      "name": "ULA (Concept 1 - ID 544)",
-      "description": "uniform linear array. Yet another way to group antennas into an array.",
+      "description": "Uniform Linear Array. A collection of transmitters aligned with equal spacing in a linear fashion.",
       "urls": []
     },
     {
@@ -4209,12 +4029,6 @@
       ]
     },
     {
-      "id": "25f2374f-92ad-428a-8bf0-2bdd4578eef8",
-      "name": "Frequency Modulation (FM) (Concept 1 - ID 589)",
-      "description": "A method in which the amplitude of a signal remains the same while the frequency of the signal is modulated. Higher frequencies represent higher amplitudes in the original signal.",
-      "urls": []
-    },
-    {
       "id": "26d71863-ef48-4d98-b0c3-6c20350fa218",
       "name": "Phase Modulation (PM)",
       "description": "Phase Modulation (PM) Phase Modulation (PM) is an analog modulation technique where the instantaneous phase of the carrier wave is varied linearly in proportion to the instantaneous amplitude of the baseband message signal, while both the carrier amplitude and frequency remain constant. While conceptually similar to FM—since frequency is the derivative of phase—PM is less common in pure analog form due to complexity, but it serves as the foundation for digital Phase Shift Keying (PSK), a crucial digital modulation family.",
@@ -4695,12 +4509,6 @@
       "urls": []
     },
     {
-      "id": "4c6d37fe-db48-415b-9661-6c89b500e7e5",
-      "name": "impedance (Concept 1 - ID 145)",
-      "description": "(Z) Measured in ohms it is the total opposition to the flow of current offered by a circuit. Impedance consists of the vector sum of resistance and reactance.",
-      "urls": []
-    },
-    {
       "id": "7607f1c8-c6e2-4e2d-b8fa-566c526a35d3",
       "name": "Dipole",
       "description": "Dipole antennas consist of two conductive elements fed at the center, are resonant when the total length is approximately half a wavelength ($\\lambda/2$), and are fundamental structures known for their omnidirectional radiation pattern perpendicular to the elements and relatively broad bandwidth.",
@@ -4981,24 +4789,12 @@
       ]
     },
     {
-      "id": "67c91df8-2442-4f33-8aac-cc7def38224e",
-      "name": "Harmonics (Concept 1 - ID 139)",
-      "description": "A frequency component of a signal that is an integral multiple of the fundamental of that signal.",
-      "urls": []
-    },
-    {
       "id": "77d355d9-8f4b-4d79-bded-7cccee7f9ebd",
       "name": "Phase Noise",
       "description": "Phase Noise Phase noise represents rapid, random, short-term fluctuations in the phase of a signal relative to the ideal carrier, typically manifested as spectral skirts around the carrier in the frequency domain, which degrades the achievable Bit Error Rate (BER) in digital systems and limits receiver selectivity by mixing down adjacent channel energy into the desired band.",
       "urls": [
         "https://www.youtube.com/watch?v=hfgaEjf1154"
       ]
-    },
-    {
-      "id": "da9833bf-ffbf-4d8a-a367-3b2c54a7c338",
-      "name": "Phase Noise (Concept 1 - ID 741)",
-      "description": "The representation of random fluctuations in a waveform's phase as a frequency domain.",
-      "urls": []
     },
     {
       "id": "4f3fa063-424f-4809-a525-1141bbf19506",
@@ -5013,12 +4809,6 @@
       "urls": [
         "https://www.youtube.com/watch?v=vQh-ZwUXERU"
       ]
-    },
-    {
-      "id": "52da0697-e983-48dd-b6ce-7c1dc7f391ef",
-      "name": "Sensitivity (Concept 1 - ID 818)",
-      "description": "The input power level which is required for the system to operate as intended.",
-      "urls": []
     },
     {
       "id": "21665370-8648-40e6-b52f-d577016a784b",
@@ -5412,13 +5202,13 @@
     },
     {
       "id": "78cb3f56-0ed1-49dd-a455-581bdb1e686b",
-      "name": "Pulse",
-      "description": "Pulse A radar technique characterized by transmitting short, high-power electromagnetic energy bursts, measuring the time delay of the reflected return signal to precisely determine the target range, generally utilizing a high peak power but maintaining a very low duty cycle to achieve long detection ranges.",
+      "name": "Radar Pulse",
+      "description": "A radar technique characterized by transmitting short, high-power electromagnetic energy bursts, measuring the time delay of the reflected return signal to precisely determine the target range, generally utilizing a high peak power but maintaining a very low duty cycle to achieve long detection ranges.",
       "urls": []
     },
     {
       "id": "90448ef4-c229-418e-9e31-55f6637a1bb2",
-      "name": "Pulse (Concept 1 - ID 767)",
+      "name": "Pulse",
       "description": "A brief change in value, usually voltage in the positive direction, that returns to the steady state.",
       "urls": []
     },
@@ -5504,12 +5294,6 @@
       "id": "e9f4e745-11e1-4258-a6fd-bb983860953c",
       "name": "Microstrip",
       "description": "Microstrip Microstrip is a prevalent planar transmission line structure in microwave circuits, composed of a conductive trace separated from a continuous ground plane by a dielectric substrate, valued for its ease of fabrication and integration, though it is prone to radiation and dispersion, particularly at higher frequencies.",
-      "urls": []
-    },
-    {
-      "id": "caa841ae-bd03-4ee1-9394-4aead9cdd8bf",
-      "name": "Microstrip (Concept 1 - ID 681)",
-      "description": "This type of transmission line configuration is separated by a dielectric and uses a conductor over a parallel ground plane",
       "urls": []
     },
     {
