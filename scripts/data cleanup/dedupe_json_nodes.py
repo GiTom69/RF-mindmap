@@ -8,8 +8,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # --- Configuration ---
 DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
-INPUT_FILE = DATA_DIR / "d3_graph_data.json"
-OUTPUT_CLEANED_FILE = DATA_DIR / "cleaned_nodes_ready_for_linking.json"
+INPUT_FILE = DATA_DIR / "nodes_with_new_sequential_ids.json"
+OUTPUT_CLEANED_FILE = DATA_DIR / "cleaned_nodes_ready_for_linking_.json"
 SIMILARITY_THRESHOLD = 0.8  # Threshold to decide if two descriptions are the "same concept"
 
 MIN_LENGTH_RATIO_TO_KEEP = 0.5
@@ -198,17 +198,18 @@ def rebuild_links_framework(cleaned_nodes, id_map):
     K_NEAREST = 5         # Example K for dynamic thresholding
     
     for i, node_A in enumerate(cleaned_nodes):
+        pass
         # In a real implementation, you'd use the similarity_matrix here.
         
         # FOR EXAMPLE ONLY: Generate a dummy link for the first 10 nodes to show structure
-        if i < 10 and i + 1 < len(cleaned_nodes):
-             node_B = cleaned_nodes[i + 1]
-             new_links.append({
-                 "source": node_A['new_id'],
-                 "target": node_B['new_id'],
-                 "type": "related to (SIMULATED)",
-                 "urls": []
-             })
+        # if i < 10 and i + 1 < len(cleaned_nodes):
+        #      node_B = cleaned_nodes[i + 1]
+        #      new_links.append({
+        #          "source": node_A['new_id'],
+        #          "target": node_B['new_id'],
+        #          "type": "related to (SIMULATED)",
+        #          "urls": []
+        #      })
              
     print(f"Simulated new links generated: {len(new_links)}")
     return new_links
