@@ -3773,14 +3773,6 @@
       ]
     },
     {
-      "id": "6d931ce3-b36a-44eb-a3f1-80b5312ab056",
-      "name": "MIMO and Beamforming",
-      "description": "MISSING",
-      "urls": [
-        "https://www.youtube.com/watch?v=g84f4mP0u30"
-      ]
-    },
-    {
       "id": "c0e9d28b-2af3-41f8-b948-1066a476a621",
       "name": "Simulation & Modeling",
       "description": "Simulation & Modeling Simulation and modeling involve using mathematical representations and specialized software tools, such as MATLAB, Keysight ADS, or Ansys HFSS, to predict and analyze the behavior of RF circuits, components, channels, and full communication systems before physical fabrication. This crucial phase allows engineers to rapidly optimize design parameters, assess the impact of non-linearities, estimate link budget performance, and validate complex signal processing algorithms, thereby accelerating development cycles and minimizing hardware prototyping costs.",

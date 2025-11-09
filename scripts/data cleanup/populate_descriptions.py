@@ -8,7 +8,7 @@ import google.generativeai as genai
 from tqdm import tqdm
 
 # --- CONFIGURATION ---
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = BASE_DIR / "data"
 TOPICS_FILE = DATA_DIR / "topics.csv"
 OUTPUT_TOPICS_FILE = DATA_DIR / "topics_described.csv"
