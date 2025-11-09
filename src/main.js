@@ -104,9 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function clearSuggestions() {
         suggestionsContainer.innerHTML = '';
     }
-
-    // REMOVED: The mergeUrlsIntoGraph function is no longer needed.
-
     // --- Helper Functions ---
     function getLinkId(sourceId, targetId, type) {
         const sId = typeof sourceId === 'object' ? sourceId.id : sourceId;
@@ -200,12 +197,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderD3MindMap(graph) {
         const container = document.getElementById('mind-map-container');
-        width = container.clientWidth;
-        height = container.clientHeight;
+        const width = container.clientWidth;
+        const height = container.clientHeight;
 
-        zoom = d3.zoom().on("zoom", (event) => g.attr("transform", event.transform));
+        const zoom = d3.zoom().on("zoom", (event) => g.attr("transform", event.transform));
 
-        svg = d3.select("#mind-map-container").append("svg")
+        const svg = d3.select("#mind-map-container")
+            .append("svg")
             .attr("width", width)
             .attr("height", height)
             .call(zoom)
@@ -214,48 +212,234 @@ document.addEventListener("DOMContentLoaded", () => {
                     resetControlsPanel();
                 }
             });
-        
+
         const g = svg.append("g");
-        
+
+        // --- Setup data structures ---
+        const nodeById = new Map(graph.nodes.map(d => [d.id, d]));
+        const highLevelTopics = graph.high_level_topics || [];
+
+        // Assign cluster property
+        graph.nodes.forEach(n => {
+            let foundCluster = null;
+            highLevelTopics.forEach(hl => {
+                if (hl.sub_topics.includes(n.id)) foundCluster = hl.id;
+            });
+            n.cluster = foundCluster || n.id;
+        });
+
+        const color = d3.scaleOrdinal(d3.schemeTableau10);
+
+        // --- Simulation ---
         const simulation = d3.forceSimulation(graph.nodes)
             .force("link", d3.forceLink(graph.links).id(d => d.id).distance(200))
-            .force("charge", d3.forceManyBody().strength(-800))
+            .force("charge", d3.forceManyBody().strength(-400))
             .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collide", d3.forceCollide().radius(d => getNodeStyle(d.id).radius + 60));
+            .force("collide", d3.forceCollide().radius(d => getNodeStyle(d.id).radius + 60))
+            .force("cluster", clusteringForce());
 
-        const link = g.append("g").attr("class", "links").selectAll("line").data(graph.links)
+        // --- Contour group (blobs) ---
+        const contourGroup = g.append("g").attr("class", "contours");
+
+        // --- Links ---
+        const link = g.append("g")
+            .attr("class", "links")
+            .selectAll("line")
+            .data(graph.links)
             .join("line")
             .attr("class", "link")
             .attr("stroke-width", 2)
             .attr("stroke-dasharray", d => (d.type === 'sub topic' ? null : "5,5"))
-            .on("click", (event, d) => { event.stopPropagation(); showUrlManager(d, 'Link'); });
+            .on("click", (event, d) => {
+                event.stopPropagation();
+                showUrlManager(d, 'Link');
+            });
 
-        const node = g.append("g").attr("class", "nodes").selectAll("g").data(graph.nodes)
-            .join("g").attr("class", d => `node node-id-${d.id.toString().replace(/\./g, '-')}`)
+        // --- Nodes ---
+        const node = g.append("g")
+            .attr("class", "nodes")
+            .selectAll("g")
+            .data(graph.nodes)
+            .join("g")
+            .attr("class", d => `node node-id-${d.id.toString().replace(/\./g, '-')}`)
             .call(drag(simulation))
-            .on("click", (event, d) => { event.stopPropagation(); showUrlManager(d, 'Node'); });
+            .on("click", (event, d) => {
+                event.stopPropagation();
+                showUrlManager(d, 'Node');
+            });
 
         node.append("circle")
-            .attr("r", d => getNodeStyle(d.id).radius)
-            .attr("fill", "steelblue")
+            .attr("r", d => {
+                if (highLevelTopics.find(h => h.id === d.id)) return 50;
+                return getNodeStyle(d.id).radius;
+            })
+            .attr("fill", d => {
+                const parent = highLevelTopics.find(h => h.id === d.id || h.sub_topics.includes(d.id));
+                return parent ? color(parent.id) : "steelblue";
+            })
             .attr("stroke", d => getNodeStyle(d.id).stroke)
             .attr("stroke-width", d => getNodeStyle(d.id).strokeWidth);
 
-        node.append("text").text(d => d.name).attr("x", d => getNodeStyle(d.id).radius + 5).attr("y", 3);
+        node.append("text")
+            .text(d => d.name)
+            .attr("x", d => getNodeStyle(d.id).radius + 5)
+            .attr("y", 3);
+
         node.append("title").text(d => d.description);
 
-        simulation.on("tick", () => {
-            link.attr("x1", d => d.source.x).attr("y1", d => d.source.y).attr("x2", d => d.target.x).attr("y2", d => d.target.y);
-            node.attr("transform", d => `translate(${d.x},${d.y})`);
-        });
-    }
+        // --- Labels for clusters ---
+        const clusterLabels = contourGroup.selectAll("text")
+            .data(highLevelTopics)
+            .join("text")
+            .attr("class", "cluster-label")
+            .attr("text-anchor", "middle")
+            .attr("dy", ".35em")
+            .attr("font-size", "16px")
+            .attr("font-weight", "600")
+            .attr("fill", "#222")
+            .attr("pointer-events", "none")
+            .text(d => d.name);
 
-    function drag(simulation) {
-        function dragstarted(event, d) { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; }
-        function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
-        function dragended(event, d) { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }
-        return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
+        // --- Simulation tick ---
+        simulation.on("tick", () => {
+            // Update links
+            link
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            // Update node positions
+            node.attr("transform", d => `translate(${d.x},${d.y})`);
+
+            // Render contour blobs using d3.contours
+            renderContours();
+        });
+
+        // --- Contour Rendering ---
+        function renderContours() {
+            const contours = [];
+
+            highLevelTopics.forEach(hl => {
+                const members = hl.sub_topics.map(id => nodeById.get(id)).filter(Boolean);
+                const parentNode = nodeById.get(hl.id);
+                if (parentNode) members.push(parentNode);
+                if (members.length === 0) return;
+
+                // Define a local grid around cluster
+                const xs = members.map(d => d.x);
+                const ys = members.map(d => d.y);
+                const xMin = d3.min(xs) - 100, xMax = d3.max(xs) + 100;
+                const yMin = d3.min(ys) - 100, yMax = d3.max(ys) + 100;
+                const step = 10;
+
+                const grid = [];
+                for (let y = yMin; y <= yMax; y += step) {
+                    for (let x = xMin; x <= xMax; x += step) {
+                        // Density function based on distance to cluster nodes
+                        const density = members.reduce((sum, n) => {
+                            const dx = n.x - x;
+                            const dy = n.y - y;
+                            return sum + Math.exp(-(dx * dx + dy * dy) / 8000);
+                        }, 0);
+                        grid.push(density);
+                    }
+                }
+
+                const nx = Math.floor((xMax - xMin) / step) + 1;
+                const ny = Math.floor((yMax - yMin) / step) + 1;
+
+                const contourGen = d3.contours()
+                    .size([nx, ny])
+                    .thresholds([0.4]);
+
+                const c = contourGen(grid)[0];
+                if (c && c.coordinates.length) {
+                    contours.push({
+                        id: hl.id,
+                        color: color(hl.id),
+                        coordinates: c.coordinates.map(ring =>
+                            ring[0].map(([ix, iy]) => [
+                                xMin + ix * step,
+                                yMin + iy * step
+                            ])
+                        )
+                    });
+                }
+            });
+
+            // Draw contours
+            const paths = contourGroup.selectAll("path")
+                .data(contours, d => d.id)
+                .join("path")
+                .attr("d", d => d3.line()(d.coordinates[0]))
+                .attr("fill", d => d.color)
+                .attr("fill-opacity", 0.15)
+                .attr("stroke", d => d.color)
+                .attr("stroke-width", 2);
+
+            // Update label positions
+            clusterLabels
+                .attr("x", d => {
+                    const hl = contours.find(c => c.id === d.id);
+                    if (!hl || !hl.coordinates[0]) return 0;
+                    const xs = hl.coordinates[0].map(p => p[0]);
+                    return d3.mean(xs);
+                })
+                .attr("y", d => {
+                    const hl = contours.find(c => c.id === d.id);
+                    if (!hl || !hl.coordinates[0]) return 0;
+                    const ys = hl.coordinates[0].map(p => p[1]);
+                    return d3.mean(ys);
+                });
+        }
+
+        // --- Cluster force ---
+        function clusteringForce() {
+            const strength = 0.1;
+            function force(alpha) {
+                highLevelTopics.forEach(hl => {
+                    const parentNode = nodeById.get(hl.id);
+                    if (!parentNode) return;
+                    const subs = hl.sub_topics.map(id => nodeById.get(id)).filter(Boolean);
+                    subs.forEach(sub => {
+                        sub.vx -= (sub.x - parentNode.x) * strength * alpha;
+                        sub.vy -= (sub.y - parentNode.y) * strength * alpha;
+                    });
+                });
+            }
+            return force;
+        }
+
+        // --- Drag behavior ---
+        function drag(simulation) {
+            function dragstarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+            function dragended(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+            return d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended);
+        }
     }
+    
+    // function drag(simulation) {
+    //     function dragstarted(event, d) { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; }
+    //     function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
+    //     function dragended(event, d) { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }
+    //     return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
+    // }
 
     function resetControlsPanel() {
         controlsContainer.innerHTML = initialControlsHTML;
@@ -406,4 +590,5 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
     }
+
 });

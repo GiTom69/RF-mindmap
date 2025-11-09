@@ -681,30 +681,6 @@
       "urls": []
     },
     {
-      "id": "efbcb851-ac4f-406d-beb7-9972fb8626f1",
-      "name": "DB",
-      "description": "decibel. Refers to relative RF power levels on a logarithmic scale. Used to express any ratio logarithmically. \"I love you 1 dB more than yesterday\" means a 20 percent increase.",
-      "urls": []
-    },
-    {
-      "id": "d9b0a859-9a38-4db4-aae5-473f6a0948fa",
-      "name": "DBC",
-      "description": "dB below carrier. Measurement of how much less power a signal at one frequency has with respect to the signal at the carrier frequency.",
-      "urls": []
-    },
-    {
-      "id": "f52cfd29-7c64-4e72-9163-82484574221a",
-      "name": "DBM",
-      "description": "decibel relative to one milliwatt. Log scale that refers to absolute RF power levels. For example, 0 dBm refers to 1 mW, 30 dBm refers to 1 Watt.",
-      "urls": []
-    },
-    {
-      "id": "82b1457d-6680-4801-a29e-045745b6ee54",
-      "name": "DBP",
-      "description": "dB Petre. Measurement of how much power a signal has at one frequency with respect to the legendary Edward Petre.  Power levels may be lower when Ed does not carry his cellphone when making phase noise measurements.",
-      "urls": []
-    },
-    {
       "id": "4293f398-bb85-4743-a2ee-a89836f2c79a",
       "name": "DBS",
       "description": "direct broadcast satellite. The thing out in space that transmits all of those cartoons to your kids. The link between the satellite and your house is done with microwave signals.",

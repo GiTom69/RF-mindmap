@@ -409,6 +409,80 @@ class SemanticLinkGenerator:
         
         return cluster_name
     
+    def merge_small_clusters_with_high_level_topics(self, clusters: List[List[int]], 
+                                                     high_level_topics: List[Dict]) -> List[Dict]:
+        """
+        For small clusters (<10 nodes), if a single high-level topic contains 50%+ of nodes,
+        merge all cluster nodes into that topic.
+        
+        Args:
+            clusters: List of clusters (each cluster is list of node indices)
+            high_level_topics: Initial high-level topics
+            
+        Returns:
+            Updated list of high-level topic dictionaries
+        """
+        print("\n" + "="*60)
+        print("MERGING SMALL CLUSTERS WITH DOMINANT TOPICS")
+        print("="*60)
+        
+        # Create a mapping of node_id to topic for quick lookup
+        node_to_topics = defaultdict(list)
+        for topic_idx, topic in enumerate(high_level_topics):
+            for node_id in topic['sub_topics']:
+                node_to_topics[node_id].append(topic_idx)
+        
+        merged_count = 0
+        nodes_added = 0
+        
+        for cluster_indices in clusters:
+            cluster_size = len(cluster_indices)
+            
+            # Only process small clusters
+            if cluster_size >= 10:
+                continue
+            
+            # Get node IDs for this cluster
+            cluster_node_ids = [self.nodes[idx]['id'] for idx in cluster_indices]
+            
+            # Count how many nodes from this cluster belong to each topic
+            topic_counts = defaultdict(int)
+            for node_id in cluster_node_ids:
+                for topic_idx in node_to_topics[node_id]:
+                    topic_counts[topic_idx] += 1
+            
+            # Check if there's only one topic and it has 50%+ of nodes
+            if len(topic_counts) == 1:
+                topic_idx = list(topic_counts.keys())[0]
+                count = topic_counts[topic_idx]
+                
+                if count >= cluster_size / 2:
+                    # Merge: add all cluster nodes to this topic
+                    topic = high_level_topics[topic_idx]
+                    
+                    # Find nodes not already in the topic
+                    existing_nodes = set(topic['sub_topics'])
+                    new_nodes = [nid for nid in cluster_node_ids if nid not in existing_nodes]
+                    
+                    if new_nodes:
+                        topic['sub_topics'].extend(new_nodes)
+                        merged_count += 1
+                        nodes_added += len(new_nodes)
+                        
+                        # Update the node_to_topics mapping
+                        for node_id in new_nodes:
+                            node_to_topics[node_id].append(topic_idx)
+                        
+                        print(f"Merged cluster ({cluster_size} nodes) into '{topic['name']}'")
+                        print(f"  Added {len(new_nodes)} new nodes to topic")
+        
+        if merged_count > 0:
+            print(f"\nTotal: Merged {merged_count} small clusters, added {nodes_added} nodes to topics")
+        else:
+            print("\nNo small clusters met the merging criteria")
+        
+        return high_level_topics
+    
     def create_high_level_topics(self, clusters: List[List[int]]) -> List[Dict]:
         """
         Create high-level topic structures from clusters.
@@ -452,6 +526,11 @@ class SemanticLinkGenerator:
         
         if len(clusters) > 10:
             print(f"\n... and {len(clusters)-10} more clusters")
+        
+        # Apply small cluster merging
+        high_level_topics = self.merge_small_clusters_with_high_level_topics(
+            clusters, high_level_topics
+        )
         
         return high_level_topics
     
