@@ -5,6 +5,7 @@ This script analyzes node pairs using:
 1. All-Pairs Cosine Similarity (sentence embeddings)
 2. Keyword/Phrase Co-occurrence Filter
 3. Dynamic/Adaptive Thresholding (user-configurable)
+4. High-Level Topic Clustering (optional)
 """
 
 import json
@@ -13,6 +14,7 @@ from typing import List, Dict, Tuple, Set
 import numpy as np
 from collections import defaultdict
 import re
+import uuid
 
 # Sentence Transformers for embeddings
 try:
@@ -304,9 +306,164 @@ class SemanticLinkGenerator:
         
         return new_links
     
-    def save_with_new_links(self, data: Dict, new_links: List[Dict], output_file: Path):
-        """Save graph data with new semantic links."""
+    def cluster_nodes(self, similarity_threshold: float = 0.7, 
+                     min_cluster_size: int = 3) -> List[List[int]]:
+        """
+        Find tightly related clusters of nodes using agglomerative clustering.
+        
+        Args:
+            similarity_threshold: Minimum similarity to be in same cluster
+            min_cluster_size: Minimum nodes required to form a cluster
+            
+        Returns:
+            List of clusters, where each cluster is a list of node indices
+        """
+        from scipy.cluster.hierarchy import linkage, fcluster
+        from scipy.spatial.distance import squareform
+        
+        print("\n" + "="*60)
+        print("CLUSTERING ANALYSIS")
+        print("="*60)
+        print(f"Parameters:")
+        print(f"  Similarity threshold: {similarity_threshold}")
+        print(f"  Min cluster size: {min_cluster_size}")
+        
+        # Convert similarity to distance
+        distance_matrix = 1 - self.similarity_matrix
+        
+        # Convert to condensed distance matrix for linkage
+        condensed_dist = squareform(distance_matrix, checks=False)
+        
+        # Perform hierarchical clustering
+        print("Performing hierarchical clustering...")
+        linkage_matrix = linkage(condensed_dist, method='average')
+        
+        # Cut tree at distance threshold
+        distance_threshold = 1 - similarity_threshold
+        cluster_labels = fcluster(linkage_matrix, distance_threshold, criterion='distance')
+        
+        # Group nodes by cluster
+        clusters_dict = defaultdict(list)
+        for node_idx, cluster_id in enumerate(cluster_labels):
+            clusters_dict[cluster_id].append(node_idx)
+        
+        # Filter by minimum size
+        clusters = [cluster for cluster in clusters_dict.values() 
+                   if len(cluster) >= min_cluster_size]
+        
+        print(f"\nFound {len(clusters)} clusters with {min_cluster_size}+ nodes")
+        
+        # Show cluster size distribution
+        cluster_sizes = [len(c) for c in clusters]
+        if cluster_sizes:
+            print(f"Cluster sizes:")
+            print(f"  Min: {min(cluster_sizes)} nodes")
+            print(f"  Max: {max(cluster_sizes)} nodes")
+            print(f"  Mean: {np.mean(cluster_sizes):.1f} nodes")
+            print(f"  Median: {np.median(cluster_sizes):.0f} nodes")
+            
+            # Show size distribution
+            size_bins = [(3, 5), (6, 10), (11, 20), (21, 50), (51, 100), (100, 1000)]
+            print("\nCluster size distribution:")
+            for low, high in size_bins:
+                count = sum(1 for s in cluster_sizes if low <= s <= high)
+                if count > 0:
+                    print(f"  {low}-{high} nodes: {count} clusters")
+        
+        return clusters
+    
+    def generate_cluster_name(self, cluster_indices: List[int], max_words: int = 3) -> str:
+        """
+        Generate a descriptive name for a cluster based on common keywords.
+        
+        Args:
+            cluster_indices: List of node indices in the cluster
+            max_words: Maximum words in the generated name
+            
+        Returns:
+            Cluster name string
+        """
+        # Collect all keywords from cluster nodes
+        all_keywords = []
+        for idx in cluster_indices:
+            node = self.nodes[idx]
+            text = f"{node['name']} {node.get('description', '')}"
+            keywords = self.extract_keywords(text, min_length=3)
+            all_keywords.extend(keywords)
+        
+        # Count keyword frequency
+        from collections import Counter
+        keyword_freq = Counter(all_keywords)
+        
+        # Get most common keywords
+        most_common = keyword_freq.most_common(max_words)
+        
+        if not most_common:
+            return "Unnamed Cluster"
+        
+        # Create name from top keywords
+        top_keywords = [word for word, _ in most_common]
+        
+        # Capitalize first letter of each word
+        cluster_name = " ".join(word.capitalize() for word in top_keywords)
+        
+        return cluster_name
+    
+    def create_high_level_topics(self, clusters: List[List[int]]) -> List[Dict]:
+        """
+        Create high-level topic structures from clusters.
+        
+        Args:
+            clusters: List of clusters (each cluster is list of node indices)
+            
+        Returns:
+            List of high-level topic dictionaries
+        """
+        print("\n" + "="*60)
+        print("GENERATING HIGH-LEVEL TOPICS")
+        print("="*60)
+        
+        high_level_topics = []
+        
+        for i, cluster_indices in enumerate(clusters, 1):
+            # Generate cluster name
+            cluster_name = self.generate_cluster_name(cluster_indices)
+            
+            # Get node IDs
+            sub_topic_ids = [self.nodes[idx]['id'] for idx in cluster_indices]
+            
+            # Create topic structure
+            topic = {
+                'id': str(uuid.uuid4()),
+                'name': cluster_name,
+                'sub_topics': sub_topic_ids
+            }
+            
+            high_level_topics.append(topic)
+            
+            # Show preview
+            if i <= 10:  # Show first 10 clusters
+                node_names = [self.nodes[idx]['name'] for idx in cluster_indices[:5]]
+                preview = ", ".join(node_names)
+                if len(cluster_indices) > 5:
+                    preview += f", ... ({len(cluster_indices)-5} more)"
+                print(f"\n{i}. {cluster_name} ({len(cluster_indices)} nodes)")
+                print(f"   {preview}")
+        
+        if len(clusters) > 10:
+            print(f"\n... and {len(clusters)-10} more clusters")
+        
+        return high_level_topics
+    
+    def save_with_new_links(self, data: Dict, new_links: List[Dict], output_file: Path,
+                           high_level_topics: List[Dict] = None):
+        """Save graph data with new semantic links and optional high-level topics."""
         data['links'].extend(new_links)
+        
+        # Add high-level topics if provided
+        if high_level_topics:
+            data['high_level_topics'] = high_level_topics
+            print(f"\nAdded {len(high_level_topics)} high-level topics")
         
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
@@ -364,18 +521,64 @@ def main():
         # Generate links
         new_links = generator.generate_links(k, min_sim, use_keyword_filter)
         
+        # Optional: Generate high-level topics from clusters
+        high_level_topics = None
+        cluster_prompt = input("\nGenerate high-level topic clusters? (y/n, default: n): ").lower()
+        
+        if cluster_prompt == 'y':
+            # Check if scipy is available
+            try:
+                import scipy
+                
+                print("\n" + "="*60)
+                print("CLUSTERING CONFIGURATION")
+                print("="*60)
+                print("Clusters group tightly related nodes into high-level topics.")
+                
+                cluster_sim = float(input("\nCluster similarity threshold (e.g., 0.7): ") or "0.7")
+                min_size = int(input("Minimum cluster size (e.g., 3): ") or "3")
+                
+                # Perform clustering
+                clusters = generator.cluster_nodes(cluster_sim, min_size)
+                
+                if clusters:
+                    # Generate high-level topics
+                    high_level_topics = generator.create_high_level_topics(clusters)
+                    
+                    # Ask for confirmation
+                    total_nodes_in_clusters = sum(len(c) for c in clusters)
+                    print(f"\nSummary:")
+                    print(f"  {len(high_level_topics)} high-level topics created")
+                    print(f"  {total_nodes_in_clusters} nodes grouped into topics")
+                    print(f"  {len(generator.nodes) - total_nodes_in_clusters} nodes ungrouped")
+                else:
+                    print("\nNo clusters found with the specified parameters.")
+                    high_level_topics = None
+                    
+            except ImportError:
+                print("\nError: scipy is required for clustering.")
+                print("Install with: pip install scipy")
+                high_level_topics = None
+        
         # Confirm save
-        save = input(f"\nSave {len(new_links)} new links to file? (y/n): ").lower()
+        save_msg = f"\nSave {len(new_links)} new links"
+        if high_level_topics:
+            save_msg += f" and {len(high_level_topics)} high-level topics"
+        save_msg += " to file? (y/n): "
+        
+        save = input(save_msg).lower()
         if save == 'y':
-            generator.save_with_new_links(data, new_links, OUTPUT_FILE)
+            generator.save_with_new_links(data, new_links, OUTPUT_FILE, high_level_topics)
             print("\n✓ Complete!")
         else:
-            print("\nLinks not saved. Adjust parameters and run again.")
+            print("\nData not saved. Adjust parameters and run again.")
             
     except KeyboardInterrupt:
         print("\n\nOperation cancelled by user.")
     except Exception as e:
         print(f"\nError: {e}")
+        import traceback
+        traceback.print_exc()
 
 
 if __name__ == "__main__":
