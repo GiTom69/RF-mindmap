@@ -24,6 +24,18 @@ except ImportError:
     SENTENCE_TRANSFORMERS_AVAILABLE = False
     print("Warning: sentence-transformers not installed. Install with: pip install sentence-transformers")
 
+# Gemini AI for topic naming
+try:
+    import google.generativeai as genai
+    from dotenv import load_dotenv
+    import os
+    GEMINI_AVAILABLE = True
+    load_dotenv()
+except ImportError:
+    GEMINI_AVAILABLE = False
+    print("Warning: google-generativeai or python-dotenv not installed.")
+    print("Install with: pip install google-generativeai python-dotenv")
+
 # Configure paths
 DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 INPUT_FILE = DATA_DIR / "d3_graph_data.json"
@@ -409,8 +421,153 @@ class SemanticLinkGenerator:
         
         return cluster_name
     
-    def merge_small_clusters_with_high_level_topics(self, clusters: List[List[int]], 
-                                                     high_level_topics: List[Dict]) -> List[Dict]:
+    def generate_ai_topic_names(self, high_level_topics: List[Dict], 
+                               model_name: str = 'gemini-flash-latest') -> List[Dict]:
+        """
+        Use Gemini AI to generate better topic names based on subtopic content.
+        
+        Args:
+            high_level_topics: List of high-level topics
+            model_name: Gemini model to use
+            
+        Returns:
+            Updated list of high-level topics with AI-generated names (or original list if error)
+        """
+        if not high_level_topics:
+            print("\nWarning: No topics provided for AI naming")
+            return high_level_topics
+        
+        if not GEMINI_AVAILABLE:
+            print("\nError: Gemini AI not available. Install with:")
+            print("pip install google-generativeai python-dotenv")
+            return high_level_topics
+        
+        api_key = os.getenv('GEMINI_API_KEY')
+        if not api_key:
+            print("\nError: GEMINI_API_KEY not found in .env file")
+            return high_level_topics
+        
+        print("\n" + "="*60)
+        print("GENERATING AI-POWERED TOPIC NAMES")
+        print("="*60)
+        
+        # Rate limit configuration (requests per minute)
+        rate_limits = {
+            'gemini-2.5-pro': 2,
+            'gemini-2.5-flash': 10,
+            'gemini-2.5-flash-preview': 10,
+            'gemini-2.5-flash-lite': 15,
+            'gemini-2.5-flash-lite-preview': 15,
+            'gemini-2.0-flash': 15,
+            'gemini-2.0-flash-exp': 15,
+            'gemini-2.0-flash-lite': 30,
+        }
+        
+        # Get RPM for selected model (default to 10 if not found)
+        rpm_limit = rate_limits.get(model_name.lower(), 10)
+        delay_between_requests = 60.0 / rpm_limit  # seconds between requests
+        
+        print(f"Using model: {model_name}")
+        print(f"Rate limit: {rpm_limit} requests/minute")
+        print(f"Delay between requests: {delay_between_requests:.2f} seconds")
+        
+        # Calculate batch size based on topics (process more topics per request for efficiency)
+        # We'll batch multiple topics into one request to minimize API calls
+        topics_per_request = min(10, max(3, len(high_level_topics) // 5))
+        
+        try:
+            # Configure Gemini
+            genai.configure(api_key=api_key)
+            model = genai.GenerativeModel(model_name)
+            
+            total_requests = (len(high_level_topics) + topics_per_request - 1) // topics_per_request
+            print(f"\nProcessing {len(high_level_topics)} topics in {total_requests} API requests...")
+            print(f"Estimated time: {total_requests * delay_between_requests:.1f} seconds")
+            
+            import time
+            start_time = time.time()
+            request_count = 0
+            
+            # Process topics in batches
+            for i in range(0, len(high_level_topics), topics_per_request):
+                batch = high_level_topics[i:i+topics_per_request]
+                
+                # Rate limiting: ensure we don't exceed RPM
+                if request_count > 0:
+                    elapsed = time.time() - start_time
+                    expected_time = request_count * delay_between_requests
+                    if elapsed < expected_time:
+                        sleep_time = expected_time - elapsed
+                        print(f"  Rate limiting: waiting {sleep_time:.1f}s...")
+                        time.sleep(sleep_time)
+                
+                # Prepare batch prompt
+                prompt_parts = [
+                    "You are an expert at analyzing technical concepts and creating concise, descriptive topic names.",
+                    "For each cluster of related concepts below, generate a SHORT (1-4 words) topic name that best describes the theme.",
+                    "The name should be specific, technical, and capture the essence of what these concepts have in common.",
+                    "Return ONLY the topic names, one per line, in the same order as provided.\n"
+                ]
+                
+                for j, topic in enumerate(batch, 1):
+                    # Get node names and descriptions for this topic
+                    node_texts = []
+                    for node_id in topic['sub_topics'][:15]:  # Limit to first 15 nodes
+                        node = next((n for n in self.nodes if n['id'] == node_id), None)
+                        if node:
+                            node_text = f"{node['name']}"
+                            if node.get('description'):
+                                desc = node['description'][:100]  # Limit description length
+                                node_text += f" ({desc})"
+                            node_texts.append(node_text)
+                    
+                    prompt_parts.append(f"\nCluster {j} ({len(topic['sub_topics'])} concepts):")
+                    prompt_parts.append(", ".join(node_texts[:10]))
+                    if len(node_texts) > 10:
+                        prompt_parts.append(f"... and {len(node_texts)-10} more")
+                
+                prompt = "\n".join(prompt_parts)
+                
+                # Call Gemini API
+                try:
+                    response = model.generate_content(prompt)
+                    request_count += 1
+                    generated_names = response.text.strip().split('\n')
+                    
+                    # Update topic names
+                    for j, topic in enumerate(batch):
+                        if j < len(generated_names):
+                            old_name = topic['name']
+                            new_name = generated_names[j].strip()
+                            # Remove numbering if present (e.g., "1. Name" -> "Name")
+                            new_name = re.sub(r'^\d+\.\s*', '', new_name)
+                            # Remove quotes if present
+                            new_name = new_name.strip('"\'')
+                            # Remove any markdown formatting
+                            new_name = re.sub(r'\*\*', '', new_name)
+                            
+                            if new_name and len(new_name) > 2:
+                                topic['name'] = new_name
+                                print(f"✓ '{old_name}' → '{new_name}'")
+                            else:
+                                print(f"⚠ Keeping original: '{old_name}'")
+                        
+                except Exception as e:
+                    print(f"⚠ Error generating names for batch {i//topics_per_request + 1}: {e}")
+                    continue
+            
+            total_time = time.time() - start_time
+            print(f"\n✓ Completed AI topic naming in {total_time:.1f} seconds")
+            print(f"  Made {request_count} API requests (avg {total_time/request_count:.2f}s per request)")
+            
+        except Exception as e:
+            print(f"\nError with Gemini AI: {e}")
+            print("Keeping original keyword-based names")
+        
+        return high_level_topics 
+
+
+    def merge_small_clusters_with_high_level_topics(self, clusters: List[List[int]], high_level_topics: List[Dict]) -> List[Dict]:
         """
         For small clusters (<10 nodes), find the most similar large cluster.
         If the small cluster has high average similarity to a large cluster topic,
@@ -608,7 +765,7 @@ def main():
         # 'all-MiniLM-L6-v2' - fast, good for general text
         # 'all-mpnet-base-v2' - slower but better quality
         # 'allenai/scibert_scivocab_uncased' - for scientific text
-        generator = SemanticLinkGenerator(model_name='all-MiniLM-L6-v2')
+        generator = SemanticLinkGenerator(model_name='all-mpnet-base-v2')
     except ImportError as e:
         print(f"Error: {e}")
         return
@@ -662,15 +819,46 @@ def main():
                 clusters = generator.cluster_nodes(cluster_sim, min_size)
                 
                 if clusters:
-                    # Generate high-level topics
-                    high_level_topics = generator.create_high_level_topics(clusters)
+                    # Generate high-level topics (without merging yet)
+                    high_level_topics, original_clusters = generator.create_high_level_topics(clusters)
                     
-                    # Ask for confirmation
-                    total_nodes_in_clusters = sum(len(c) for c in clusters)
-                    print(f"\nSummary:")
-                    print(f"  {len(high_level_topics)} high-level topics created")
-                    print(f"  {total_nodes_in_clusters} nodes grouped into topics")
-                    print(f"  {len(generator.nodes) - total_nodes_in_clusters} nodes ungrouped")
+                    # Safety check
+                    if not high_level_topics:
+                        print("\nError: Failed to create high-level topics")
+                        high_level_topics = None
+                    else:
+                        # Optional: Use AI to generate better topic names
+                        ai_naming = input("\nUse AI (Gemini) to generate topic names? (y/n, default: n): ").lower()
+                        if ai_naming == 'y':
+                            high_level_topics = generator.generate_ai_topic_names(high_level_topics)
+                            
+                            # Check if AI naming returned valid topics
+                            if not high_level_topics:
+                                print("\nWarning: AI naming failed, reverting to keyword-based names")
+                                high_level_topics, original_clusters = generator.create_high_level_topics(clusters)
+                        
+                        # Now apply merging after all topics are created
+                        if high_level_topics:
+                            print("\n" + "="*60)
+                            print("POST-PROCESSING: MERGING SMALL CLUSTERS")
+                            print("="*60)
+                            
+                            merge_prompt = input("\nApply small cluster merging? (y/n, default: y): ").lower()
+                            if merge_prompt != 'n':
+                                high_level_topics = generator.merge_small_clusters_with_high_level_topics(
+                                    original_clusters, high_level_topics
+                                )
+                        
+                        # Ask for confirmation
+                        if high_level_topics:
+                            total_nodes_in_topics = sum(len(topic['sub_topics']) for topic in high_level_topics)
+                            print(f"\nFinal Summary:")
+                            print(f"  {len(high_level_topics)} high-level topics")
+                            print(f"  {total_nodes_in_topics} total node assignments")
+                            print(f"  {len(generator.nodes)} total nodes in graph")
+                        else:
+                            print("\nError: No valid topics created")
+                            high_level_topics = None
                 else:
                     print("\nNo clusters found with the specified parameters.")
                     high_level_topics = None
