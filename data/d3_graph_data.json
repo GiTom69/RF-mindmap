@@ -5346,7 +5346,7 @@
     },
     {
       "id": "195b4f27-1289-4261-ba31-9db47c5eefd0",
-      "name": "anode",
+      "name": "Anode",
       "description": "The positive electrode or terminal of a device. The “P” material of a diode.",
       "urls": []
     },
@@ -5490,7 +5490,7 @@
     },
     {
       "id": "df042071-f3bb-4066-8ec4-5d3fe4781367",
-      "name": "cathode",
+      "name": "Cathode",
       "description": "The negative terminal electrode of a device. The “N” material in a junction diode.",
       "urls": []
     },
@@ -7187,12 +7187,6 @@
       "urls": []
     },
     {
-      "id": "09417fec-069e-44ee-9952-81c213156988",
-      "name": "Anode",
-      "description": "The anode, generally paired with a cathode, is a positive terminal for a component. Being that it is positive, electron flow is directed toward the anode.",
-      "urls": []
-    },
-    {
       "id": "2d7ce6c1-b915-45b3-a12c-adfb0df73aac",
       "name": "Antenna",
       "description": "A device which interprets electrical signals/radio waves and transforms it to the other form (signal to waves, waves to signal)",
@@ -7730,12 +7724,6 @@
       "id": "59f19a0c-7380-4e16-941c-e2a099b76f26",
       "name": "Captivated",
       "description": "A term for center conductors that are held in place by the body of the connector, degrades performance.",
-      "urls": []
-    },
-    {
-      "id": "5436b189-8dd7-47c0-8f1f-5ac25cb12b78",
-      "name": "Cathode",
-      "description": "A terminal on an electrical component where electrons flow into. The terminal in which the electrons leave is known as the anode.",
       "urls": []
     },
     {
