@@ -9,7 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const suggestionsContainer = document.getElementById('search-suggestions');
     
     let currentGraphData = null;
-    let svg, zoom, width, height; // D3 variables for global access
+    let svg, zoom, width, height, g; // D3 variables for global access
+    let simulation = null;
+    let isSimulationRunning = false;
 
     // --- Initial Event Listeners ---
     notesToggle.addEventListener('click', () => {
@@ -25,9 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Data Loading & Initialization ---
-    // MODIFIED: Load only the single, complete JSON data file.
     d3.json("../data/d3_graph_data_with_semantic_links.json").then(graphData => {
-        // The data is already in the correct format with URLs embedded.
         currentGraphData = graphData; 
         renderD3MindMap(currentGraphData);
         initializeSearch();
@@ -35,13 +35,18 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Error loading or parsing data:", error);
     });
 
-    // --- Search Functionality ---
+    // --- Search Functionality (Optimized) ---
+    let searchDebounceTimer;
     function initializeSearch() {
         searchInput.addEventListener('input', () => {
+            clearTimeout(searchDebounceTimer);
             const query = searchInput.value;
+            
             if (query.length > 1) {
-                const results = fuzzySearch(query, currentGraphData.nodes);
-                displaySuggestions(results.slice(0, 10));
+                searchDebounceTimer = setTimeout(() => {
+                    const results = fuzzySearch(query, currentGraphData.nodes);
+                    displaySuggestions(results.slice(0, 10));
+                }, 150); // Debounce search
             } else {
                 clearSuggestions();
             }
@@ -56,13 +61,20 @@ document.addEventListener("DOMContentLoaded", () => {
     
     function fuzzySearch(query, nodes) {
         const lowerCaseQuery = query.toLowerCase();
-        return nodes.map(node => {
+        const results = [];
+        
+        // Early exit optimization
+        for (let i = 0; i < nodes.length; i++) {
+            const node = nodes[i];
             const lowerCaseTitle = node.name.toLowerCase();
             const score = calculateMatchScore(lowerCaseTitle, lowerCaseQuery);
-            return { node, score };
-        })
-        .filter(item => item.score > 0)
-        .sort((a, b) => b.score - a.score);
+            
+            if (score > 0) {
+                results.push({ node, score });
+            }
+        }
+        
+        return results.sort((a, b) => b.score - a.score);
     }
 
     function calculateMatchScore(text, query) {
@@ -104,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function clearSuggestions() {
         suggestionsContainer.innerHTML = '';
     }
+
     // --- Helper Functions ---
     function getLinkId(sourceId, targetId, type) {
         const sId = typeof sourceId === 'object' ? sourceId.id : sourceId;
@@ -159,13 +172,23 @@ document.addEventListener("DOMContentLoaded", () => {
         return await response.json();
     }
 
+    // Cached node styles
+    const nodeStyleCache = new Map();
     function getNodeStyle(nodeId) {
-        const level = nodeId.toString().split('.').length;
-        switch (level) {
-            case 1: return { radius: 20, stroke: 'black', strokeWidth: 2 };
-            case 2: return { radius: 15, stroke: 'none', strokeWidth: 0 };
-            default: return { radius: 10, stroke: 'none', strokeWidth: 0 };
+        if (nodeStyleCache.has(nodeId)) {
+            return nodeStyleCache.get(nodeId);
         }
+        
+        const level = nodeId.toString().split('.').length;
+        let style;
+        switch (level) {
+            case 1: style = { radius: 20, stroke: 'black', strokeWidth: 2 }; break;
+            case 2: style = { radius: 15, stroke: 'none', strokeWidth: 0 }; break;
+            default: style = { radius: 10, stroke: 'none', strokeWidth: 0 }; break;
+        }
+        
+        nodeStyleCache.set(nodeId, style);
+        return style;
     }
 
     // --- D3 & UI Interaction ---
@@ -197,12 +220,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderD3MindMap(graph) {
         const container = document.getElementById('mind-map-container');
-        const width = container.clientWidth;
-        const height = container.clientHeight;
+        width = container.clientWidth;
+        height = container.clientHeight;
 
-        const zoom = d3.zoom().on("zoom", (event) => g.attr("transform", event.transform));
+        zoom = d3.zoom()
+            .scaleExtent([0.1, 4])
+            .on("zoom", (event) => g.attr("transform", event.transform));
 
-        const svg = d3.select("#mind-map-container")
+        svg = d3.select("#mind-map-container")
             .append("svg")
             .attr("width", width)
             .attr("height", height)
@@ -213,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-        const g = svg.append("g");
+        g = svg.append("g");
 
         // --- Setup data structures ---
         const nodeById = new Map(graph.nodes.map(d => [d.id, d]));
@@ -222,26 +247,31 @@ document.addEventListener("DOMContentLoaded", () => {
         // Assign cluster property
         graph.nodes.forEach(n => {
             let foundCluster = null;
-            highLevelTopics.forEach(hl => {
-                if (hl.sub_topics.includes(n.id)) foundCluster = hl.id;
-            });
+            for (let i = 0; i < highLevelTopics.length; i++) {
+                if (highLevelTopics[i].sub_topics.includes(n.id)) {
+                    foundCluster = highLevelTopics[i].id;
+                    break;
+                }
+            }
             n.cluster = foundCluster || n.id;
         });
 
         const color = d3.scaleOrdinal(d3.schemeTableau10);
 
-        // --- Simulation ---
-        const simulation = d3.forceSimulation(graph.nodes)
+        // --- Optimized Simulation ---
+        simulation = d3.forceSimulation(graph.nodes)
             .force("link", d3.forceLink(graph.links).id(d => d.id).distance(200))
             .force("charge", d3.forceManyBody().strength(-400))
             .force("center", d3.forceCenter(width / 2, height / 2))
             .force("collide", d3.forceCollide().radius(d => getNodeStyle(d.id).radius + 60))
-            .force("cluster", clusteringForce());
+            .force("cluster", clusteringForce())
+            .alphaDecay(0.02) // Slower decay for smoother animation
+            .velocityDecay(0.4); // More damping
 
         // --- Contour group (blobs) ---
         const contourGroup = g.append("g").attr("class", "contours");
 
-        // --- Links ---
+        // --- Links (Optimized) ---
         const link = g.append("g")
             .attr("class", "links")
             .selectAll("line")
@@ -255,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 showUrlManager(d, 'Link');
             });
 
-        // --- Nodes ---
+        // --- Nodes (Optimized with canvas-like rendering) ---
         const node = g.append("g")
             .attr("class", "nodes")
             .selectAll("g")
@@ -270,8 +300,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         node.append("circle")
             .attr("r", d => {
-                if (highLevelTopics.find(h => h.id === d.id)) return 50;
-                return getNodeStyle(d.id).radius;
+                const isHighLevel = highLevelTopics.find(h => h.id === d.id);
+                return isHighLevel ? 50 : getNodeStyle(d.id).radius;
             })
             .attr("fill", d => {
                 const parent = highLevelTopics.find(h => h.id === d.id || h.sub_topics.includes(d.id));
@@ -280,10 +310,15 @@ document.addEventListener("DOMContentLoaded", () => {
             .attr("stroke", d => getNodeStyle(d.id).stroke)
             .attr("stroke-width", d => getNodeStyle(d.id).strokeWidth);
 
+        // Only show labels when zoomed in or for important nodes
         node.append("text")
             .text(d => d.name)
             .attr("x", d => getNodeStyle(d.id).radius + 5)
-            .attr("y", 3);
+            .attr("y", 3)
+            .style("opacity", d => {
+                const level = d.id.toString().split('.').length;
+                return level <= 2 ? 1 : 0; // Hide minor node labels initially
+            });
 
         node.append("title").text(d => d.description);
 
@@ -300,118 +335,146 @@ document.addEventListener("DOMContentLoaded", () => {
             .attr("pointer-events", "none")
             .text(d => d.name);
 
-        // --- Simulation tick ---
+        // --- Optimized Simulation Tick with Throttling ---
+        let tickCount = 0;
+        let rafId = null;
+        
         simulation.on("tick", () => {
-            // Update links
+            tickCount++;
+            
+            // Update on every tick, but throttle expensive operations
             link
                 .attr("x1", d => d.source.x)
                 .attr("y1", d => d.source.y)
                 .attr("x2", d => d.target.x)
                 .attr("y2", d => d.target.y);
 
-            // Update node positions
             node.attr("transform", d => `translate(${d.x},${d.y})`);
 
-            // Render contour blobs using d3.contours
-            renderContours();
+            // Only render contours every 5 ticks and use RAF
+            if (tickCount % 5 === 0) {
+                if (rafId) cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(() => renderContours());
+            }
         });
 
-        // --- Contour Rendering ---
+        // Stop simulation after it settles to save CPU
+        simulation.on("end", () => {
+            isSimulationRunning = false;
+            renderContours(); // Final render
+        });
+
+        isSimulationRunning = true;
+
+        // --- Optimized Contour Rendering ---
+        let contourRenderTimeout;
         function renderContours() {
-            const contours = [];
+            // Debounce rapid calls
+            clearTimeout(contourRenderTimeout);
+            contourRenderTimeout = setTimeout(() => {
+                const contours = [];
 
-            highLevelTopics.forEach(hl => {
-                const members = hl.sub_topics.map(id => nodeById.get(id)).filter(Boolean);
-                const parentNode = nodeById.get(hl.id);
-                if (parentNode) members.push(parentNode);
-                if (members.length === 0) return;
+                highLevelTopics.forEach(hl => {
+                    const members = hl.sub_topics.map(id => nodeById.get(id)).filter(Boolean);
+                    const parentNode = nodeById.get(hl.id);
+                    if (parentNode) members.push(parentNode);
+                    if (members.length === 0) return;
 
-                // Define a local grid around cluster
-                const xs = members.map(d => d.x);
-                const ys = members.map(d => d.y);
-                const xMin = d3.min(xs) - 100, xMax = d3.max(xs) + 100;
-                const yMin = d3.min(ys) - 100, yMax = d3.max(ys) + 100;
-                const step = 10;
+                    // Reduced grid resolution for performance
+                    const xs = members.map(d => d.x);
+                    const ys = members.map(d => d.y);
+                    const xMin = d3.min(xs) - 100, xMax = d3.max(xs) + 100;
+                    const yMin = d3.min(ys) - 100, yMax = d3.max(ys) + 100;
+                    const step = 20; // Increased from 10 for better performance
 
-                const grid = [];
-                for (let y = yMin; y <= yMax; y += step) {
-                    for (let x = xMin; x <= xMax; x += step) {
-                        // Density function based on distance to cluster nodes
-                        const density = members.reduce((sum, n) => {
-                            const dx = n.x - x;
-                            const dy = n.y - y;
-                            return sum + Math.exp(-(dx * dx + dy * dy) / 8000);
-                        }, 0);
-                        grid.push(density);
+                    const grid = [];
+                    for (let y = yMin; y <= yMax; y += step) {
+                        for (let x = xMin; x <= xMax; x += step) {
+                            let density = 0;
+                            // Optimized density calculation
+                            for (let i = 0; i < members.length; i++) {
+                                const n = members[i];
+                                const dx = n.x - x;
+                                const dy = n.y - y;
+                                const distSq = dx * dx + dy * dy;
+                                density += Math.exp(-distSq / 8000);
+                            }
+                            grid.push(density);
+                        }
                     }
-                }
 
-                const nx = Math.floor((xMax - xMin) / step) + 1;
-                const ny = Math.floor((yMax - yMin) / step) + 1;
+                    const nx = Math.floor((xMax - xMin) / step) + 1;
+                    const ny = Math.floor((yMax - yMin) / step) + 1;
 
-                const contourGen = d3.contours()
-                    .size([nx, ny])
-                    .thresholds([0.4]);
+                    const contourGen = d3.contours()
+                        .size([nx, ny])
+                        .thresholds([0.4]);
 
-                const c = contourGen(grid)[0];
-                if (c && c.coordinates.length) {
-                    contours.push({
-                        id: hl.id,
-                        color: color(hl.id),
-                        coordinates: c.coordinates.map(ring =>
-                            ring[0].map(([ix, iy]) => [
-                                xMin + ix * step,
-                                yMin + iy * step
-                            ])
-                        )
-                    });
-                }
-            });
-
-            // Draw contours
-            const paths = contourGroup.selectAll("path")
-                .data(contours, d => d.id)
-                .join("path")
-                .attr("d", d => d3.line()(d.coordinates[0]))
-                .attr("fill", d => d.color)
-                .attr("fill-opacity", 0.15)
-                .attr("stroke", d => d.color)
-                .attr("stroke-width", 2);
-
-            // Update label positions
-            clusterLabels
-                .attr("x", d => {
-                    const hl = contours.find(c => c.id === d.id);
-                    if (!hl || !hl.coordinates[0]) return 0;
-                    const xs = hl.coordinates[0].map(p => p[0]);
-                    return d3.mean(xs);
-                })
-                .attr("y", d => {
-                    const hl = contours.find(c => c.id === d.id);
-                    if (!hl || !hl.coordinates[0]) return 0;
-                    const ys = hl.coordinates[0].map(p => p[1]);
-                    return d3.mean(ys);
+                    const c = contourGen(grid)[0];
+                    if (c && c.coordinates.length) {
+                        contours.push({
+                            id: hl.id,
+                            color: color(hl.id),
+                            coordinates: c.coordinates.map(ring =>
+                                ring[0].map(([ix, iy]) => [
+                                    xMin + ix * step,
+                                    yMin + iy * step
+                                ])
+                            )
+                        });
+                    }
                 });
+
+                // Draw contours
+                contourGroup.selectAll("path")
+                    .data(contours, d => d.id)
+                    .join("path")
+                    .attr("d", d => d3.line()(d.coordinates[0]))
+                    .attr("fill", d => d.color)
+                    .attr("fill-opacity", 0.15)
+                    .attr("stroke", d => d.color)
+                    .attr("stroke-width", 2);
+
+                // Update label positions
+                clusterLabels
+                    .attr("x", d => {
+                        const hl = contours.find(c => c.id === d.id);
+                        if (!hl || !hl.coordinates[0]) return 0;
+                        const xs = hl.coordinates[0].map(p => p[0]);
+                        return d3.mean(xs);
+                    })
+                    .attr("y", d => {
+                        const hl = contours.find(c => c.id === d.id);
+                        if (!hl || !hl.coordinates[0]) return 0;
+                        const ys = hl.coordinates[0].map(p => p[1]);
+                        return d3.mean(ys);
+                    });
+            }, 50); // Debounce by 50ms
         }
 
         // --- Cluster force ---
         function clusteringForce() {
             const strength = 0.1;
             function force(alpha) {
-                highLevelTopics.forEach(hl => {
+                for (let i = 0; i < highLevelTopics.length; i++) {
+                    const hl = highLevelTopics[i];
                     const parentNode = nodeById.get(hl.id);
-                    if (!parentNode) return;
+                    if (!parentNode) continue;
+                    
                     const subs = hl.sub_topics.map(id => nodeById.get(id)).filter(Boolean);
-                    subs.forEach(sub => {
-                        sub.vx -= (sub.x - parentNode.x) * strength * alpha;
-                        sub.vy -= (sub.y - parentNode.y) * strength * alpha;
-                    });
-                });
+                    for (let j = 0; j < subs.length; j++) {
+                        const sub = subs[j];
+                        const dx = sub.x - parentNode.x;
+                        const dy = sub.y - parentNode.y;
+                        sub.vx -= dx * strength * alpha;
+                        sub.vy -= dy * strength * alpha;
+                    }
+                }
             }
             return force;
         }
 
-        // --- Drag behavior ---
+        // --- Optimized Drag behavior ---
         function drag(simulation) {
             function dragstarted(event, d) {
                 if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -432,14 +495,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 .on("drag", dragged)
                 .on("end", dragended);
         }
+
+        // Zoom-based label visibility
+        zoom.on("zoom.labels", (event) => {
+            const scale = event.transform.k;
+            node.selectAll("text")
+                .style("opacity", d => {
+                    const level = d.id.toString().split('.').length;
+                    if (level === 1) return 1;
+                    if (level === 2) return scale > 0.5 ? 1 : 0;
+                    return scale > 1 ? 1 : 0;
+                });
+        });
     }
-    
-    // function drag(simulation) {
-    //     function dragstarted(event, d) { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; }
-    //     function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
-    //     function dragended(event, d) { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }
-    //     return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
-    // }
 
     function resetControlsPanel() {
         controlsContainer.innerHTML = initialControlsHTML;
@@ -478,7 +546,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const relatedList = document.createElement('ul');
             relatedList.className = 'related-topics-list';
-            const connectedLinks = currentGraphData.links.filter(link => link.source.id === element.id || link.target.id === element.id);
+            const connectedLinks = currentGraphData.links.filter(link => 
+                link.source.id === element.id || link.target.id === element.id
+            );
 
             if (connectedLinks.length > 0) {
                 connectedLinks.forEach(link => {
@@ -487,7 +557,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     const li = document.createElement('li');
                     const button = document.createElement('button');
                     button.className = 'related-topic-button';
-                    button.innerHTML = isSource ? `<span class="relation">[${link.type}] →</span> ${otherNode.name}` : `<span class="relation">← [${link.type}]</span> ${otherNode.name}`;
+                    button.innerHTML = isSource ? 
+                        `<span class="relation">[${link.type}] →</span> ${otherNode.name}` : 
+                        `<span class="relation">← [${link.type}]</span> ${otherNode.name}`;
                     button.onclick = () => {
                         focusOnNode(otherNode);
                         showUrlManager(otherNode, 'Node');
@@ -571,10 +643,14 @@ document.addEventListener("DOMContentLoaded", () => {
         controlsContainer.appendChild(urlList);
 
         const addUrlInput = document.createElement('input');
-        addUrlInput.type = 'text'; addUrlInput.id = 'add-url-input'; addUrlInput.placeholder = 'Add a new URL';
+        addUrlInput.type = 'text'; 
+        addUrlInput.id = 'add-url-input'; 
+        addUrlInput.placeholder = 'Add a new URL';
         controlsContainer.appendChild(addUrlInput);
+        
         const addUrlButton = document.createElement('button');
-        addUrlButton.id = 'add-url-button'; addUrlButton.textContent = 'Add';
+        addUrlButton.id = 'add-url-button'; 
+        addUrlButton.textContent = 'Add';
         controlsContainer.appendChild(addUrlButton);
 
         addUrlButton.onclick = () => {
@@ -590,5 +666,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
     }
-
 });
