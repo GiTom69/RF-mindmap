@@ -16,7 +16,10 @@ code tasks :
 - add button to find additional sources for a topics (on button press)?
 - generate learning path
 - feature to reset and redo all the links
-- rebuild links from simillarites in descriptions
+- rebuild links from simillarites in descriptions - half done
+- implement offline semantic processing
+- show only essential topics (and hide the rest)
+- steal an existing sillbus 
 
 topics tasks:
 - add glossaries to data

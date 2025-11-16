@@ -30,7 +30,9 @@ try:
     from dotenv import load_dotenv
     import os
     GEMINI_AVAILABLE = True
-    load_dotenv()
+    # Load .env from project root
+    PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+    load_dotenv(PROJECT_ROOT / ".env")
 except ImportError:
     GEMINI_AVAILABLE = False
     print("Warning: google-generativeai or python-dotenv not installed.")
@@ -422,7 +424,7 @@ class SemanticLinkGenerator:
         return cluster_name
     
     def generate_ai_topic_names(self, high_level_topics: List[Dict], 
-                               model_name: str = 'gemini-flash-latest') -> List[Dict]:
+                               model_name: str = 'gemini-2.5-flash') -> List[Dict]:
         """
         Use Gemini AI to generate better topic names based on subtopic content.
         
