@@ -7,6 +7,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const notesToggle = document.getElementById('notes-toggle');
     const searchInput = document.getElementById('search-input');
     const suggestionsContainer = document.getElementById('search-suggestions');
+    const loadingScreen = document.getElementById('loading-screen');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+
+    // --- Loading Progress Helper ---
+    function updateProgress(percent, text) {
+        progressBar.style.width = percent + '%';
+        progressText.textContent = text;
+    }
+
+    function hideLoadingScreen() {
+        updateProgress(100, 'Complete!');
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500); // Wait for fade out
+        }, 300);
+    }
+
+    // --- 10 Second Timeout Safety Mechanism ---
+    let loadingTimeout = setTimeout(() => {
+        console.warn('Loading screen timeout reached (10 seconds). Force hiding loading screen.');
+        hideLoadingScreen();
+    }, 10000);
+
+    // Clear timeout when loading completes normally
+    function clearLoadingTimeout() {
+        if (loadingTimeout) {
+            clearTimeout(loadingTimeout);
+            loadingTimeout = null;
+        }
+    }
     
     let currentGraphData = null;
     let svg, zoom, width, height, g; // D3 variables for global access
@@ -37,13 +70,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Data Loading & Initialization ---
+    updateProgress(10, 'Loading data...');
+    
     d3.json("../data/d3_graph_data_hierarchical.json").then(graphData => {
-        currentGraphData = graphData;`` 
+        updateProgress(30, 'Data loaded, rendering graph...');
+        currentGraphData = graphData;
         renderD3MindMap(currentGraphData);
+        updateProgress(50, 'Initializing search...');
         initializeSearch();
-        initializeLinkToggles();
+        updateProgress(60, 'Settling layout...');
     }).catch(error => {
         console.error("Error loading or parsing data:", error);
+        progressText.textContent = 'Error loading data';
+        progressBar.style.backgroundColor = '#FF6B6B';
     });
 
     // --- Link Toggle Initialization ---
@@ -92,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!document.getElementById('search-container').contains(event.target)) {
                 clearSuggestions();
             }
-        });
+        }, { passive: true });
     }
     
     function fuzzySearch(query, nodes) {
@@ -211,12 +250,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Category color mapping
     function getCategoryColor(category) {
         const colorMap = {
-            'Core concept in RF engineering': '#FF6B6B',        // Bright red
-            'Core concept in Electrical engineering': '#4ECDC4', // Teal
-            'Core concept in System design': '#95E1D3',          // Light teal
+            'Core concept in RF engineering': 'hsla(0, 100%, 71%, 1.00)',        // Bright red
+            'Core concept in Electrical engineering': 'hsla(176, 56%, 56%, 1.00)', // Teal
+            'Core concept in System design': 'hsla(228, 64%, 61%, 1.00)',          // Light teal
             'Useful term in RF engineering': '#FFB6B9',          // Light coral
             'Useful term in Electrical engineering': '#A8E6CF',  // Mint green
-            'Useful term in System design': '#C7CEEA',           // Lavender
+            'Useful term in System design': '#c7ceeaff',           // Lavender
             'Other (mechanical, chemical, unrelated)': '#B8B8B8' // Gray
         };
         return colorMap[category] || '#778899'; // Default: light slate gray
@@ -287,7 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!document.getElementById('search-container').contains(event.target)) {
                     resetControlsPanel();
                 }
-            });
+            }, { passive: false });
 
         g = svg.append("g");
 
@@ -319,15 +358,20 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         // --- Cluster force (defined early for use in simulation) ---
+        // Pre-compute sub-topic arrays for performance
+        const clusterSubTopics = highLevelTopics.map(hl => ({
+            parentNode: nodeById.get(hl.id),
+            subs: hl.sub_topics.map(id => nodeById.get(id)).filter(Boolean)
+        })).filter(c => c.parentNode);
+        
         function clusteringForce() {
             const strength = 0.1;
             function force(alpha) {
-                for (let i = 0; i < highLevelTopics.length; i++) {
-                    const hl = highLevelTopics[i];
-                    const parentNode = nodeById.get(hl.id);
-                    if (!parentNode) continue;
+                for (let i = 0; i < clusterSubTopics.length; i++) {
+                    const cluster = clusterSubTopics[i];
+                    const parentNode = cluster.parentNode;
+                    const subs = cluster.subs;
                     
-                    const subs = hl.sub_topics.map(id => nodeById.get(id)).filter(Boolean);
                     for (let j = 0; j < subs.length; j++) {
                         const sub = subs[j];
                         const dx = sub.x - parentNode.x;
@@ -340,7 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return force;
         }
 
-        // --- Optimized Simulation ---
+        // --- Optimized Simulation (Fast Initial Layout) ---
         simulation = d3.forceSimulation(graph.nodes)
             .force("link", d3.forceLink(graph.links)
                 .id(d => d.id)
@@ -357,8 +401,9 @@ document.addEventListener("DOMContentLoaded", () => {
             .force("center", d3.forceCenter(width / 2, height / 2))
             .force("collide", d3.forceCollide().radius(d => getNodeStyle(d.id).radius + 60))
             .force("cluster", clusteringForce())
-            .alphaDecay(0.02) // Slower decay for smoother animation
-            .velocityDecay(0.4); // More damping
+            .alphaDecay(0.05) // Faster initial convergence
+            .velocityDecay(0.6) // More damping for quicker settling
+            .alphaMin(0.001); // Stop earlier
 
         // --- Contour group (blobs) ---
         const contourGroup = g.append("g").attr("class", "contours");
@@ -374,7 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const config = linkHierarchy[d.type] || linkHierarchy['default'];
                 return config.width;
             })
-            .attr("stroke-opacity", d => {
+            .style("stroke-opacity", d => {
                 const config = linkHierarchy[d.type] || linkHierarchy['default'];
                 const visibility = linkVisibility[d.type] !== undefined ? linkVisibility[d.type] : linkVisibility['other'];
                 return visibility ? config.opacity : 0;
@@ -395,6 +440,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.stopPropagation();
                 showUrlManager(d, 'Link');
             });
+        
+        console.log('linkElements created with', linkElements.size(), 'links');
+        
+        // Initialize link toggles now that linkElements exists
+        initializeLinkToggles();
 
         // --- Nodes (Optimized with canvas-like rendering) ---
         const node = g.append("g")
@@ -446,11 +496,20 @@ document.addEventListener("DOMContentLoaded", () => {
         // --- Optimized Simulation Tick with Throttling ---
         let tickCount = 0;
         let rafId = null;
+        let skipContours = true; // Defer contours initially
+        const targetTicks = 100; // Estimate for progress tracking
         
         simulation.on("tick", () => {
             tickCount++;
             
+            // Update loading progress during simulation (60-95%)
+            if (tickCount % 5 === 0 && tickCount <= targetTicks) {
+                const simProgress = Math.min(95, 60 + (tickCount / targetTicks) * 35);
+                updateProgress(simProgress, `Settling layout... (${tickCount}/${targetTicks})`);
+            }
+            
             // Update on every tick, but throttle expensive operations
+            // IMPORTANT: Only update position attributes, preserve stroke-opacity for toggles
             linkElements
                 .attr("x1", d => d.source.x)
                 .attr("y1", d => d.source.y)
@@ -459,8 +518,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             node.attr("transform", d => `translate(${d.x},${d.y})`);
 
-            // Only render contours every 5 ticks and use RAF
-            if (tickCount % 5 === 0) {
+            // Skip contours for first 30 ticks (fast initial render)
+            if (tickCount < 30) return;
+            
+            // Enable contours after initial layout
+            if (skipContours && tickCount >= 30) {
+                skipContours = false;
+                updateProgress(70, 'Rendering clusters...');
+            }
+            
+            // Only render contours every 10 ticks and use RAF (less frequent)
+            if (!skipContours && tickCount % 10 === 0) {
                 if (rafId) cancelAnimationFrame(rafId);
                 rafId = requestAnimationFrame(() => renderContours());
             }
@@ -470,6 +538,8 @@ document.addEventListener("DOMContentLoaded", () => {
         simulation.on("end", () => {
             isSimulationRunning = false;
             renderContours(); // Final render
+            clearLoadingTimeout(); // Clear timeout before hiding
+            hideLoadingScreen();
         });
 
         isSimulationRunning = true;
@@ -493,7 +563,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const ys = members.map(d => d.y);
                     const xMin = d3.min(xs) - 100, xMax = d3.max(xs) + 100;
                     const yMin = d3.min(ys) - 100, yMax = d3.max(ys) + 100;
-                    const step = 20; // Increased from 10 for better performance
+                    const step = 25; // Further increased for faster rendering
 
                     const grid = [];
                     for (let y = yMin; y <= yMax; y += step) {
@@ -620,26 +690,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function toggleLinkType(linkType) {
         linkVisibility[linkType] = !linkVisibility[linkType];
+        console.log(`Toggling ${linkType} to ${linkVisibility[linkType]}`);
         
-        if (linkElements) {
-            linkElements.each(function(d) {
+        // Use the same linkHierarchy config as during initial render
+        const linkHierarchy = {
+            'sub topic': { opacity: 1.0 },
+            'depends on': { opacity: 0.7 },
+            'extends': { opacity: 0.5 },
+            'semantically_similar': { opacity: 0.3 },
+            'default': { opacity: 0.6 }
+        };
+        
+        // Re-select all links fresh from the DOM using the svg and g references
+        const allLinks = g.selectAll(".link");
+        console.log('Total link elements in DOM:', allLinks.size());
+        
+        // Update all links based on their current visibility state
+        // Use .style() instead of .attr() to override CSS
+        allLinks
+            .style("stroke-opacity", function(d) {
                 const visibility = linkVisibility[d.type] !== undefined ? linkVisibility[d.type] : linkVisibility['other'];
-                const config = {
-                    'sub topic': { opacity: 1.0 },
-                    'depends on': { opacity: 0.7 },
-                    'extends': { opacity: 0.5 },
-                    'semantically_similar': { opacity: 0.3 },
-                    'default': { opacity: 0.6 }
-                };
-                const linkConfig = config[d.type] || config['default'];
-                
-                d3.select(this)
-                    .transition()
-                    .duration(300)
-                    .attr("stroke-opacity", visibility ? linkConfig.opacity : 0)
-                    .style("pointer-events", visibility ? "auto" : "none");
+                const linkConfig = linkHierarchy[d.type] || linkHierarchy['default'];
+                const targetOpacity = visibility ? linkConfig.opacity : 0;
+                return targetOpacity;
+            })
+            .style("pointer-events", function(d) {
+                const visibility = linkVisibility[d.type] !== undefined ? linkVisibility[d.type] : linkVisibility['other'];
+                return visibility ? "auto" : "none";
             });
-        }
+        
+        // Count how many were updated
+        const updatedCount = allLinks.filter(d => d.type === linkType).size();
+        console.log(`Updated ${updatedCount} links of type "${linkType}" to visibility: ${linkVisibility[linkType]}`);
     }
 
     function showUrlManager(element, type) {
