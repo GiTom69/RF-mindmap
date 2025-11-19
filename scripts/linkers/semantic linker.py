@@ -45,7 +45,7 @@ OUTPUT_FILE = DATA_DIR / "d3_graph_data_with_semantic_links.json"
 class SemanticLinkGenerator:
     """Generate semantic links between nodes based on similarity."""
     
-    def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
+    def __init__(self, model_name: str = "allenai/scibert_scivocab_uncased"):
         """
         Initialize the link generator.
         
