@@ -276,6 +276,28 @@
     <div id="controls-container">
         <h2>Controls</h2>
         <button id="save-csv-button">Save & Download urls.csv</button>
+        
+        <hr>
+        <h3 style="margin-bottom: 10px;">Link Visibility</h3>
+        <div id="link-toggles" style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; cursor: pointer;">
+                <input type="checkbox" id="toggle-sub-topic" checked> 
+                <span style="color: #333; font-weight: bold;">Hierarchical (Sub Topics)</span>
+            </label>
+            <label style="display: block; margin-bottom: 8px; cursor: pointer;">
+                <input type="checkbox" id="toggle-depends-on" checked> 
+                <span style="color: #666;">Logical (Depends On)</span>
+            </label>
+            <label style="display: block; margin-bottom: 8px; cursor: pointer;">
+                <input type="checkbox" id="toggle-extends" checked> 
+                <span style="color: #999;">Logical (Extends)</span>
+            </label>
+            <label style="display: block; margin-bottom: 8px; cursor: pointer;">
+                <input type="checkbox" id="toggle-semantic" checked> 
+                <span style="color: #ccc; font-style: italic;">Semantic Links</span>
+            </label>
+        </div>
+        
         <hr>
         <div id="url-manager">
             <p>Click on a topic (node) or a connection (link) to see its associated resources.</p>

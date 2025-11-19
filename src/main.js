@@ -12,6 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let svg, zoom, width, height, g; // D3 variables for global access
     let simulation = null;
     let isSimulationRunning = false;
+    let linkElements = null; // Store link selection for toggling
+
+    // Link visibility state
+    let linkVisibility = {
+        'sub topic': true,
+        'depends on': true,
+        'extends': true,
+        'semantically_similar': true,
+        'other': true
+    };
 
     // --- Initial Event Listeners ---
     notesToggle.addEventListener('click', () => {
@@ -28,12 +38,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Data Loading & Initialization ---
     d3.json("../data/d3_graph_data_with_syllabus.json").then(graphData => {
-        currentGraphData = graphData; 
+        currentGraphData = graphData;`` 
         renderD3MindMap(currentGraphData);
         initializeSearch();
+        initializeLinkToggles();
     }).catch(error => {
         console.error("Error loading or parsing data:", error);
     });
+
+    // --- Link Toggle Initialization ---
+    function initializeLinkToggles() {
+        const toggleSubTopic = document.getElementById('toggle-sub-topic');
+        const toggleDependsOn = document.getElementById('toggle-depends-on');
+        const toggleExtends = document.getElementById('toggle-extends');
+        const toggleSemantic = document.getElementById('toggle-semantic');
+
+        if (toggleSubTopic) {
+            toggleSubTopic.addEventListener('change', () => toggleLinkType('sub topic'));
+        }
+        if (toggleDependsOn) {
+            toggleDependsOn.addEventListener('change', () => toggleLinkType('depends on'));
+        }
+        if (toggleExtends) {
+            toggleExtends.addEventListener('change', () => toggleLinkType('extends'));
+        }
+        if (toggleSemantic) {
+            toggleSemantic.addEventListener('change', () => toggleLinkType('semantically_similar'));
+        }
+    }
 
     // --- Search Functionality (Optimized) ---
     let searchDebounceTimer;
@@ -258,9 +290,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const color = d3.scaleOrdinal(d3.schemeTableau10);
 
+        // --- Link Hierarchy Configuration ---
+        const linkHierarchy = {
+            'sub topic': { strength: 0.8, distance: 100, width: 3, opacity: 1.0, color: '#333', dashArray: null },
+            'depends on': { strength: 0.3, distance: 200, width: 2, opacity: 0.7, color: '#666', dashArray: '5,5' },
+            'extends': { strength: 0.2, distance: 250, width: 1.5, opacity: 0.5, color: '#999', dashArray: '5,5' },
+            'semantically_similar': { strength: 0.1, distance: 300, width: 1, opacity: 0.3, color: '#ccc', dashArray: '2,2' },
+            'default': { strength: 0.2, distance: 200, width: 2, opacity: 0.6, color: '#888', dashArray: '5,5' }
+        };
+
         // --- Optimized Simulation ---
         simulation = d3.forceSimulation(graph.nodes)
-            .force("link", d3.forceLink(graph.links).id(d => d.id).distance(200))
+            .force("link", d3.forceLink(graph.links)
+                .id(d => d.id)
+                .strength(link => {
+                    const config = linkHierarchy[link.type] || linkHierarchy['default'];
+                    return config.strength;
+                })
+                .distance(link => {
+                    const config = linkHierarchy[link.type] || linkHierarchy['default'];
+                    return config.distance;
+                })
+            )
             .force("charge", d3.forceManyBody().strength(-400))
             .force("center", d3.forceCenter(width / 2, height / 2))
             .force("collide", d3.forceCollide().radius(d => getNodeStyle(d.id).radius + 60))
@@ -271,15 +322,34 @@ document.addEventListener("DOMContentLoaded", () => {
         // --- Contour group (blobs) ---
         const contourGroup = g.append("g").attr("class", "contours");
 
-        // --- Links (Optimized) ---
-        const link = g.append("g")
+        // --- Links (Optimized with Visual Hierarchy) ---
+        linkElements = g.append("g")
             .attr("class", "links")
             .selectAll("line")
             .data(graph.links)
             .join("line")
-            .attr("class", "link")
-            .attr("stroke-width", 2)
-            .attr("stroke-dasharray", d => (d.type === 'sub topic' ? null : "5,5"))
+            .attr("class", d => `link link-type-${d.type.replace(/\s+/g, '-')}`)
+            .attr("stroke-width", d => {
+                const config = linkHierarchy[d.type] || linkHierarchy['default'];
+                return config.width;
+            })
+            .attr("stroke-opacity", d => {
+                const config = linkHierarchy[d.type] || linkHierarchy['default'];
+                const visibility = linkVisibility[d.type] !== undefined ? linkVisibility[d.type] : linkVisibility['other'];
+                return visibility ? config.opacity : 0;
+            })
+            .attr("stroke", d => {
+                const config = linkHierarchy[d.type] || linkHierarchy['default'];
+                return config.color;
+            })
+            .attr("stroke-dasharray", d => {
+                const config = linkHierarchy[d.type] || linkHierarchy['default'];
+                return config.dashArray;
+            })
+            .style("pointer-events", d => {
+                const visibility = linkVisibility[d.type] !== undefined ? linkVisibility[d.type] : linkVisibility['other'];
+                return visibility ? "auto" : "none";
+            })
             .on("click", (event, d) => {
                 event.stopPropagation();
                 showUrlManager(d, 'Link');
@@ -514,6 +584,30 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('save-csv-button').addEventListener('click', () => {
             if (currentGraphData) saveUrlsToCsv(currentGraphData); else alert("No data available to save.");
         });
+    }
+
+    function toggleLinkType(linkType) {
+        linkVisibility[linkType] = !linkVisibility[linkType];
+        
+        if (linkElements) {
+            linkElements.each(function(d) {
+                const visibility = linkVisibility[d.type] !== undefined ? linkVisibility[d.type] : linkVisibility['other'];
+                const config = {
+                    'sub topic': { opacity: 1.0 },
+                    'depends on': { opacity: 0.7 },
+                    'extends': { opacity: 0.5 },
+                    'semantically_similar': { opacity: 0.3 },
+                    'default': { opacity: 0.6 }
+                };
+                const linkConfig = config[d.type] || config['default'];
+                
+                d3.select(this)
+                    .transition()
+                    .duration(300)
+                    .attr("stroke-opacity", visibility ? linkConfig.opacity : 0)
+                    .style("pointer-events", visibility ? "auto" : "none");
+            });
+        }
     }
 
     function showUrlManager(element, type) {

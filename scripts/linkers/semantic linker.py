@@ -190,6 +190,30 @@ class SemanticLinkGenerator:
             pct = 100 * count / len(similarities)
             print(f"  [{low:.1f}, {high:.1f}): {count:,} pairs ({pct:.2f}%)")
     
+    def _are_hierarchically_related(self, id1: str, id2: str) -> bool:
+        """
+        Check if two nodes are in a hierarchical relationship.
+        
+        Args:
+            id1: First node ID
+            id2: Second node ID
+            
+        Returns:
+            True if nodes are parent-child or siblings
+        """
+        parts1 = str(id1).split('.')
+        parts2 = str(id2).split('.')
+        
+        # One is parent of the other
+        if parts1 == parts2[:len(parts1)] or parts2 == parts1[:len(parts2)]:
+            return True
+        
+        # Share common parent (siblings)
+        if len(parts1) > 1 and len(parts2) > 1:
+            return parts1[:-1] == parts2[:-1]
+        
+        return False
+    
     def analyze_keyword_cooccurrence(self, sample_size: int = 1000):
         """Analyze keyword co-occurrence statistics."""
         print("\n" + "="*60)
@@ -223,7 +247,9 @@ class SemanticLinkGenerator:
     
     def get_top_k_similar(self, node_idx: int, k: int, 
                          min_similarity: float = 0.0,
-                         use_keyword_filter: bool = True) -> List[Tuple[int, float]]:
+                         use_keyword_filter: bool = True,
+                         filter_hierarchical: bool = True,
+                         max_per_node: int = None) -> List[Tuple[int, float]]:
         """
         Get top-K most similar nodes for a given node.
         
@@ -232,60 +258,87 @@ class SemanticLinkGenerator:
             k: Number of top similar nodes to return
             min_similarity: Minimum similarity threshold
             use_keyword_filter: Apply keyword co-occurrence filter
+            filter_hierarchical: Exclude hierarchically related nodes
+            max_per_node: Maximum semantic links per node (None = unlimited)
             
         Returns:
             List of (node_index, similarity_score) tuples
         """
         similarities = self.similarity_matrix[node_idx]
+        source_node = self.nodes[node_idx]
         
-        # Apply keyword filter if requested
-        if use_keyword_filter:
-            valid_indices = []
-            for idx in range(len(similarities)):
-                if idx != node_idx and similarities[idx] >= min_similarity:
-                    if self.keyword_cooccurrence_filter(self.nodes[node_idx], self.nodes[idx]):
-                        valid_indices.append(idx)
+        # Apply filters
+        valid_indices = []
+        for idx in range(len(similarities)):
+            if idx == node_idx or similarities[idx] < min_similarity:
+                continue
             
-            if not valid_indices:
-                return []
+            target_node = self.nodes[idx]
             
-            # Get similarities for valid indices
-            valid_sims = [(idx, similarities[idx]) for idx in valid_indices]
-        else:
-            # All indices except self
-            valid_sims = [(idx, sim) for idx, sim in enumerate(similarities) 
-                         if idx != node_idx and sim >= min_similarity]
+            # Filter hierarchically related nodes
+            if filter_hierarchical and self._are_hierarchically_related(source_node['id'], target_node['id']):
+                continue
+            
+            # Apply keyword filter if requested
+            if use_keyword_filter:
+                if not self.keyword_cooccurrence_filter(source_node, target_node):
+                    continue
+            
+            valid_indices.append(idx)
+        
+        if not valid_indices:
+            return []
+        
+        # Get similarities for valid indices
+        valid_sims = [(idx, similarities[idx]) for idx in valid_indices]
         
         # Sort by similarity and take top K
         valid_sims.sort(key=lambda x: x[1], reverse=True)
+        
+        # Apply max_per_node limit if specified
+        if max_per_node is not None:
+            return valid_sims[:min(k, max_per_node)]
+        
         return valid_sims[:k]
     
     def generate_links(self, k: int = 5, min_similarity: float = 0.5,
-                      use_keyword_filter: bool = True) -> List[Dict]:
+                      use_keyword_filter: bool = True,
+                      filter_hierarchical: bool = True,
+                      max_semantic_per_node: int = 3) -> List[Dict]:
         """
-        Generate semantic links using dynamic thresholding.
+        Generate semantic links using dynamic thresholding with hierarchical awareness.
         
         Args:
-            k: Number of top similar nodes to link per node
+            k: Number of top similar nodes to consider per node
             min_similarity: Minimum similarity threshold
             use_keyword_filter: Apply keyword co-occurrence filter
+            filter_hierarchical: Exclude hierarchically related nodes
+            max_semantic_per_node: Maximum semantic links per node (prevents over-connection)
             
         Returns:
             List of new link dictionaries
         """
         print("\n" + "="*60)
-        print("GENERATING SEMANTIC LINKS")
+        print("GENERATING SEMANTIC LINKS WITH HIERARCHICAL FILTERING")
         print("="*60)
         print(f"Parameters:")
         print(f"  Top-K per node: {k}")
         print(f"  Min similarity: {min_similarity}")
         print(f"  Keyword filter: {use_keyword_filter}")
+        print(f"  Filter hierarchical: {filter_hierarchical}")
+        print(f"  Max semantic per node: {max_semantic_per_node}")
         
         new_links = []
         links_by_source = defaultdict(int)
+        semantic_count = defaultdict(int)
         
         for i, node in enumerate(self.nodes):
-            top_similar = self.get_top_k_similar(i, k, min_similarity, use_keyword_filter)
+            # Skip if node already has too many semantic links
+            if semantic_count[node['id']] >= max_semantic_per_node:
+                continue
+            
+            top_similar = self.get_top_k_similar(i, k, min_similarity, use_keyword_filter, 
+                                                 filter_hierarchical, max_semantic_per_node)
             
             for j, similarity in top_similar:
                 source_id = node['id']
@@ -293,6 +346,10 @@ class SemanticLinkGenerator:
                 
                 # Check if link already exists
                 if (source_id, target_id) in self.existing_links:
+                    continue
+                
+                # Check target node's semantic link count
+                if semantic_count[target_id] >= max_semantic_per_node:
                     continue
                 
                 # Create new link
@@ -305,6 +362,12 @@ class SemanticLinkGenerator:
                 })
                 
                 links_by_source[source_id] += 1
+                semantic_count[source_id] += 1
+                semantic_count[target_id] += 1
+                
+                # Stop if this node has reached its limit
+                if semantic_count[source_id] >= max_semantic_per_node:
+                    break
         
         print(f"\nGenerated {len(new_links):,} new semantic links")
         print(f"Average links per node: {len(new_links) / len(self.nodes):.2f}")
@@ -794,9 +857,12 @@ def main():
         min_sim = float(input("Minimum similarity threshold (e.g., 0.5): ") or "0.5")
         use_filter = input("Use keyword co-occurrence filter? (y/n, default: y): ").lower()
         use_keyword_filter = use_filter != 'n'
+        filter_hier = input("Filter hierarchically related nodes? (y/n, default: y): ").lower()
+        filter_hierarchical = filter_hier != 'n'
+        max_sem = int(input("Max semantic links per node (e.g., 3, prevents over-connection): ") or "3")
         
         # Generate links
-        new_links = generator.generate_links(k, min_sim, use_keyword_filter)
+        new_links = generator.generate_links(k, min_sim, use_keyword_filter, filter_hierarchical, max_sem)
         
         # Optional: Generate high-level topics from clusters
         high_level_topics = None
