@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Data Loading & Initialization ---
-    d3.json("../data/d3_graph_data_with_semantic_links.json").then(graphData => {
+    d3.json("../data/d3_graph_data_with_syllabus.json").then(graphData => {
         currentGraphData = graphData; 
         renderD3MindMap(currentGraphData);
         initializeSearch();

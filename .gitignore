@@ -10,6 +10,7 @@ __pycache__/
 how-branch --all
 link_review_report.md
 data/*
-!data/d3_graph_data.json
+!data/d3_graph_data*.json
 **old**
 obsidian_vault/
+SOURCE_FIELD_POPULATION_SUMMARY.md
