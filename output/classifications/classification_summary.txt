@@ -1,0 +1,12 @@
+Topic Classification Summary
+==================================================
+
+Total topics classified: 1821
+
+Core concept in RF engineering: 555 (30.5%)
+Core concept in Electrical engineering: 260 (14.3%)
+Core concept in System design: 42 (2.3%)
+Useful term in RF engineering: 204 (11.2%)
+Useful term in Electrical engineering: 96 (5.3%)
+Useful term in System design: 132 (7.2%)
+Other (mechanical, chemical, unrelated): 532 (29.2%)

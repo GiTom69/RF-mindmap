@@ -208,6 +208,20 @@ document.addEventListener("DOMContentLoaded", () => {
         return await response.json();
     }
 
+    // Category color mapping
+    function getCategoryColor(category) {
+        const colorMap = {
+            'Core concept in RF engineering': '#FF6B6B',        // Bright red
+            'Core concept in Electrical engineering': '#4ECDC4', // Teal
+            'Core concept in System design': '#95E1D3',          // Light teal
+            'Useful term in RF engineering': '#FFB6B9',          // Light coral
+            'Useful term in Electrical engineering': '#A8E6CF',  // Mint green
+            'Useful term in System design': '#C7CEEA',           // Lavender
+            'Other (mechanical, chemical, unrelated)': '#B8B8B8' // Gray
+        };
+        return colorMap[category] || '#778899'; // Default: light slate gray
+    }
+
     // Cached node styles
     const nodeStyleCache = new Map();
     function getNodeStyle(nodeId) {
@@ -246,11 +260,12 @@ document.addEventListener("DOMContentLoaded", () => {
         svg.transition().duration(750).call(zoom.transform, transform);
 
         const circle = nodeElement.select('circle');
+        const originalColor = getCategoryColor(targetNode.category);
         circle.transition().duration(300)
             .attr("fill", "#ffcc00")
             .attr("r", getNodeStyle(targetNode.id).radius + 5)
             .transition().duration(1000)
-            .attr("fill", "steelblue")
+            .attr("fill", originalColor)
             .attr("r", getNodeStyle(targetNode.id).radius);
     }
 
@@ -399,10 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const isHighLevel = highLevelTopics.find(h => h.id === d.id);
                 return isHighLevel ? 50 : getNodeStyle(d.id).radius;
             })
-            .attr("fill", d => {
-                const parent = highLevelTopics.find(h => h.id === d.id || h.sub_topics.includes(d.id));
-                return parent ? color(parent.id) : "steelblue";
-            })
+            .attr("fill", d => getCategoryColor(d.category))
             .attr("stroke", d => getNodeStyle(d.id).stroke)
             .attr("stroke-width", d => getNodeStyle(d.id).strokeWidth);
 

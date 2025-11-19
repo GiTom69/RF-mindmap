@@ -14,3 +14,4 @@ data/*
 **old**
 obsidian_vault/
 SOURCE_FIELD_POPULATION_SUMMARY.md
+output/classifications/topic_classifications.csv
