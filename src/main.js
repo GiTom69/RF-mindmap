@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Data Loading & Initialization ---
-    d3.json("../data/d3_graph_data_with_syllabus.json").then(graphData => {
+    d3.json("../data/d3_graph_data_hierarchical.json").then(graphData => {
         currentGraphData = graphData;`` 
         renderD3MindMap(currentGraphData);
         initializeSearch();
@@ -54,15 +54,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const toggleSemantic = document.getElementById('toggle-semantic');
 
         if (toggleSubTopic) {
+            toggleSubTopic.checked = linkVisibility['sub topic'];
             toggleSubTopic.addEventListener('change', () => toggleLinkType('sub topic'));
         }
         if (toggleDependsOn) {
+            toggleDependsOn.checked = linkVisibility['depends on'];
             toggleDependsOn.addEventListener('change', () => toggleLinkType('depends on'));
         }
         if (toggleExtends) {
+            toggleExtends.checked = linkVisibility['extends'];
             toggleExtends.addEventListener('change', () => toggleLinkType('extends'));
         }
         if (toggleSemantic) {
+            toggleSemantic.checked = linkVisibility['semantically_similar'];
             toggleSemantic.addEventListener('change', () => toggleLinkType('semantically_similar'));
         }
     }
@@ -299,6 +303,28 @@ document.addEventListener("DOMContentLoaded", () => {
             'default': { strength: 0.2, distance: 200, width: 2, opacity: 0.6, color: '#888', dashArray: '5,5' }
         };
 
+        // --- Cluster force (defined early for use in simulation) ---
+        function clusteringForce() {
+            const strength = 0.1;
+            function force(alpha) {
+                for (let i = 0; i < highLevelTopics.length; i++) {
+                    const hl = highLevelTopics[i];
+                    const parentNode = nodeById.get(hl.id);
+                    if (!parentNode) continue;
+                    
+                    const subs = hl.sub_topics.map(id => nodeById.get(id)).filter(Boolean);
+                    for (let j = 0; j < subs.length; j++) {
+                        const sub = subs[j];
+                        const dx = sub.x - parentNode.x;
+                        const dy = sub.y - parentNode.y;
+                        sub.vx -= dx * strength * alpha;
+                        sub.vy -= dy * strength * alpha;
+                    }
+                }
+            }
+            return force;
+        }
+
         // --- Optimized Simulation ---
         simulation = d3.forceSimulation(graph.nodes)
             .force("link", d3.forceLink(graph.links)
@@ -413,7 +439,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tickCount++;
             
             // Update on every tick, but throttle expensive operations
-            link
+            linkElements
                 .attr("x1", d => d.source.x)
                 .attr("y1", d => d.source.y)
                 .attr("x2", d => d.target.x)
@@ -522,28 +548,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 50); // Debounce by 50ms
         }
 
-        // --- Cluster force ---
-        function clusteringForce() {
-            const strength = 0.1;
-            function force(alpha) {
-                for (let i = 0; i < highLevelTopics.length; i++) {
-                    const hl = highLevelTopics[i];
-                    const parentNode = nodeById.get(hl.id);
-                    if (!parentNode) continue;
-                    
-                    const subs = hl.sub_topics.map(id => nodeById.get(id)).filter(Boolean);
-                    for (let j = 0; j < subs.length; j++) {
-                        const sub = subs[j];
-                        const dx = sub.x - parentNode.x;
-                        const dy = sub.y - parentNode.y;
-                        sub.vx -= dx * strength * alpha;
-                        sub.vy -= dy * strength * alpha;
-                    }
-                }
-            }
-            return force;
-        }
-
         // --- Optimized Drag behavior ---
         function drag(simulation) {
             function dragstarted(event, d) {
@@ -584,6 +588,22 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('save-csv-button').addEventListener('click', () => {
             if (currentGraphData) saveUrlsToCsv(currentGraphData); else alert("No data available to save.");
         });
+        // Re-initialize link toggles after resetting
+        initializeLinkToggles();
+        // Restore checkbox states
+        updateCheckboxStates();
+    }
+
+    function updateCheckboxStates() {
+        const toggleSubTopic = document.getElementById('toggle-sub-topic');
+        const toggleDependsOn = document.getElementById('toggle-depends-on');
+        const toggleExtends = document.getElementById('toggle-extends');
+        const toggleSemantic = document.getElementById('toggle-semantic');
+
+        if (toggleSubTopic) toggleSubTopic.checked = linkVisibility['sub topic'];
+        if (toggleDependsOn) toggleDependsOn.checked = linkVisibility['depends on'];
+        if (toggleExtends) toggleExtends.checked = linkVisibility['extends'];
+        if (toggleSemantic) toggleSemantic.checked = linkVisibility['semantically_similar'];
     }
 
     function toggleLinkType(linkType) {

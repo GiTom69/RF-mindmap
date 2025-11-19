@@ -38,7 +38,7 @@ except ImportError:
 
 # Configure paths
 DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
-INPUT_FILE = DATA_DIR / "d3_graph_data.json"
+INPUT_FILE = DATA_DIR / "d3_graph_data_with_syllabus.json"
 OUTPUT_FILE = DATA_DIR / "d3_graph_data_with_semantic_links.json"
 
 
