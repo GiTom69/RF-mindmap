@@ -74,10 +74,12 @@ class SemanticLinkGenerator:
         self.nodes = data['nodes']
         
         # Store existing links to avoid duplicates
+        # For semantic links, we treat them as bidirectional, so we store both directions
         for link in data.get('links', []):
             self.existing_links.add((link['source'], link['target']))
-            # Add reverse direction for undirected semantics
-            self.existing_links.add((link['target'], link['source']))
+            # For semantic links, also block the reverse direction to prevent duplicate bidirectional links
+            if link.get('type') == 'semantically_similar' or link.get('is_bidirectional', False):
+                self.existing_links.add((link['target'], link['source']))
         
         print(f"Loaded {len(self.nodes)} nodes and {len(data.get('links', []))} existing links")
         return data
@@ -307,6 +309,7 @@ class SemanticLinkGenerator:
                       max_semantic_per_node: int = 3) -> List[Dict]:
         """
         Generate semantic links using dynamic thresholding with hierarchical awareness.
+        Semantic links are bidirectional by nature - only one link is created per node pair.
         
         Args:
             k: Number of top similar nodes to consider per node
@@ -344,22 +347,27 @@ class SemanticLinkGenerator:
                 source_id = node['id']
                 target_id = self.nodes[j]['id']
                 
-                # Check if link already exists
-                if (source_id, target_id) in self.existing_links:
+                # Check if link already exists (in either direction, since semantic links are bidirectional)
+                if (source_id, target_id) in self.existing_links or (target_id, source_id) in self.existing_links:
                     continue
                 
                 # Check target node's semantic link count
                 if semantic_count[target_id] >= max_semantic_per_node:
                     continue
                 
-                # Create new link
+                # Create new bidirectional link
                 new_links.append({
                     'source': source_id,
                     'target': target_id,
                     'type': 'semantically_similar',
                     'similarity_score': float(similarity),
+                    'is_bidirectional': True,
                     'urls': []
                 })
+                
+                # Mark both directions as existing to prevent duplicate creation
+                self.existing_links.add((source_id, target_id))
+                self.existing_links.add((target_id, source_id))
                 
                 links_by_source[source_id] += 1
                 semantic_count[source_id] += 1
@@ -369,7 +377,7 @@ class SemanticLinkGenerator:
                 if semantic_count[source_id] >= max_semantic_per_node:
                     break
         
-        print(f"\nGenerated {len(new_links):,} new semantic links")
+        print(f"\nGenerated {len(new_links):,} new bidirectional semantic links")
         print(f"Average links per node: {len(new_links) / len(self.nodes):.2f}")
         
         # Show distribution
